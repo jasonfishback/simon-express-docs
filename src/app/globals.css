@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #f0f0f0;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+}
+
+input, button, textarea, select {
+  font-family: inherit;
+}
+
+
+/* Mobile app-like behavior */
+html, body {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+}
+
+/* Prevent long-press selection on buttons/UI elements */
+button, .no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Allow text selection in inputs and content areas */
+input, textarea, p, span, h1, h2, h3, h4, h5, h6 {
+  -webkit-user-select: auto;
+  user-select: auto;
+}
+
+/* Prevent iOS from zooming in when focusing inputs (fonts under 16px trigger zoom) */
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"],
+input[type="search"], input[type="password"], input[type="url"], textarea, select {
+  font-size: 16px;
+}
