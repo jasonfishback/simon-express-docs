@@ -98,11 +98,21 @@ export async function findFolderIdByName(mailbox: string, name: string, parentId
 export async function ensureChildFolder(mailbox: string, parentId: string, name: string): Promise<string> {
   const existing = await findFolderIdByName(mailbox, name, parentId)
   if (existing) return existing
-  const created = await graph<{ id: string }>(
-    `/users/${encodeURIComponent(mailbox)}/mailFolders/${parentId}/childFolders`,
-    { method: 'POST', body: JSON.stringify({ displayName: name }) }
-  )
-  return created.id
+  try {
+    const created = await graph<{ id: string }>(
+      `/users/${encodeURIComponent(mailbox)}/mailFolders/${parentId}/childFolders`,
+      { method: 'POST', body: JSON.stringify({ displayName: name }) }
+    )
+    return created.id
+  } catch (err: any) {
+    // If the folder was created concurrently or the displayName lookup missed
+    // (e.g. case sensitivity), look it up again before giving up.
+    if (String(err?.message || '').includes('ErrorFolderExists') || String(err?.message || '').includes('409')) {
+      const retry = await findFolderIdByName(mailbox, name, parentId)
+      if (retry) return retry
+    }
+    throw err
+  }
 }
 
 export interface FuelMessage {
@@ -186,5 +196,6 @@ export async function moveMessage(mailbox: string, messageId: string, destinatio
 function escapeOData(s: string): string {
   return s.replace(/'/g, "''")
 }
+
 
 
