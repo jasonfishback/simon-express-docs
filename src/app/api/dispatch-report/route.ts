@@ -224,7 +224,7 @@ export async function GET(req: NextRequest) {
 
   try {
     const fromEmail = process.env.FROM_EMAIL || 'Simon Express Dispatch <dispatch@simonexpress.com>'
-    const dispatchEmail = 'dispatch@simonexpress.com'
+    const dispatchEmail = 'jfishback@simonexpress.com'
 
     // Compute date labels in Mountain time
     const now = new Date()
@@ -313,4 +313,5 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: err?.message || 'Internal error' }, { status: 500 })
   }
 }
+
 
