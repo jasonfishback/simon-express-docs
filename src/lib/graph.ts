@@ -120,11 +120,11 @@ export async function listFuelMessages(mailbox: string, folderId: string, fromAd
   // Filter to unread + from + subject. Graph's $search supports phrase searches but
   // can't be combined with $filter, so we use $filter for the strict match and
   // do subject-contains client-side after retrieving.
-  const filter = `isRead eq false and from/emailAddress/address eq '${escapeOData(fromAddress)}'`
+  const filter = `isRead eq false`
   const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/${folderId}/messages?$filter=${encodeURIComponent(filter)}&$select=id,subject,receivedDateTime,from&$orderby=receivedDateTime asc&$top=20`
   const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }> }>(path)
   return res.value
-    .filter(m => m.subject?.toLowerCase().includes(subjectContains.toLowerCase()))
+    .filter(m => { const senderOk = (m.from?.emailAddress?.address || '').toLowerCase() === fromAddress.toLowerCase(); const subjectOk = (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase()); return senderOk && subjectOk; })
     .map(m => ({
       id: m.id,
       subject: m.subject,
@@ -186,3 +186,5 @@ export async function moveMessage(mailbox: string, messageId: string, destinatio
 function escapeOData(s: string): string {
   return s.replace(/'/g, "''")
 }
+
+
