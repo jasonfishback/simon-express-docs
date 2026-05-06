@@ -4,8 +4,8 @@
 // emails to KPI-FEED/Processed.
 //
 // Triggered by:
-//   - Vercel Cron (Authorization: Bearer ${CRON_SECRET})
-//   - Manual test via ?key=${CRON_SECRET}
+//   - Vercel Cron (Authorization: Bearer ${INGEST_API_KEY})
+//   - Manual test via ?key=${INGEST_API_KEY}
 
 import { NextRequest, NextResponse } from 'next/server'
 import {
@@ -23,7 +23,7 @@ const DEFAULT_FROM = 'DailyPricing@pilotflyingj.com'
 const DEFAULT_SUBJECT = 'Pricing - Pilot Flying J'
 
 function isAuthorized(req: NextRequest): boolean {
-  const cronSecret = process.env.CRON_SECRET
+  const cronSecret = process.env.INGEST_API_KEY
   if (!cronSecret) return false
   const auth = req.headers.get('authorization')
   if (auth === `Bearer ${cronSecret}`) return true
@@ -140,3 +140,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ ...summary, error: err?.message || 'Internal error' }, { status: 500 })
   }
 }
+

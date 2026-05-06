@@ -2,7 +2,7 @@
 // Triggered by Vercel Cron at 13:00 UTC (07:00 Mountain during DST).
 //
 // Authentication:
-// - Vercel Cron requests carry an Authorization header containing CRON_SECRET (env var)
+// - Vercel Cron requests carry an Authorization header containing INGEST_API_KEY (env var)
 // - Manual triggers may pass the same secret via ?key=<value> query string for testing
 //
 // Report contents:
@@ -26,7 +26,7 @@ interface FuelStation {
 
 // Authenticate the incoming request
 function isAuthorized(req: NextRequest): boolean {
-  const cronSecret = process.env.CRON_SECRET
+  const cronSecret = process.env.INGEST_API_KEY
   if (!cronSecret) return false
   // Vercel Cron sends an Authorization header
   const auth = req.headers.get('authorization')
@@ -206,7 +206,7 @@ function buildReportHtml(args: {
 export async function GET(req: NextRequest) {
   if (!isAuthorized(req)) {
     // Temporary diagnostic info to debug env var setup. Safe — does not leak the secret value.
-    const cronSecret = process.env.CRON_SECRET
+    const cronSecret = process.env.INGEST_API_KEY
     const auth = req.headers.get('authorization')
     const keyParam = req.nextUrl.searchParams.get('key')
     return NextResponse.json({
@@ -313,3 +313,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: err?.message || 'Internal error' }, { status: 500 })
   }
 }
+
