@@ -75,7 +75,7 @@ export async function listFuelMessages(mailbox: string, folderId: string, fromAd
 export interface FuelAttachment { id: string; name: string; contentType: string; contentBytes: string; size: number }
 
 export async function getMessageAttachments(mailbox: string, messageId: string): Promise<FuelAttachment[]> {
-  const path = `/users/${encodeURIComponent(mailbox)}/messages/${messageId}/attachments?$select=id,name,contentType,size,contentBytes`
+  const path = `/users/${encodeURIComponent(mailbox)}/messages/${messageId}/attachments`
   const res = await graph<{ value: Array<{ id: string; name: string; contentType: string; size: number; contentBytes: string; '@odata.type'?: string }> }>(path)
   return res.value
     .filter(a => a['@odata.type'] === '#microsoft.graph.fileAttachment' && a.contentBytes)
@@ -89,3 +89,4 @@ export async function markMessageRead(mailbox: string, messageId: string): Promi
 export async function moveMessage(mailbox: string, messageId: string, destinationFolderId: string): Promise<void> {
   await graph(`/users/${encodeURIComponent(mailbox)}/messages/${messageId}/move`, { method: 'POST', body: JSON.stringify({ destinationId: destinationFolderId }) })
 }
+
