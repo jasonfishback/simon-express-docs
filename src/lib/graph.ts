@@ -24,14 +24,19 @@ async function graph<T>(path: string, init?: RequestInit): Promise<T> {
   return (await res.json()) as T
 }
 
-function escapeOData(s: string): string { return s.replace(/'/g, "''") }
+async function listAllFolders(mailbox: string, parentId?: string): Promise<Array<{ id: string; displayName: string }>> {
+  const path = parentId
+    ? `/users/${encodeURIComponent(mailbox)}/mailFolders/${parentId}/childFolders?$select=id,displayName&$top=100`
+    : `/users/${encodeURIComponent(mailbox)}/mailFolders?$select=id,displayName&$top=100`
+  const res = await graph<{ value: Array<{ id: string; displayName: string }> }>(path)
+  return res.value
+}
 
 export async function findFolderIdByName(mailbox: string, name: string, parentId?: string): Promise<string | null> {
-  const path = parentId
-    ? `/users/${encodeURIComponent(mailbox)}/mailFolders/${parentId}/childFolders?$filter=displayName eq '${escapeOData(name)}'&$select=id,displayName`
-    : `/users/${encodeURIComponent(mailbox)}/mailFolders?$filter=displayName eq '${escapeOData(name)}'&$select=id,displayName`
-  const res = await graph<{ value: Array<{ id: string; displayName: string }> }>(path)
-  return res.value[0]?.id ?? null
+  const folders = await listAllFolders(mailbox, parentId)
+  const target = name.toLowerCase().trim()
+  const match = folders.find(f => (f.displayName || '').toLowerCase().trim() === target)
+  return match?.id ?? null
 }
 
 export async function ensureChildFolder(mailbox: string, parentId: string, name: string): Promise<string> {
@@ -43,8 +48,11 @@ export async function ensureChildFolder(mailbox: string, parentId: string, name:
   } catch (err: any) {
     const msg = String(err?.message || '')
     if (msg.includes('ErrorFolderExists') || msg.includes('409')) {
-      const retry = await findFolderIdByName(mailbox, name, parentId)
-      if (retry) return retry
+      const retry = await listAllFolders(mailbox, parentId)
+      const fallback = retry.find(f => (f.displayName || '').toLowerCase().trim() === name.toLowerCase().trim())
+      if (fallback) return fallback.id
+      const partial = retry.find(f => (f.displayName || '').toLowerCase().includes(name.toLowerCase()))
+      if (partial) return partial.id
     }
     throw err
   }
