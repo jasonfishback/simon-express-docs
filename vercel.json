@@ -1,8 +1,12 @@
 {
-  "crons": [
-    {
-      "path": "/api/dispatch-report",
-      "schedule": "0 13 * * *"
-    }
-  ]
+    "crons":  [
+                  {
+                      "path":  "/api/dispatch-report",
+                      "schedule":  "0 13 * * *"
+                  },
+                  {
+                      "path":  "/api/fuel-ingest",
+                      "schedule":  "*/30 * * * *"
+                  }
+              ]
 }
