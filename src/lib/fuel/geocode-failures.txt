@@ -1,5 +1,565 @@
-site|state	city, state	accuracy	type
-385|MO	Collins, MO	accuracy=1	type=intersection
-684|ND	Beach, ND	accuracy=1	type=intersection
-912|NE	Wood River, NE	accuracy=1	type=intersection
-1009|CA	Jurupa Valley, CA	accuracy=0.45	type=street_center
+site|state	city, state	address	zip
+026|MI	Ottawa Lake, MI	6158 US 223	49267
+029|IN	Fremont, IN	6900 Old US 27	46737
+030|IN	Greenfield, IN	2640 North 600 West	46140
+031|IN	Highland, IN	8150 Indianapolis Boulevard	46322
+034|IN	Remington, IN	4154 West US Highway 24	47977
+035|IN	South Bend, IN	6424 West Brick Road	46628
+037|IN	Whiteland, IN	2962 East 500 North	46184
+039|IL	Monee, IL	6002 Monee-Manhattan Road	60449
+040|WI	Oak Creek, WI	2031 West Ryan Road	53154
+041|KY	Mt Sterling, KY	3060 Owingsville Road	40353
+043|IA	Walcott, IA	3500 North Plainview Road	52773
+044|MO	Boonville, MO	1701 Ashley Road	65233
+047|KY	Georgetown, KY	259 Cherry Blossom Way	40324
+048|KY	Glendale, KY	58 Glendale-Hodgenville Road	42740
+049|KY	Oak Grove, KY	8190 Pembroke-Oak Grove Road	42262
+050|KY	Pendleton, KY	489 Pendleton Road	40070
+051|TN	Greeneville, TN	11190 Baileyton Road	37745
+052|TN	La Vergne, TN	535 Waldron Road	37086
+053|TN	Hurricane Mills, TN	15559 Highway 13 South	37078
+056|NC	Kannapolis, NC	2825 Lane Street	28083
+057|NC	Mebane, NC	1342 Trollingwood Road	27302
+060|SC	Bowman, SC	2064 Homestead Road	29018
+062|SC	Florence, SC	3006 North Williston Road	29506
+063|SC	Piedmont, SC	110 Frontage Road	29673
+066|GA	Braselton, GA	5888 Highway 53	30517
+067|GA	Cartersville, GA	968 Cassville-White Road	30120
+068|GA	Dublin, GA	2185 US 441	31021
+071|GA	Port Wentworth, GA	7001 Highway 21	31407
+075|AL	Satsuma, AL	6109 US 43 South	36572
+076|AL	Tuscaloosa, AL	4416 Skyland Boulevard East	35405
+077|MS	Jackson, MS	2520 South Gallatin Street	39204
+081|PA	Portersville, PA	2010 New Castle Road	16051
+087|FL	Jacksonville, FL	1050 US 301 South	32234
+090|FL	Fort Pierce, FL	7300 West Okeechobee Road	34945
+091|FL	Saint Johns, FL	1625 County Road 210 West	32259
+092|FL	Ocala, FL	4255 NW Highway 326	34482
+094|FL	Punta Gorda, FL	26505 Jones Loop Road	33950
+095|FL	Wildwood, FL	493 East State Route 44	34785
+096|FL	Okeechobee, FL	3051 State Road 60	34972
+097|OH	Vandalia, OH	175 Northwoods Blvd.	45377
+114|TN	Crossville, TN	2449 Genesis Road	38571
+118|AR	Benton, AR	7801 Alcoa Road	72015
+130|OH	Richfield, OH	5219 Brecksville Road	44286
+131|IA	Osceola, IA	2010 West Clay Street	50213
+133|OR	Chemult, OR	341 Damon Street 109450 Highway 97	97731
+134|MN	St Cloud, MN	4231 Clearwater Road	56301
+137|CA	Weed, CA	395 E. Vista Drive	96094
+141|WY	Evanston, WY	289 Bear River Drive	82930
+144|GA	Augusta, GA	2975 Gun Club Road	30907
+145|AR	Springdale, AR	5660 West Sunset Avenue	72762
+146|NY	Castleton-On-Hudson, NY	995 US Route 9	12033
+147|NV	West Wendover, NV	1200 West Wendover Boulevard	89883
+150|MD	Hagerstown, MD	11633 Greencastle Pike	21740
+151|WA	Olympia, WA	2430 93rd Avenue SW	98512
+152|IN	Memphis, IN	14013 Memphis Blue Lick Road	47143
+154|CA	Lost Hills, CA	14808 Warren Street	93249
+156|KY	Mortons Gap, KY	Pennyrile Parkway Exit 37	42440
+157|TX	Sulphur Springs, TX	1200 South Hillcrest	75482
+159|VA	Providence Forge, VA	6721 Emmaus Church Road	23140
+163|NM	Lordsburg, NM	1050 East Motel Drive	88045
+164|WI	Mauston, WI	1101 State Road 82 East	53948
+165|IL	Effingham, IL	2500 North 3rd Street	62401
+167|MO	Nevada, MO	2424 East Austin Road	64772
+168|CA	Dunnigan, CA	30035 County Road 8	95937
+171|IL	Oakwood, IL	503 N. Oakwood Street	61858
+174|MS	New Albany, MS	500 State Highway 15 South	38652
+179|MD	Hagerstown, MD	16921 Halfway Boulevard	21740
+180|AZ	Bellemont, AZ	12500 West I-40	86015
+190|NJ	Hampton, NJ	66 Route 173 West	8827
+192|GA	Tifton, GA	4431 Old Union Road	31794
+195|OR	Wasco, OR	91485 Biggs Rufus Highway	97065
+196|OK	Roland, OK	302 West Ray Fine Boulevard	74954
+198|IN	Plymouth, IN	10619 9A Road	46563
+199|LA	Haughton, LA	490 North Elm Street	71037
+200|CA	Boron, CA	5725 Highway 58	93516
+206|TX	Weatherford, TX	1201 I-20 West	76087
+208|MO	Pacific, MO	1475 Thornton Street	63069
+209|TX	Van Horn, TX	501 Van Horn Drive	79855
+210|NJ	Mahwah, NJ	230 Route 17 South	7430
+211|AZ	Lake Havasu City, AZ	14750 South Highway 95	86404
+213|OH	Columbus, OH	3600 Interchange Road	43204
+219|TN	Knoxville, TN	7210 Straw Plains Pike	37914
+222|MA	Sturbridge, MA	400 Route 15 (Haynes Street)	1566
+268|IA	Walcott, IA	2975 North Plainview Road	52773
+270|TN	Knoxville, TN	314 Lovell Road	37922
+271|IN	Gary, IN	2501 Burr Street	46406
+274|LA	Breaux Bridge, LA	2112 Rees Street	70517
+275|NC	Charlotte, NC	3807 Statesville Avenue	28206
+279|AZ	Rio Rico, AZ	769 East Frontage Road	85648
+280|NJ	Bloomsbury, NJ	979 Route 173	8804
+281|OH	Girard, OH	2786 Salt Springs Road	44420
+282|CA	Barstow, CA	2591 Commerce Parkway	92311
+284|MI	Monroe, MI	1200 Nadeau Road	48161
+285|OH	Hebron, OH	10258 Lancaster Road SW	43025
+286|OH	Eaton, OH	6141 US 127 North	45320
+287|OH	Burbank, OH	10048 Avon Lake Road	44214
+289|WI	Beloit, WI	3001 Milwaukee Road	53511
+293|FL	Ocala, FL	2020 SW 135th Street	34473
+296|MI	Dexter, MI	195 Baker Road	48130
+298|PA	Drums, PA	SR 93 Box 1114	18222
+299|IL	Bloomington, IL	1522 West Market Street	61701
+300|LA	Hammond, LA	2111 SW Railroad Avenue	70403
+302|AL	Theodore, AL	6955 Theodore Dawes Road	36582
+303|OH	Napoleon, OH	905 American Road Route 24	43545
+304|IN	New Haven, IN	3105 Doyle Road	46774
+305|NM	Jamestown, NM	I-40 Exit 39 - PO Box 960 1 Giant Crossing I-40 Exit 39	87347
+306|TX	San Antonio, TX	5619 I-10 East	78219
+307|CA	North Palm Springs, CA	6605 N. Indian Canyon Drive PO Box 581236	92258
+308|WY	Laramie, WY	1564 McCue Street	82072
+309|OH	Caldwell, OH	44133 Fairground Road	43724
+310|SC	Duncan, SC	1405 East Main Street	29334
+311|PA	Erie, PA	8035 Perry Highway	16509
+312|GA	Tallapoosa, GA	882 Georgia Highway 100	30176
+313|IL	East St Louis, IL	699 State Route 203	62201
+317|MO	Joplin, MO	4500 Highway 43 South	64804
+321|KY	Walton, KY	11229 Frontage Road	41094
+322|NY	Bath, NY	7767 State Route 53	14810
+324|WI	Franksville, WI	13712 Northwestern Avenue	53126
+328|AZ	Quartzsite, AZ	1201 West Main Street	85359
+329|IA	Council Bluffs, IA	2647 South 24th Street	51501
+330|TX	New Braunfels, TX	4142 Loop 337	78132
+331|GA	Atlanta, GA	2605 Bouldercrest	30316
+332|AR	North Little Rock, AR	3300 Highway 391 North	72117
+335|LA	Rayville, LA	103 Grimshaw Street	71269
+336|PA	Dubois, PA	1742 Rich Highway	15801
+337|SC	Florence, SC	2015 West Lucas Street	29501
+338|SC	West Columbia, SC	3008 Highway 321	29033
+340|NV	Fernley, NV	465 Pilot Road	89408
+341|NV	North Las Vegas, NV	3812 East Craig Road	89031
+343|CA	San Diego, CA	1497 Piper Ranch Road	92154
+346|SC	Lugoff, SC	522 Highway 601 South	29078
+348|PA	Bentleyville, PA	205 Wilson Road	15314
+350|ID	Mountain Home, ID	1050 Highway 20	83647
+352|FL	Fort Myers, FL	6050 Plaza Drive	33905
+353|KY	Georgetown, KY	110 Triport Road	40324
+354|KY	Simpsonville, KY	819 Buck Creek Road	40067
+356|KY	Shepherdsville, KY	2050 East Blue Lick Road	40165
+358|KY	Paducah, KY	5353 Cairo Road	42001
+360|OH	Findlay, OH	11471 State Route 613W	45840
+365|CA	Madera, CA	22717 Avenue 18 1/2	93637
+366|TN	Jackson, TN	30 Sand Pebble Road	38305
+367|TX	Caddo Mills, TX	2226 FM-1903 I-30 & FM 1903 Exit 87	75135
+368|IL	Decatur, IL	4030 East Boyd Road	62521
+370|PA	Pittston, PA	417 Route 315	18640
+372|CA	Castaic, CA	31642 Castaic Road	91384
+373|IA	Urbandale, IA	11957 Douglas Avenue	50322
+374|FL	Marianna, FL	2209 Highway 71	32448
+375|TX	Houston, TX	4440 North McCarty Street	77013
+377|TX	Laredo, TX	1101 Uniroyal Drive	78045
+380|NY	Liverpool, NY	107 Seventh North Street	13088
+381|CA	Hesperia, CA	8701 Highway 395	92345
+384|VA	Colonial Heights, VA	2126 Ruffin Mill Road	23834
+385|MO	Collins, MO	Hwy 13 South and US 54	64738
+386|OR	Salem, OR	4220 Brooklake Road	97305
+388|MS	Meridian, MS	1555 Tommy Webb Drive	39307
+390|OR	Stanfield, OR	2115 Highway 395	97875
+391|OR	Central Point, OR	1600 East Pine Street	97502
+393|NC	Waynesville, NC	3712 Crabtree Road	28786
+394|NY	Newburgh, NY	239 Route 17K	12550
+396|VA	Staunton, VA	3541 Lee Jackson Highway	24401
+399|KY	Lebanon Junction, KY	150 Park Plaza Boulevard	40150
+402|WY	Cheyenne, WY	8020 Campstool Road	82007
+404|TN	Murfreesboro, TN	2441 South Church Street	37127
+406|TN	Cornersville, TN	9211 Lewisburg Highway	37047
+407|IA	Clear Lake, IA	2411 US Highway 18 East	50428
+408|MD	Grantsville, MD	3000 Chestnut Ridge Road	21536
+409|TN	Dickson, TN	2320 Highway 46 South	37055
+475|NM	Moriarty, NM	305 W. Abrahames Road	87035
+476|IL	Woodhull, IL	900 Plaza Avenue	61490
+477|TX	Anna, TX	714 S. Central Expressway	75409
+478|IN	Leavenworth, IN	6921 South SR 66	47137
+481|TN	Mc Donald, TN	281 Pleasant Grove Road SW	37353
+482|IL	Mt. Vernon, IL	4610 Broadway	62864
+483|IL	Morris, IL		
+485|NV	Winnemucca, NV	5625 I-80 West Winnemucca Exchange	89445
+486|TX	Tyler, TX	12881 FM 14 A	75706
+488|TX	Cotulla, TX	921 N. IH 35	78014
+489|ND	Grand Forks, ND	4401 32nd Avenue South	58201
+491|VA	Harrisonburg, VA	3634 North Valley Pike	22802
+492|AR	Arkadelphia, AR	170 Valley Street	71923
+493|SC	St George, SC	113 Motel Drive	29477
+494|NY	Schenectady, NY	1128 Duanesburg Road	12306
+495|IA	Brooklyn, IA	4126 Highway 21	52211
+497|AL	Lincoln, AL	121 Honda Drive	35096
+498|OK	Atoka, OK		
+500|FL	Jasper, FL		
+503|WV	Morgantown, WV	2309 Smithtown Road I-79 Exit 146	26508
+504|OR	Klamath Falls, OR	3817 N Hwy 97	97601
+507|TX	Jarrell, TX	11710 North Interstate 35	76537
+509|UT	Beaver, UT	653 West 1400 North	84713
+510|UT	Scipio, UT	810 North 800 West	84656
+511|ND	Mandan, ND		
+513|NV	Jean, NV	115 West Primm Blvd.	89019
+514|IL	Lincoln, IL	2903 Woodlawn Road	62656
+517|PA	Duncannon, PA	30 Benvenue Road	17020
+518|PA	Frystown, PA	2210 Camp Swatara Road	17067
+549|NC	Mt Airy, NC	125 Plaza Lane	27030
+550|ND	Minot, ND	3800 Highway 2 and 52 W	58701
+551|TX	Cisco, TX		
+552|OH	Lebanon, OH		
+553|TX	Fort Stockton, TX	2571 N. Front Street	79735
+554|TX	George West, TX		
+557|NM	Hobbs, NM		
+559|TX	Big Spring, TX		
+568|TX	Von Ormy, TX	14555 IH35 South	78073
+571|MO	Charleston, MO	2460 E. Highway 60	63834
+572|IA	Williams, IA	3040 220th Street	50271
+573|TX	Hempstead, TX		
+575|GA	Saint Marys, GA	491 St. Mary's Road	31558
+576|MN	Northfield, MN	8051 Bagley Avenue	55057
+580|TX	Odessa, TX	5900 E. Interstate 20	79766
+581|MN	Inver Grove Heights, MN	11650 Courthouse Blvd.	55077
+583|WA	Ferndale, WA	1678 Main Street	98248
+584|OR	Aurora, OR	12334 Ehlen Road	97002
+586|MS	Moss Point, MS	5705 Hwy 63	39563
+590|MN	Alexandria, MN	3181 Evergreen Lane	56308
+592|CO	Grand Junction, CO		
+593|AZ	Tucson, AZ	5570 E. Travel Plaza Way	85756
+594|IA	Sioux City, IA	2815 Singing Hills Blvd.	51111
+595|IL	Marion, IL	2611 Vernell Road	62959
+596|MI	Kimball Township, MI	2424 Wadhams Road	48074
+597|OH	Chillicothe, OH		
+599|SD	Murdo, SD	601 East Fifth Street	57559
+601|AL	Mc Calla, AL	6098 MacAshan Dr	35111
+602|AL	Birmingham, AL	224 Daniel Payne Drive	35207
+603|AL	Dothan, AL	2190 Ross Clark Circle	36301
+604|AL	Hope Hull, AL	900 Tyson Road	36043
+605|AR	Russellville, AR	42 Bradley Cove Road	72801
+606|AR	Texarkana, AR	Rt 12 Box 254B I30 & Hwy 108	71854
+607|AR	West Memphis, AR	3400 Service Loop Road	72301
+608|AZ	Ehrenberg, AZ	Box 801 I-10 Exit 1 S Frontage	85334
+609|AZ	Eloy, AZ	16189 S Sunshine Blvd	85231
+610|AZ	Kingman, AZ	3300 E Andy DeVine Ave	86401
+611|AZ	Phoenix, AZ	6700 West Latham	85043
+612|AZ	Winslow, AZ	400 Transcon Lane	86047
+613|CA	Bakersfield, CA	17047 Zachary Ave	93308
+614|CA	Barstow, CA	2611 Fisher Blvd.	92311
+616|CA	Frazier Park, CA	42810 Frazier Mountain Park Rd	93243
+617|CA	Lodi, CA	15100 North Thornton Rd	95242
+618|CA	Ripon, CA	1501 North Jack Tone Road	95366
+619|CO	Aurora, CO	16751 East 32nd Ave	80011
+620|PA	Smithton, PA	122 Fitzhenry Road	15479
+621|CO	Limon, CO	2495 Williams Ave	80828
+622|FL	Saint Lucie, FL	100 North Kings Hwy	34945
+623|FL	Quincy, FL	32670 Blue Star Hwy	32343
+624|FL	Dade City, FL	29933 State Road 52	33576
+625|FL	Tampa, FL	11555 East Sligh Ave.	33584
+626|FL	St Augustine, FL	950 State Road 206 West	32086
+627|GA	Brunswick, GA	2990 US Hwy 17 South	31523
+628|GA	Carnesville, GA	10226 Old Federal Road	30521
+630|GA	Jackson, GA	I-75 & Exit 66 Bucksnort Road	30233
+631|GA	Lake Park, GA	7001 Lake Park Bellville Road	31636
+632|GA	Resaca, GA	288 Resaca Beach Blvd	30735
+633|GA	Union Point, GA	3600 Highway 77 South	30669
+634|GA	Temple, GA	15 Villa Rosa Road	30179
+636|IA	Davenport, IA	8200 N.W. Blvd.	52806
+637|IA	Evansdale, IA	445 Evansdale Drive	50707
+638|ID	Caldwell, ID	3512 Franklin Road	83605
+639|ID	Post Falls, ID	3636 W. 5th Street	83854
+640|ID	Twin Falls, ID	5350 Hwy 93 I-84 & Exit 173	83338
+669|MO	Joplin, MO	11570 Hwy FF	64804
+671|MO	Matthews, MO	703 State Hwy 80	63867
+672|MO	Peculiar, MO	700 J Hwy	64078
+673|MO	Sullivan, MO	1500 AF Highway	63080
+674|MO	Warrenton, MO	#1 Camp Branch Rd	63383
+675|MO	Wayland, MO	102 Fore Drive	63472
+676|MS	Gulfport, MS	9351 Canal Road	39503
+677|MS	Olive Branch, MS	4740 Bethel Road	38654
+678|MS	Pearl, MS	685 Highway 80 East	39208
+682|NC	Graham, NC	1043 Jimmie Kerr Rd	27258
+683|NC	Kenly, NC	1800 Princeton-Kenly Road	27542
+684|ND	Beach, ND	I-94 & Hwy 16	58621
+685|ND	Fargo, ND	3150 39th St SW Suite A	58104
+686|NE	Gretna, NE	15010 South State Hwy 31	68028
+687|NE	North Platte, NE	3400 So. Newberry Rd.	69101
+688|NJ	Carneys Point, NJ	326 Slapes Corner/I295 Ex 2C	8069
+689|NM	Albuquerque, NM	9911 Avalon Road NW	87105
+690|NM	Lordsburg, NM	11 Old Hwy 70	88045
+691|NM	Tucumcari, NM	2021 S. Mountain Rd	88401
+692|NV	Wells, NV	156 Hwy 93 South	89835
+693|NY	Pembroke, NY	8484 Allegheny Road	14036
+694|OH	Austinburg, OH	2349 Center Road	44010
+695|OH	Beaverdam, OH	420 East Main Street	45808
+696|OH	Berkshire, OH	7735 East State Rt 37	43074
+697|OH	Hubbard, OH	2226 North Main	44425
+698|OH	Washington Court House, OH	9935 SR 41	43128
+699|OH	Millersport, OH	10480 Baltimore	43046
+700|OH	Lake Township, OH	26415 Warns Road	43551
+701|OK	Ardmore, OK	2450 Cooper Drive	73401
+702|OK	Checotah, OK	1255 Gentry	74426
+703|OK	Oklahoma City, OK	701 South Morgan Road	73128
+704|OK	Edmond, OK	4801 NE 122nd St.	73013
+705|OK	Sayre, OK	2400 So 4th Route	73662
+706|OK	Tulsa, OK	121 North 129 E/I-44 Exit 236	74116
+707|PA	Brookville, PA	246 Allegheny Blvd	15825
+708|PA	Carlisle, PA	1501 Harrisburg Pike	17013
+709|PA	Mill Hall, PA	5609 Nittany Valley Drive	17751
+710|PA	New Milford, PA	1623 Oliver Road	18834
+711|SC	Blacksburg, SC	1011 North Mountain St	29702
+712|SC	Columbia, SC	5901 Fairfield Road	29203
+714|SC	Rock Hill, SC	2435 Mount Holly Road	29730
+716|SD	Sioux Falls, SD	5201 Granite Lane	57107
+720|TN	Fairview, TN	1420 Hwy 96 North	37062
+722|TN	Knoxville, TN	800 Watt Road	37932
+723|TX	Amarillo, TX	9601 I-40 E Exit 76	79118
+725|TX	Baytown, TX	1876 East Freeway	77521
+726|TX	Dallas, TX	7425 Bonnie View Road	75241
+727|TX	Edinburg, TX	1305 East Monte Cristo Road	78539
+728|TX	El Paso, TX	1301 Horizon Blvd	79928
+729|TX	Houston, TX	15919 North Freeway	77090
+730|TX	Laredo, TX	1011 Beltway Parkway	78041
+733|TX	Lubbock, TX	602 4th Street	79401
+734|TX	New Caney, TX	23412 Hwy 242	77357
+735|TX	Orange, TX	7112 I-10 West	77630
+736|TX	Pecos, TX	100 E Pinehurst I20 US Hwy 285	79772
+737|TX	San Antonio, TX	1815 N Foster Road	78244
+738|TX	Abilene, TX	I-20 Exit 277 101 N FM 707	79563
+739|TX	Waco, TX	2409 So New Road	76711
+740|TX	Brookshire, TX	204 South Waller Ave	77423
+741|TX	Wichita Falls, TX	2311 Jacksboro Highway	76301
+742|UT	Tooele, UT	1605 East Saddleback Blvd.	84074
+743|UT	Nephi, UT	1597 South Main	84648
+744|UT	Ogden, UT	1172 West 21st Street	84401
+746|UT	Salt Lake City, UT	2025 S 900 W	84116
+747|UT	Springville, UT	1460 N 1750 W	84663
+748|UT	Willard, UT	600 West 750 North	84340
+749|VA	Carmel Church, VA	24279 Rogers Clark Blvd.	22546
+750|VA	Fort Chiswell, VA	I-81/I-77 Exit 80	24360
+752|VA	Winchester, VA	1530 Rest Church Rd	22624
+754|VA	Wytheville, VA	3249 Chapman Road	24382
+756|WI	Black River Falls, WI	780 State Hwy 54	54615
+758|WY	Casper, WY	41 SE Wyoming Blvd.	82609
+759|WY	Cheyenne, WY	2250 Etchepare Drive	82007
+760|WY	Cokeville, WY	10501 US Hwy 30	83114
+761|WY	Evanston, WY	1920 Harrison Drive	82930
+762|WY	Gillette, WY	1810 South Douglas Hwy.	82718
+763|WY	Rawlins, WY	I-80 Johnson Road	82301
+764|WY	Rock Springs, WY	650 Stage Coach Dr.	82901
+765|CA	Thousand Palms, CA	72235 Varner Rd	92276
+768|MO	Kansas City, MO	1300 N. Corrington Avenue	64120
+770|NV	Winnemucca, NV	1880 W. Winnemucca Blvd	89445
+772|UT	North Salt Lake, UT	885 West North Point Circle	84054
+773|UT	Richfield, UT	35 East Flying J Drive	84701
+774|UT	Snowville, UT	90 South Stone Road	84336
+894|TX	Eagle Pass, TX		
+895|MI	Woodhaven, MI	21055 West Road	48183
+897|FL	Opa Locka, FL	16650 NW 27th Avenue	33054
+898|VA	Emporia, VA	918 West Atlantic	23847
+899|VA	South Hill, VA	1011 E. Atlantic Street	23970
+900|NC	Dunn, NC	65 Sadler Road	28334
+902|NE	Grand Island, NE	3335 West Wood River Road	68801
+903|KS	Salina, KS	1944 N. 9th Street	67401
+904|NE	Big Springs, NE	I-80 & Big Springs Road	69122
+905|MT	Milltown, MT	7985 Highway 200	59851
+906|MT	Columbus, MT	602 8th Avenue North	59019
+907|MT	Miles City, MT	1210 South Haynes	59301
+908|MT	Rocker, MT	1000 Grizzly Trail	59701
+909|MT	Shelby, MT	1350 Roosevelt	59474
+910|MT	Three Forks, MT	10800 Highway 287	59751
+911|MT	Superior, MT	27 Diamond Road	59872
+912|NE	Wood River, NE	I-80 and Highway 11 Exit 300	68883
+913|IA	Altoona, IA	3231 Adventureland Drive I-80 & US 65	50009
+914|MT	Missoula, MT	8475 Hwy 93 N Suite B	59808
+915|MT	Billings, MT	2711 N. Frontage Road	59101
+916|MT	Lolo, MT	11882 Highway 93 S	59847
+917|MT	Great Falls, MT	3100 Tri-Hill Frontage Road	59404
+918|SD	Rapid City, SD	2783 Deadwood Avenue	57702
+920|KS	Colby, KS	1100 East Willow Street	67701
+922|MT	Columbia Falls, MT	6102 Highway 2 West	59912
+923|MT	Billings, MT	2775 Old Hardin Road	59101
+924|MT	Butte, MT	122000 W. Browns Gulch Road	59701
+931|SD	Rapid City, SD	4200 N I-90 Service Rd Exit 61	57701
+934|OR	La Grande, OR	I-84 & Exit 265 PO Box 3298	97850
+966|NV	Battle Mountain, NV	650 W Front Street	89820
+967|WA	Spokane, WA	E 6606 Broadway	99212
+1001|TX	Big Lake, TX		
+1003|TX	Childress, TX		
+1004|OK	Tonkawa, OK		
+1005|NV	Fernley, NV		
+1006|TX	Junction, TX		
+1009|CA	Jurupa Valley, CA		
+1012|IA	Mt. Pleasant, IA		
+1013|MT	Belgrade, MT		
+1014|MT	Glendive, MT		
+1015|MT	Sidney, MT		
+1017|CA	Lathrop, CA		
+1019|CA	Orland, CA		
+1021|MI	Holland, MI		
+1023|TX	Lufkin, TX		
+1024|IL	Joliet, IL		
+1025|TX	Channelview, TX		
+1027|TX	Vega, TX		
+1028|TX	Buffalo, TX		
+1030|IL	Alsip, IL		
+1033|TX	Midland, TX		
+1041|IL	Carol Stream, IL		
+1042|IL	Bridgeview, IL		
+1043|ID	Idaho Falls, ID		
+1046|FL	South Bay, FL		
+1047|FL	Jacksonville, FL		
+1049|VA	Suffolk, VA		
+1051|LA	Iowa, LA		
+1054|TX	Buda, TX		
+1056|OH	Edon, OH		
+1057|TX	Pasadena, TX		
+1058|FL	Waldo, FL		
+1059|TX	Schulenburg, TX		
+1061|MO	Springfield, MO		
+1063|NC	Marion, NC		
+1068|SC	Jedburg, SC		
+1070|NM	Santa Rosa, NM		
+1071|CA	Tulare, CA		
+1080|CA	Patterson, CA		
+1082|SC	Charleston, SC		
+1083|TX	Stratford, TX		
+1086|IN	Marion, IN		
+1092|IA	Cedar Rapids, IA		
+1094|CA	Tehachapi, CA		
+1096|FL	Cocoa, FL		
+1098|NJ	Newark, NJ		
+1103|WA	Arlington, WA		
+1105|LA	Bunkie, LA		
+1106|NM	Albuquerque, NM		
+1110|CO	Colorado Springs, CO		
+1114|IL	Bensenville, IL		
+1117|IN	Rochester, IN		
+1118|NM	Clovis, NM		
+1126|MO	Kansas City, MO		
+1128|FL	Bartow, FL		
+1132|CA	Brawley, CA		
+1134|TX	Orla, TX		
+1135|TX	Falfurrias, TX		
+1140|TX	Rhome, TX		
+1143|TX	Odessa, TX		
+1145|TX	Midland, TX		
+1146|TX	Pecos, TX		
+1147|TX	Kermit, TX		
+1161|TX	Odessa, TX		
+1163|PA	Emlenton, PA		
+1165|NM	Jal, NM		
+1169|WA	Olympia, WA		
+1171|NV	Mesquite, NV		
+1173|WA	Tacoma, WA		
+1174|IL	Marshall, IL		
+1175|AZ	Mayer, AZ		
+1177|CA	Fontana, CA		
+1178|AZ	Tucson, AZ		
+1179|AZ	Nogales, AZ		
+1180|AZ	Tonopah, AZ		
+1181|IL	Rochelle, IL		
+1185|AZ	Desert Springs, AZ		
+1192|AZ	Wittmann, AZ		
+1193|AZ	Wikieup, AZ		
+1194|AZ	Phoenix, AZ		
+1195|WA	Ellensburg, WA		
+1205|TX	Monahans, TX		
+1206|TX	Kermit, TX		
+1207|TX	Monahans, TX		
+1208|AZ	Yuma, AZ		
+1209|TX	Midland, TX		
+1211|TX	Andrews, TX		
+1212|AZ	Salome, AZ		
+1219|IL	Vandalia, IL		
+1225|IL	Mascoutah, IL		
+1227|TX	Pyote, TX		
+1234|AZ	Willow Beach, AZ		
+1235|AZ	Tacna, AZ		
+1243|AZ	Gila Bend, AZ		
+1247|TX	New Boston, TX		
+1260|CA	Bakersfield, CA		
+1267|CA	Palmdale, CA		
+1269|AZ	San Simon, AZ		
+1272|CA	Yermo, CA		
+1281|AZ	Page, AZ		
+1283|TX	Corsicana, TX		
+1284|TX	Nash, TX		
+1287|TX	Van, TX		
+1288|KY	Beaver Dam, KY		
+1289|TX	Denison, TX		
+1290|TX	Red Oak, TX		
+1292|TX	Paige, TX		
+1297|TX	Italy, TX		
+1299|TX	Henrietta, TX		
+1303|TX	Palestine, TX		
+1315|NJ	Cinnaminson, NJ		
+1317|NY	Fultonville, NY		
+1319|TX	Alvarado, TX		
+1323|MO	Faucett, MO		
+1326|CA	Colton, CA		
+1327|MA	Chicopee, MA		
+1328|CA	Rialto, CA		
+1336|LA	Kentwood, LA		
+1346|KS	Newton, KS		
+1347|LA	Pearl River, LA		
+1354|TX	Odessa, TX		
+1360|KY	Mayfield, KY		
+1370|TX	Laredo, TX		
+1372|AZ	Yucca, AZ		
+1380|TX	Mercedes, TX		
+1381|TX	Hearne, TX		
+1382|CO	Hudson, CO		
+1383|AR	Jonesboro, AR		
+1384|CA	Mecca, CA		
+1385|CA	Bloomington, CA		
+1390|GA	Ellabell, GA		
+1399|AZ	Litchfield Park, AZ		
+1412|IL	Zion, IL		
+1433|AZ	Chandler, AZ		
+1436|AL	Tuskegee, AL		
+1439|LA	Port Allen, LA		
+1440|AR	Bald Knob, AR		
+1446|FL	Ponce De Leon, FL		
+1450|TX	Eagle Pass, TX		
+1452|AL	Winfield, AL		
+1458|CA	Perris, CA		
+1460|IL	Barry, IL		
+1461|WI	Cedar Grove, WI		
+1467|IL	Chicago Heights, IL		
+1470|TX	Carthage, TX		
+1476|IL	Belvidere, IL		
+1478|WI	Kaukauna, WI		
+1483|IL	Kankakee, IL		
+1490|TN	Mason, TN		
+1494|IL	Itasca, IL		
+1495|IL	Midlothian, IL		
+1505|IL	Atlanta, IL		
+1549|AL	Lincoln, AL		
+1550|AL	Cullman, AL		
+1577|TN	Pioneer, TN		
+4556|FL	Wildwood, FL		
+4557|GA	Carnesville, GA		
+4558|GA	Calhoun, GA		
+4559|GA	Villa Rica, GA		
+4560|GA	Jackson, GA		
+4561|GA	Valdosta, GA		
+4562|GA	Kingsland, GA		
+4563|PA	Harrisburg, PA		
+4566|SC	Blacksburg, SC		
+4568|SC	Graniteville, SC		
+4569|SC	Hardeeville, SC		
+4576|SC	Saint George, SC		
+4578|SC	Winnsboro, SC		
+4579|SC	Saint Matthews, SC		
+4580|SC	Prosperity, SC		
+4581|SC	Bishopville, SC		
+4584|SC	Latta, SC		
+4596|TN	White Pine, TN		
+4597|TN	Gordonsville, TN		
+4598|TN	Niota, TN		
+4599|TN	Monteagle, TN		
+4619|VA	Wytheville, VA		
+4622|VA	South Boston, VA		
+4642|VA	Toms Brook, VA		
+4649|VA	Raphine, VA		
+4651|VA	Skippers, VA		
+4656|VA	Disputanta, VA		
+6955|NC	Haw River, NC		
+6978|NC	Candor, NC		
+6990|NC	Kenly, NC		
+6996|NC	Warsaw, NC		
+7971|NC	Conover, NC		
+7976|NC	Troutman, NC		
+7983|NC	Salisbury, NC		
+7996|NC	Monroe, NC		

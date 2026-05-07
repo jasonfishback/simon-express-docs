@@ -24,14 +24,14 @@ export default function HomePage() {
         flexShrink: 0,
       }} />
 
-      {/* Header — light, frosted, sticky look */}
+      {/* Header — light, frosted, tighter padding for mobile */}
       <header style={{
         background: 'rgba(255,255,255,0.78)',
         borderBottom: '1px solid rgba(11,11,12,0.06)',
         backdropFilter: 'saturate(180%) blur(20px)',
         WebkitBackdropFilter: 'saturate(180%) blur(20px)',
-        paddingTop: 'calc(20px + env(safe-area-inset-top))',
-        paddingBottom: 18,
+        paddingTop: 'calc(14px + env(safe-area-inset-top))',
+        paddingBottom: 14,
         paddingLeft: 16,
         paddingRight: 16,
         textAlign: 'center',
@@ -43,14 +43,14 @@ export default function HomePage() {
           background: 'linear-gradient(180deg, #FFFFFF 0%, var(--paper) 100%)',
           border: '1px solid var(--line)',
           borderRadius: 'var(--r-lg)',
-          padding: '14px 24px',
+          padding: '10px 20px',
           boxShadow: 'var(--sh-sm)',
         }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo.png"
             alt="Simon Express"
-            style={{ maxWidth: 240, width: '100%', display: 'block', margin: '0 auto' }}
+            style={{ maxWidth: 220, width: '100%', display: 'block', margin: '0 auto' }}
           />
         </div>
         <p style={{
@@ -59,35 +59,24 @@ export default function HomePage() {
           letterSpacing: '0.20em',
           color: 'var(--mute)',
           textTransform: 'uppercase',
-          marginTop: 12,
+          marginTop: 8,
           fontWeight: 600,
         }}>
           Driver Portal
         </p>
       </header>
 
-      {/* Main — full-width frosted glass cards */}
+      {/* Main — full-width frosted glass cards, top-aligned for mobile */}
       <main style={{
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'stretch',
-        justifyContent: 'center',
-        padding: '32px 16px',
-        gap: 16,
+        justifyContent: 'flex-start',
+        padding: '20px 16px',
+        gap: 14,
         width: '100%',
       }}>
-        <p
-          className="sx-kicker"
-          style={{
-            color: 'var(--mute)',
-            marginBottom: 4,
-            textAlign: 'center',
-          }}
-        >
-          Select a section
-        </p>
-
         {/* Document Submission card — frosted glass, red accent */}
         <button
           onClick={() => router.push('/docs')}

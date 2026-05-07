@@ -21,10 +21,10 @@ const TAG_LABELS: Record<Tag, string> = {
 }
 
 const TAG_COLORS: Record<Tag, { bg: string; color: string; activeBg: string; activeColor: string; border: string }> = {
-  bol:     { bg: '#E6F1FB', color: '#0C447C', activeBg: '#185FA5', activeColor: '#fff', border: '#B5D4F4' },
-  lumper:  { bg: '#EAF3DE', color: '#3B6D11', activeBg: '#3B6D11', activeColor: '#fff', border: '#C0DD97' },
-  receipt: { bg: '#FFF3CD', color: '#7B5800', activeBg: '#CC8800', activeColor: '#fff', border: '#FFD97D' },
-  other:   { bg: '#F1EFE8', color: '#5F5E5A', activeBg: '#5F5E5A', activeColor: '#fff', border: '#D3D1C7' },
+  bol:     { bg: 'rgba(37,99,235,0.08)',  color: '#1D4ED8', activeBg: '#1D4ED8', activeColor: '#fff', border: 'rgba(37,99,235,0.22)' },
+  lumper:  { bg: 'rgba(22,163,74,0.10)',  color: '#15803D', activeBg: '#15803D', activeColor: '#fff', border: 'rgba(22,163,74,0.22)' },
+  receipt: { bg: 'rgba(202,138,4,0.10)',  color: '#A16207', activeBg: '#A16207', activeColor: '#fff', border: 'rgba(202,138,4,0.24)' },
+  other:   { bg: 'rgba(107,111,118,0.10)', color: 'var(--steel)', activeBg: 'var(--ink)', activeColor: '#fff', border: 'rgba(107,111,118,0.22)' },
 }
 
 const GROUP_LABELS: Record<Tag, string> = {
@@ -369,14 +369,11 @@ export default function Home() {
 
   return (
     <div className={styles.app}>
-      <header className={styles.header}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.png" alt="Simon Express" className={styles.logo} />
-        <p className={styles.tagline}>Document Submission Portal</p>
-        <a href="/" style={{ display: 'inline-block', marginTop: 8, fontSize: 11, color: '#888', textDecoration: 'none', letterSpacing: 1, fontFamily: 'Barlow Condensed, sans-serif', textTransform: 'uppercase' }}>
-          ← Back to Portal
-        </a>
-      </header>
+      <div className={styles.topBar}>
+        <a href="/" className={styles.backPill}>← Back</a>
+      </div>
+      <h1 className={styles.screenTitle}>Document Submission</h1>
+      <p className={styles.screenSubtitle}>Submit BOL, lumper receipts &amp; paperwork</p>
 
       {screen === 'form' && (
         <main className={styles.formView}>
@@ -401,7 +398,7 @@ export default function Home() {
             >
               <input ref={fileInputRef} type="file" accept="image/*,application/pdf" multiple onChange={handleFileChange} style={{ display: 'none' }} />
               <div className={styles.uploadIcon}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#CC0000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D71920" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
                   <circle cx="12" cy="13" r="4"/>
                 </svg>
@@ -464,10 +461,10 @@ export default function Home() {
 
             {docs.length > 0 && (
               <div className={styles.summaryBar}>
-                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#185FA5' }}/>{counts.bol} BOL</span>
-                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#3B6D11' }}/>{counts.lumper} Lumper</span>
-                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#CC8800' }}/>{counts.receipt} Receipt</span>
-                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#888780' }}/>{counts.other} Other</span>
+                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#1D4ED8' }}/>{counts.bol} BOL</span>
+                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#15803D' }}/>{counts.lumper} Lumper</span>
+                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: '#A16207' }}/>{counts.receipt} Receipt</span>
+                <span className={styles.summaryChip}><span className={styles.dot} style={{ background: 'var(--steel)' }}/>{counts.other} Other</span>
                 <span className={styles.summaryTotal}>{docs.length} total</span>
                 {(() => {
                   const bytes = estimatePayloadBytes(docs)
@@ -509,8 +506,8 @@ export default function Home() {
 
       {screen === 'success' && (
         <div className={styles.statusScreen}>
-          <div className={styles.statusIcon} style={{ background: '#EAF3DE' }}>
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#3B6D11" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className={styles.statusIcon} style={{ background: 'rgba(22,163,74,0.10)', border: '1px solid rgba(22,163,74,0.20)' }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <polyline points="20 6 9 17 4 12"/>
             </svg>
           </div>
@@ -522,8 +519,8 @@ export default function Home() {
 
       {screen === 'error' && (
         <div className={styles.statusScreen}>
-          <div className={styles.statusIcon} style={{ background: '#FCEBEB' }}>
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#A32D2D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className={styles.statusIcon} style={{ background: 'rgba(215,25,32,0.08)', border: '1px solid rgba(215,25,32,0.20)' }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#D71920" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
             </svg>
           </div>
