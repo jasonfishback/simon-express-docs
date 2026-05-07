@@ -1572,26 +1572,74 @@ export default function FuelPage() {
   }, [optimizedPlan, origin, destination, routeInfo, routeExitInfo, routeSummary, originLatLng, destLatLng, routeAlerts, viaPoints, extraMilesFromVias, isRoundTrip])
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--paper)', fontFamily: 'var(--body)' }}>
-      {/* Header — Simon Express styled */}
-      <header style={{
-        background: 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)',
-        borderBottom: '4px solid var(--red)',
-        padding: '18px 16px 16px',
-        textAlign: 'center',
-        boxShadow: 'var(--sh-md)',
+    <div style={{
+      minHeight: '100dvh',
+      background: 'var(--paper)',
+      fontFamily: 'var(--body)',
+      width: '100%',
+      maxWidth: '100vw',
+      paddingBottom: 'calc(28px + env(safe-area-inset-bottom))',
+    }}>
+      {/* Top bar — just a back pill, no header */}
+      <div style={{
+        padding: 'calc(12px + env(safe-area-inset-top)) 16px 8px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
       }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo.png" alt="Simon Express" style={{ maxWidth: 260, width: '100%', display: 'block', margin: '0 auto' }} />
-        <p style={{ fontFamily: 'var(--display)', fontSize: 11, letterSpacing: '0.18em', color: 'var(--mute-2)', textTransform: 'uppercase', marginTop: 8, fontWeight: 500 }}>
-          Daily Fuel Prices · Pilot Travel Centers
-        </p>
-        <a href="/" style={{ display: 'inline-block', marginTop: 8, fontSize: 11, color: 'var(--mute-3)', textDecoration: 'none', letterSpacing: '0.14em', fontFamily: 'var(--display)', textTransform: 'uppercase', fontWeight: 500 }}>
-          ← Back to Portal
+        <a
+          href="/"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '9px 16px',
+            background: 'rgba(255,255,255,0.78)',
+            border: '1px solid rgba(11,11,12,0.06)',
+            borderRadius: 'var(--r-pill)',
+            color: 'var(--ink)',
+            fontFamily: 'var(--display)',
+            fontSize: 12,
+            fontWeight: 600,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            textDecoration: 'none',
+            boxShadow: 'var(--sh-sm)',
+            backdropFilter: 'saturate(180%) blur(20px)',
+            WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+            cursor: 'pointer',
+            transition: 'all var(--t-fast) var(--ease)',
+            WebkitTapHighlightColor: 'transparent',
+          }}
+        >
+          ← Back
         </a>
-      </header>
+      </div>
+      <h1 style={{
+        fontFamily: 'var(--display)',
+        fontSize: 22,
+        fontWeight: 600,
+        color: 'var(--ink)',
+        textTransform: 'uppercase',
+        letterSpacing: '-0.01em',
+        padding: '4px 16px 0',
+        lineHeight: 1,
+      }}>
+        Fuel Optimization
+      </h1>
+      <p style={{
+        fontFamily: 'var(--display)',
+        fontSize: 11,
+        fontWeight: 600,
+        color: 'var(--mute)',
+        letterSpacing: '0.18em',
+        textTransform: 'uppercase',
+        padding: '6px 16px 12px',
+      }}>
+        Daily prices · Pilot Travel Centers
+      </p>
 
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '20px 16px 40px' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '8px 16px 40px' }}>
 
         {/* Date */}
         {data && (
