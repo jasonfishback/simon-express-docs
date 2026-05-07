@@ -8,6 +8,7 @@ import {
   markMessageRead,
   moveMessage,
 } from '@/lib/graph'
+import { enrichStations } from '@/lib/fuel/enrich'
 
 const DEFAULT_FROM = 'DailyPricing@pilotflyingj.com'
 const DEFAULT_SUBJECT = 'Pricing - Pilot Flying J'
@@ -148,12 +149,23 @@ export async function GET(req: NextRequest) {
           throw new Error('Parser returned 0 stations — file format may have changed')
         }
 
+        // Enrich pricing rows with cached lat/lng/address/zip/phone.
+        // Without this, /api/fuel-upload would write rows missing coords,
+        // which makes the route planner return zero matches on every search.
+        const { stations: enriched, cacheHits, cacheMisses } = enrichStations(stations)
+        detail.cacheHits = cacheHits
+        detail.cacheMisses = cacheMisses.length
+        if (cacheMisses.length > 0) {
+          detail.cacheMissKeys = cacheMisses
+          console.warn(`Fuel ingest: ${cacheMisses.length} stations missing from coord cache:`, cacheMisses.join(', '))
+        }
+
         // POST to /api/fuel-upload as JSON (the format it expects)
         const updatedAt = new Date().toISOString().split('T')[0]
         const uploadRes = await fetch(fuelUploadUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ apiKey: fuelApiKey, stations, updatedAt }),
+          body: JSON.stringify({ apiKey: fuelApiKey, stations: enriched, updatedAt }),
         })
         if (!uploadRes.ok) {
           const errText = await uploadRes.text()
