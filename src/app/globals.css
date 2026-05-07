@@ -71,6 +71,15 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   line-height: 1.5;
+  /* Mobile: prevent horizontal scroll, respect safe areas */
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  /* iOS safe area on notched devices */
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 input, button, textarea, select { font-family: inherit; }

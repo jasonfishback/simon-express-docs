@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Simon Express — Driver Portal',
   description: 'Document submission and fuel pricing for Simon Express drivers.',
   manifest: '/manifest.json',
-  themeColor: '#111111',
+  themeColor: '#0B0B0C',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
