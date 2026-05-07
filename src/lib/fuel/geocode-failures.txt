@@ -1,0 +1,5 @@
+site|state	city, state	accuracy	type
+385|MO	Collins, MO	accuracy=1	type=intersection
+684|ND	Beach, ND	accuracy=1	type=intersection
+912|NE	Wood River, NE	accuracy=1	type=intersection
+1009|CA	Jurupa Valley, CA	accuracy=0.45	type=street_center
