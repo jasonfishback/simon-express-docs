@@ -1,21 +1,79 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500&display=swap');
+/* ============================================================
+   SIMON EXPRESS — fuel app stylesheet
+   Aligned with simonexpress.com main site design system:
+   editorial/industrial, Simon Red accent, frosted glass cards,
+   layered shadows, polished interactions.
+   ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* --- TOKENS --- */
+:root {
+  --red:        #D71920;
+  --red-dark:   #A30D13;
+  --red-deep:   #6E090D;
+  --black:      #0B0B0C;
+  --ink:        #17181A;
+  --ink-2:      #1C1D20;
+  --steel:      #2A2C30;
+  --mute:       #6B6F76;
+  --mute-2:     #9FA2A8;
+  --mute-3:     #C9CBD0;
+  --line:       #E6E7EA;
+  --line-2:     #EFEFEC;
+  --paper:      #FAFAF7;
+  --paper-warm: #F2F2EE;
+  --white:      #FFFFFF;
+  --gold:       #F5C33B;
+  --green:      #16A34A;
+  --green-deep: #166534;
+  --amber-bg:   #FFF8EE;
+  --amber-line: #F3D9A4;
+
+  --display: 'Oswald', 'Helvetica Neue', Arial, sans-serif;
+  --body:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Radii — iOS-style soft corners */
+  --r-xs:    6px;
+  --r-sm:    10px;
+  --r-md:    14px;
+  --r-lg:    20px;
+  --r-xl:    28px;
+  --r-pill:  999px;
+
+  /* Shadows — soft, layered depth */
+  --sh-sm:   0 1px 2px rgba(11,11,12,0.04), 0 1px 3px rgba(11,11,12,0.06);
+  --sh-md:   0 2px 4px rgba(11,11,12,0.04), 0 6px 14px rgba(11,11,12,0.08);
+  --sh-lg:   0 4px 8px rgba(11,11,12,0.05), 0 14px 28px rgba(11,11,12,0.12);
+  --sh-xl:   0 8px 16px rgba(11,11,12,0.06), 0 24px 56px rgba(11,11,12,0.18);
+  --sh-red:  0 4px 12px rgba(215,25,32,0.22), 0 10px 28px rgba(215,25,32,0.28);
+  --sh-red-hover: 0 6px 18px rgba(215,25,32,0.32), 0 14px 36px rgba(215,25,32,0.36);
+  --sh-inset: inset 0 1px 0 rgba(255,255,255,0.10);
+
+  /* Motion */
+  --ease:     cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast:   120ms;
+  --t-base:   220ms;
+  --t-slow:   420ms;
+}
+
+/* --- RESET & BASE --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
-  background: #f0f0f0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
-body {
-  font-family: 'Barlow', sans-serif;
-}
-
-input, button, textarea, select {
-  font-family: inherit;
-}
-
+input, button, textarea, select { font-family: inherit; }
 
 /* Mobile app-like behavior */
 html, body {
@@ -27,7 +85,6 @@ html, body {
   touch-action: manipulation;
 }
 
-/* Prevent long-press selection on buttons/UI elements */
 button, .no-select {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -36,14 +93,259 @@ button, .no-select {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Allow text selection in inputs and content areas */
 input, textarea, p, span, h1, h2, h3, h4, h5, h6 {
   -webkit-user-select: auto;
   user-select: auto;
 }
 
-/* Prevent iOS from zooming in when focusing inputs (fonts under 16px trigger zoom) */
+/* Prevent iOS zoom on input focus */
 input[type="text"], input[type="email"], input[type="tel"], input[type="number"],
 input[type="search"], input[type="password"], input[type="url"], textarea, select {
   font-size: 16px;
+}
+
+/* --- SHARED COMPONENT CLASSES — used by the fuel page --- */
+
+/* Frosted glass card — primary surface for major sections */
+.sx-card {
+  background: rgba(255,255,255,0.78);
+  border: 1px solid rgba(11,11,12,0.06);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-md);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  padding: 18px 20px;
+}
+
+.sx-card-solid {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--sh-md);
+  padding: 18px 20px;
+}
+
+.sx-card-flat {
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+}
+
+/* Eyebrow / kicker label — small uppercase text above section titles */
+.sx-kicker {
+  font-family: var(--display);
+  color: var(--mute);
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Display heading — Oswald, used for big numbers / stats */
+.sx-display {
+  font-family: var(--display);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* Mono number — for prices, codes, etc */
+.sx-mono {
+  font-family: var(--mono);
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Primary red gradient button */
+.sx-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  font-family: var(--display); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 14px;
+  padding: 14px 24px;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  background: linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%);
+  color: #fff;
+  box-shadow: var(--sh-red), var(--sh-inset);
+  cursor: pointer;
+  transition:
+    transform var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease),
+    background-position var(--t-base) var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.sx-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-red-hover), var(--sh-inset);
+}
+.sx-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--sh-red), var(--sh-inset);
+}
+.sx-btn:disabled {
+  background: var(--mute-3);
+  box-shadow: var(--sh-sm);
+  cursor: not-allowed;
+  color: var(--mute);
+}
+
+.sx-btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--display); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 13px;
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  background: var(--white);
+  color: var(--ink);
+  box-shadow: var(--sh-sm);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease);
+}
+.sx-btn-ghost:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+  box-shadow: var(--sh-md);
+  transform: translateY(-1px);
+}
+
+.sx-btn-soft {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  font-family: var(--display); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 12px;
+  padding: 8px 14px;
+  border: 1px dashed var(--mute-3);
+  border-radius: var(--r-pill);
+  background: var(--paper-warm);
+  color: var(--ink);
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease);
+}
+.sx-btn-soft:hover:not(:disabled) {
+  border-color: var(--red);
+  color: var(--red);
+  background: var(--white);
+}
+
+/* Form input — tidy, modern */
+.sx-input {
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  width: 100%;
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.sx-input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(215,25,32,0.12);
+}
+.sx-input::placeholder { color: var(--mute-2); }
+
+/* Pill / badge — small label */
+.sx-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--display);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  background: var(--paper-warm);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.sx-pill-red {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red-dark);
+}
+.sx-pill-green {
+  background: rgba(22,163,74,0.10);
+  color: var(--green-deep);
+  border-color: rgba(22,163,74,0.28);
+}
+.sx-pill-amber {
+  background: var(--amber-bg);
+  color: #92400E;
+  border-color: var(--amber-line);
+}
+
+/* Toggle — checkbox-styled pill, used for the round trip flag */
+.sx-toggle {
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  padding: 8px 14px;
+  border-radius: var(--r-pill);
+  background: var(--paper-warm);
+  border: 1px solid var(--line);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--mute);
+  transition: all var(--t-fast) var(--ease);
+  user-select: none;
+}
+.sx-toggle:hover { border-color: var(--mute-3); }
+.sx-toggle.is-on {
+  background: rgba(22,163,74,0.08);
+  border-color: rgba(22,163,74,0.28);
+  color: var(--green-deep);
+  font-weight: 600;
+}
+.sx-toggle input[type="checkbox"] {
+  width: 14px; height: 14px;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+/* Stat tile — small KPI card */
+.sx-stat {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 10px 14px;
+  box-shadow: var(--sh-sm);
+}
+.sx-stat-label {
+  font-family: var(--display);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 4px;
+}
+.sx-stat-value {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+/* Animations */
+@keyframes sx-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.sx-fade-in { animation: sx-fade-in var(--t-base) var(--ease-out); }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: var(--r-xs);
 }

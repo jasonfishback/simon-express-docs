@@ -251,14 +251,14 @@ export default function FuelPage() {
               if (!suggestions?.length || !ref.current) return
               sugBox = document.createElement('div')
               const rect = ref.current.getBoundingClientRect()
-              sugBox.style.cssText = `position:fixed;z-index:9999;background:#fff;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:${ref.current.offsetWidth}px;left:${rect.left}px;top:${rect.bottom + 2}px;overflow:hidden`
+              sugBox.style.cssText = `position:fixed;z-index:9999;background:#fff;border:1px solid #E6E7EA;border-radius:14px;box-shadow:0 4px 8px rgba(11,11,12,0.05),0 14px 28px rgba(11,11,12,0.12);width:${ref.current.offsetWidth}px;left:${rect.left}px;top:${rect.bottom + 4}px;overflow:hidden`
               document.body.appendChild(sugBox)
               suggestions.slice(0, 6).forEach((s: any) => {
                 const pp = s.placePrediction
                 const item = document.createElement('div')
                 item.textContent = pp.text.toString()
-                item.style.cssText = 'padding:10px 14px;cursor:pointer;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5'
-                item.onmouseenter = () => { item.style.background = '#f0f0f0' }
+                item.style.cssText = 'padding:11px 14px;cursor:pointer;font-size:14px;color:#17181A;border-bottom:1px solid #EFEFEC;font-family:Inter,sans-serif;transition:background 120ms'
+                item.onmouseenter = () => { item.style.background = '#F2F2EE' }
                 item.onmouseleave = () => { item.style.background = '#fff' }
                 item.onmousedown = async (e) => {
                   e.preventDefault()
@@ -287,14 +287,14 @@ export default function FuelPage() {
                 if (!cities.length) return
                 sugBox = document.createElement('div')
                 const rect = ref.current.getBoundingClientRect()
-                sugBox.style.cssText = `position:fixed;z-index:9999;background:#fff;border:1px solid #ddd;border-radius:6px;box-shadow:0 4px 12px rgba(0,0,0,0.15);width:${ref.current.offsetWidth}px;left:${rect.left}px;top:${rect.bottom + 2}px;overflow:hidden`
+                sugBox.style.cssText = `position:fixed;z-index:9999;background:#fff;border:1px solid #E6E7EA;border-radius:14px;box-shadow:0 4px 8px rgba(11,11,12,0.05),0 14px 28px rgba(11,11,12,0.12);width:${ref.current.offsetWidth}px;left:${rect.left}px;top:${rect.bottom + 4}px;overflow:hidden`
                 document.body.appendChild(sugBox)
                 cities.forEach((r: any) => {
                   const text = r.formatted_address
                   const item = document.createElement('div')
                   item.textContent = text
-                  item.style.cssText = 'padding:10px 14px;cursor:pointer;font-size:14px;color:#333;border-bottom:1px solid #f5f5f5'
-                  item.onmouseenter = () => { item.style.background = '#f0f0f0' }
+                  item.style.cssText = 'padding:11px 14px;cursor:pointer;font-size:14px;color:#17181A;border-bottom:1px solid #EFEFEC;font-family:Inter,sans-serif;transition:background 120ms'
+                  item.onmouseenter = () => { item.style.background = '#F2F2EE' }
                   item.onmouseleave = () => { item.style.background = '#fff' }
                   item.onmousedown = (e) => {
                     e.preventDefault()
@@ -621,7 +621,7 @@ export default function FuelPage() {
     const directionsRenderer = new G.maps.DirectionsRenderer({
       map: googleMap.current,
       suppressMarkers: false,
-      polylineOptions: { strokeColor: '#CC0000', strokeWeight: 4, strokeOpacity: 0.8 },
+      polylineOptions: { strokeColor: '#D71920', strokeWeight: 4, strokeOpacity: 0.85 },
     })
     routeRendererRef.current = directionsRenderer
 
@@ -1572,26 +1572,37 @@ export default function FuelPage() {
   }, [optimizedPlan, origin, destination, routeInfo, routeExitInfo, routeSummary, originLatLng, destLatLng, routeAlerts, viaPoints, extraMilesFromVias, isRoundTrip])
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f0f0f0', fontFamily: '-apple-system, sans-serif' }}>
-      {/* Header */}
-      <header style={{ background: '#111', borderBottom: '4px solid #CC0000', padding: '14px 16px 12px', textAlign: 'center' }}>
+    <div style={{ minHeight: '100vh', background: 'var(--paper)', fontFamily: 'var(--body)' }}>
+      {/* Header — Simon Express styled */}
+      <header style={{
+        background: 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)',
+        borderBottom: '4px solid var(--red)',
+        padding: '18px 16px 16px',
+        textAlign: 'center',
+        boxShadow: 'var(--sh-md)',
+      }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo.png" alt="Simon Express" style={{ maxWidth: 260, width: '100%', display: 'block', margin: '0 auto' }} />
-        <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 11, letterSpacing: 2, color: '#888', textTransform: 'uppercase', marginTop: 6 }}>
+        <p style={{ fontFamily: 'var(--display)', fontSize: 11, letterSpacing: '0.18em', color: 'var(--mute-2)', textTransform: 'uppercase', marginTop: 8, fontWeight: 500 }}>
           Daily Fuel Prices · Pilot Travel Centers
         </p>
-        <a href="/" style={{ display: 'inline-block', marginTop: 8, fontSize: 11, color: '#888', textDecoration: 'none', letterSpacing: 1, fontFamily: 'Barlow Condensed, sans-serif', textTransform: 'uppercase' }}>
+        <a href="/" style={{ display: 'inline-block', marginTop: 8, fontSize: 11, color: 'var(--mute-3)', textDecoration: 'none', letterSpacing: '0.14em', fontFamily: 'var(--display)', textTransform: 'uppercase', fontWeight: 500 }}>
           ← Back to Portal
         </a>
       </header>
 
-      <div style={{ maxWidth: 900, margin: '0 auto', padding: '14px 14px 40px' }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '20px 16px 40px' }}>
 
         {/* Date */}
         {data && (
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <p style={{ fontSize: 12, color: '#888' }}>Effective: <strong style={{ color: '#111' }}>{data.updatedAt}</strong></p>
-            <p style={{ fontSize: 11, color: '#aaa' }}>US Direct Bill — Pilot Travel Centers</p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 }}>
+            <p style={{ fontSize: 12, color: 'var(--mute)', fontFamily: 'var(--body)' }}>
+              <span className="sx-kicker" style={{ marginRight: 6 }}>Effective</span>
+              <strong style={{ color: 'var(--ink)', fontFamily: 'var(--mono)', fontWeight: 600 }}>{data.updatedAt}</strong>
+            </p>
+            <p style={{ fontSize: 11, color: 'var(--mute-2)', fontFamily: 'var(--display)', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>
+              US Direct Bill — Pilot Travel Centers
+            </p>
           </div>
         )}
 
@@ -1602,13 +1613,18 @@ export default function FuelPage() {
           if (isNaN(ageHours) || ageHours <= 48) return null
           return (
             <div style={{
-              padding: '10px 14px', background: '#fef2f2', border: '1px solid #fecaca',
-              borderRadius: 8, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 10,
+              padding: '12px 16px',
+              background: '#FEF2F2',
+              border: '1px solid #FECACA',
+              borderRadius: 'var(--r-md)',
+              marginBottom: 14,
+              display: 'flex', alignItems: 'center', gap: 12,
+              boxShadow: 'var(--sh-sm)',
             }}>
-              <span style={{ fontSize: 18 }}>⚠️</span>
+              <span style={{ fontSize: 20 }}>⚠️</span>
               <div style={{ flex: 1 }}>
-                <p style={{ fontSize: 13, color: '#991b1b', fontWeight: 700 }}>Fuel data may be stale</p>
-                <p style={{ fontSize: 11, color: '#7f1d1d' }}>
+                <p className="sx-display" style={{ fontSize: 14, color: '#991B1B' }}>Fuel data may be stale</p>
+                <p style={{ fontSize: 12, color: '#7F1D1D', fontFamily: 'var(--mono)', marginTop: 2 }}>
                   Prices were last updated {Math.round(ageHours)} hours ago.
                 </p>
               </div>
@@ -1617,15 +1633,20 @@ export default function FuelPage() {
         })()}
 
         {/* Mode tabs */}
-        <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
           {(['route', 'all'] as const).map(mode => (
             <button key={mode} onClick={() => { setSelectedStation(null); if (mode === 'all') clearRoute(); else setViewMode('route') }} style={{
-              fontFamily: 'Barlow Condensed, sans-serif', fontSize: 14, fontWeight: 700, letterSpacing: 0.5,
-              padding: '8px 18px', borderRadius: 8, border: '2px solid',
-              background: viewMode === mode ? '#111' : '#fff',
-              color: viewMode === mode ? '#fff' : '#555',
-              borderColor: viewMode === mode ? '#111' : '#ddd',
+              fontFamily: 'var(--display)', fontSize: 13, fontWeight: 600, letterSpacing: '0.08em',
+              padding: '10px 20px', borderRadius: 'var(--r-pill)',
+              border: '1px solid',
+              background: viewMode === mode
+                ? 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)'
+                : 'var(--white)',
+              color: viewMode === mode ? '#fff' : 'var(--ink)',
+              borderColor: viewMode === mode ? 'var(--ink)' : 'var(--line)',
+              boxShadow: viewMode === mode ? 'var(--sh-md)' : 'var(--sh-sm)',
               cursor: 'pointer', textTransform: 'uppercase',
+              transition: 'all var(--t-base) var(--ease)',
             }}>
               {mode === 'all' ? '🗺 All Stations' : '🛣 Route Planner'}
             </button>
@@ -1634,11 +1655,11 @@ export default function FuelPage() {
 
         {/* Route planner panel */}
         {viewMode === 'route' && (
-          <div style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 10, padding: '14px 16px', marginBottom: 12 }}>
-            <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 13, fontWeight: 700, letterSpacing: 1.5, color: '#999', textTransform: 'uppercase', marginBottom: 10 }}>
+          <div className="sx-card sx-fade-in" style={{ marginBottom: 14 }}>
+            <p className="sx-kicker" style={{ marginBottom: 12 }}>
               Plan Your Route
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <input
                 ref={originRef}
                 defaultValue={origin}
@@ -1646,10 +1667,10 @@ export default function FuelPage() {
                 onKeyDown={e => e.key === 'Enter' && planRoute()}
                 placeholder="Origin — start typing a city..."
                 autoComplete="off"
-                style={{ fontSize: 14, padding: '9px 12px', borderRadius: 7, border: '1px solid #ddd', background: '#f8f8f8', color: '#111', width: '100%', boxSizing: 'border-box' as const }}
+                className="sx-input"
               />
               {viaPoints.map((vp, idx) => (
-                <div key={idx} style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                <div key={idx} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                   <input
                     ref={el => { viaRefs.current[idx] = el }}
                     value={vp}
@@ -1661,23 +1682,34 @@ export default function FuelPage() {
                     onKeyDown={e => e.key === 'Enter' && planRoute()}
                     placeholder={`Stop ${idx + 1} — start typing a city...`}
                     autoComplete="off"
+                    className="sx-input"
                     style={{
-                      flex: 1, fontSize: 14, padding: '9px 12px', borderRadius: 7,
-                      border: '1px solid #ffd27a', background: '#fffaf0', color: '#111',
-                      boxSizing: 'border-box' as const,
+                      flex: 1,
+                      borderColor: 'var(--amber-line)',
+                      background: 'var(--amber-bg)',
                     }}
                   />
                   <button
                     onClick={() => {
                       setViaPoints(viaPoints.filter((_, i) => i !== idx))
-                      // Clean up ref arrays
                       viaRefs.current.splice(idx, 1)
                       viaAutoRefs.current.splice(idx, 1)
                     }}
                     style={{
-                      padding: '9px 12px', background: '#fff', border: '1px solid #ddd',
-                      borderRadius: 7, cursor: 'pointer', fontSize: 14, color: '#888',
+                      padding: '10px 14px', background: 'var(--white)',
+                      border: '1px solid var(--line)',
+                      borderRadius: 'var(--r-md)',
+                      cursor: 'pointer', fontSize: 16, color: 'var(--mute)',
                       lineHeight: 1, fontWeight: 700,
+                      transition: 'all var(--t-fast) var(--ease)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.color = 'var(--red)'
+                      e.currentTarget.style.borderColor = 'var(--red)'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.color = 'var(--mute)'
+                      e.currentTarget.style.borderColor = 'var(--line)'
                     }}
                     title="Remove this stop"
                   >×</button>
@@ -1686,13 +1718,11 @@ export default function FuelPage() {
               <div style={{ display: 'flex', gap: 8, alignSelf: 'flex-start', flexWrap: 'wrap' }}>
                 <button
                   onClick={() => setViaPoints([...viaPoints, ''])}
+                  className="sx-btn-soft"
                   style={{
-                    padding: '6px 12px',
-                    background: '#fffaf0', border: '1px dashed #ffd27a',
-                    borderRadius: 7, cursor: 'pointer',
-                    fontSize: 12, color: '#996515', fontWeight: 700,
-                    fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5,
-                    textTransform: 'uppercase',
+                    borderColor: 'var(--amber-line)',
+                    background: 'var(--amber-bg)',
+                    color: '#92400E',
                   }}
                 >
                   + Add stop
@@ -1771,36 +1801,31 @@ export default function FuelPage() {
                     )
                   }}
                   style={{
-                    padding: '6px 12px',
-                    background: '#eff6ff', border: '1px dashed #93c5fd',
-                    borderRadius: 7, cursor: 'pointer',
-                    fontSize: 12, color: '#1e40af', fontWeight: 700,
-                    fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5,
+                    padding: '8px 14px',
+                    background: 'rgba(37,99,235,0.08)',
+                    border: '1px dashed rgba(37,99,235,0.40)',
+                    borderRadius: 'var(--r-pill)',
+                    cursor: 'pointer',
+                    fontSize: 12, color: '#1E40AF', fontWeight: 600,
+                    fontFamily: 'var(--display)', letterSpacing: '0.06em',
                     textTransform: 'uppercase',
+                    transition: 'all var(--t-fast) var(--ease)',
                   }}
                 >
                   📍 Use my location
                 </button>
               </div>
-              {viaPoints.some(v => v.trim()) && (
-                <label style={{
-                  display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-                  padding: '6px 10px', background: isRoundTrip ? '#f0fdf4' : '#f8f8f8',
-                  border: `1px solid ${isRoundTrip ? '#86efac' : '#e5e5e5'}`,
-                  borderRadius: 7, alignSelf: 'flex-start',
-                  transition: 'all 0.15s ease',
-                }}>
-                  <input
-                    type="checkbox"
-                    checked={isRoundTrip}
-                    onChange={e => setIsRoundTrip(e.target.checked)}
-                    style={{ width: 14, height: 14, cursor: 'pointer', accentColor: '#16a34a' }}
-                  />
-                  <span style={{ fontSize: 12, color: isRoundTrip ? '#166534' : '#666', fontWeight: 600 }}>
-                    🔄 Part of a round trip
-                  </span>
-                </label>
-              )}
+              {/* Round trip toggle — always visible (was hidden behind viaPoints check)
+                  Used as a labeling concession: when checked + viaPoints exist, the
+                  "X mi added" label is suppressed because those miles are intentional. */}
+              <label className={`sx-toggle ${isRoundTrip ? 'is-on' : ''}`} style={{ alignSelf: 'flex-start' }}>
+                <input
+                  type="checkbox"
+                  checked={isRoundTrip}
+                  onChange={e => setIsRoundTrip(e.target.checked)}
+                />
+                <span>🔄 Part of a round trip</span>
+              </label>
               <input
                 ref={destRef}
                 defaultValue={destination}
@@ -1808,40 +1833,38 @@ export default function FuelPage() {
                 onKeyDown={e => e.key === 'Enter' && planRoute()}
                 placeholder="Destination — start typing a city..."
                 autoComplete="off"
-                style={{ fontSize: 14, padding: '9px 12px', borderRadius: 7, border: '1px solid #ddd', background: '#f8f8f8', color: '#111', width: '100%', boxSizing: 'border-box' as const }}
+                className="sx-input"
               />
-              {/* Fuel level slider — placed above the button so drivers set their fuel level before planning */}
-              <div style={{ padding: 12, background: '#f8f8f8', borderRadius: 8 }}>
-                <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: '#555', textTransform: 'uppercase', marginBottom: 8 }}>
+              {/* Fuel level slider */}
+              <div className="sx-card-flat">
+                <p className="sx-kicker" style={{ marginBottom: 10, color: 'var(--steel)' }}>
                   ⛽ Current Fuel Level
                 </p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                  <div style={{ flex: 1, position: 'relative', paddingTop: 28 }}>
+                  <div style={{ flex: 1, position: 'relative', paddingTop: 30 }}>
                     {/* Floating bubble that tracks the thumb position */}
                     <div
                       style={{
                         position: 'absolute',
-                        // Position calculation: the thumb's center moves between 8px (at value=0) and (width - 8px) at value=max.
-                        // We approximate by using a percentage with a small inset adjustment so the bubble stays centered on the thumb.
                         left: `calc(${(currentFuelEighths / 8) * 100}% - ${(currentFuelEighths / 8) * 28 - 14}px)`,
                         top: 0,
                         transform: 'translateX(-50%)',
-                        background: '#CC0000',
+                        background: 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)',
                         color: '#fff',
-                        fontFamily: 'Barlow Condensed, sans-serif',
-                        fontSize: 13,
-                        fontWeight: 800,
-                        letterSpacing: 0.5,
-                        padding: '3px 10px',
-                        borderRadius: 6,
+                        fontFamily: 'var(--display)',
+                        fontSize: 12,
+                        fontWeight: 600,
+                        letterSpacing: '0.06em',
+                        padding: '4px 10px',
+                        borderRadius: 'var(--r-pill)',
                         whiteSpace: 'nowrap',
                         pointerEvents: 'none',
-                        boxShadow: '0 2px 6px rgba(204,0,0,0.3)',
+                        boxShadow: 'var(--sh-red)',
+                        textTransform: 'uppercase',
                         transition: 'left 0.05s ease-out',
                       }}
                     >
                       {['Empty','1/8','1/4','3/8','1/2','5/8','3/4','7/8','Full'][currentFuelEighths]}
-                      {/* Triangle pointer below the bubble */}
                       <div style={{
                         position: 'absolute',
                         bottom: -5,
@@ -1851,60 +1874,55 @@ export default function FuelPage() {
                         height: 0,
                         borderLeft: '5px solid transparent',
                         borderRight: '5px solid transparent',
-                        borderTop: '5px solid #CC0000',
+                        borderTop: '5px solid var(--red)',
                       }} />
                     </div>
                     <input
                       type="range" min={0} max={8} step={1} value={currentFuelEighths}
                       onChange={e => setCurrentFuelEighths(Number(e.target.value))}
-                      style={{ width: '100%', display: 'block' }}
+                      style={{ width: '100%', display: 'block', accentColor: 'var(--red)' }}
                     />
                   </div>
                 </div>
-                <p style={{ fontSize: 11, color: '#888' }}>
-                  ≈ {((currentFuelEighths/8) * 240).toFixed(0)} gallons in 240-gal tank · 6 mpg · min 1/4 tank reserve
+                <p style={{ fontSize: 11, color: 'var(--mute)', fontFamily: 'var(--mono)' }}>
+                  ≈ {((currentFuelEighths/8) * 240).toFixed(0)} gal in 240-gal tank · 6 mpg · min 1/4 tank reserve
                 </p>
               </div>
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 10 }}>
                 <button
                   onClick={planRoute}
                   disabled={routeLoading}
-                  style={{
-                    flex: 1, fontFamily: 'Barlow Condensed, sans-serif', fontSize: 16, fontWeight: 800,
-                    padding: '10px', background: routeLoading ? '#ccc' : '#CC0000', color: '#fff',
-                    border: 'none', borderRadius: 8, cursor: routeLoading ? 'not-allowed' : 'pointer',
-                    letterSpacing: 1, textTransform: 'uppercase',
-                  }}
+                  className="sx-btn"
+                  style={{ flex: 1, padding: '16px 24px', fontSize: 15 }}
                 >
                   {routeLoading ? 'Finding Route...' : '🛣 Find Fuel Stops'}
                 </button>
                 {routeStations.length > 0 && (
-                  <button onClick={clearRoute} style={{
-                    padding: '10px 16px', background: '#f4f4f4', border: '1px solid #ddd',
-                    borderRadius: 8, cursor: 'pointer', fontSize: 13, color: '#555',
-                  }}>Clear</button>
+                  <button onClick={clearRoute} className="sx-btn-ghost">
+                    Clear
+                  </button>
                 )}
               </div>
             </div>
-            {routeError && <p style={{ fontSize: 12, color: '#CC0000', marginTop: 8 }}>{routeError}</p>}
+            {routeError && <p style={{ fontSize: 13, color: 'var(--red)', marginTop: 10, fontWeight: 500 }}>{routeError}</p>}
             {routeInfo && (
               <>
-                <div style={{ marginTop: 10, padding: '8px 12px', background: '#f8f8f8', borderRadius: 7, display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-                  <span style={{ fontSize: 12, color: '#555' }}>📍 {routeInfo.distance}</span>
-                  <span style={{ fontSize: 12, color: '#555' }}>⏱ {routeInfo.duration}</span>
+                <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                  <span className="sx-pill"><span style={{ fontFamily: 'var(--mono)' }}>📍 {routeInfo.distance}</span></span>
+                  <span className="sx-pill"><span style={{ fontFamily: 'var(--mono)' }}>⏱ {routeInfo.duration}</span></span>
                   {optimizedPlan && optimizedPlan.length > 0 && (
-                    <span style={{ fontSize: 12, color: '#CC0000', fontWeight: 600 }}>
-                      ⛽ Optimized to fuel at {optimizedPlan.length} {optimizedPlan.length === 1 ? 'stop' : 'stops'} for maximum savings
+                    <span className="sx-pill sx-pill-red">
+                      ⛽ Optimized — {optimizedPlan.length} {optimizedPlan.length === 1 ? 'stop' : 'stops'} for max savings
                     </span>
                   )}
                   {extraMilesFromVias > 0 && !isRoundTrip && (
-                    <span style={{ fontSize: 12, color: '#92400e', fontWeight: 600, background: '#fef3c7', padding: '2px 8px', borderRadius: 4 }}>
-                      ➕ {Math.round(extraMilesFromVias)} mi added by {viaPoints.filter(v => v.trim()).length} {viaPoints.filter(v => v.trim()).length === 1 ? 'extra stop' : 'extra stops'}
+                    <span className="sx-pill sx-pill-amber">
+                      ➕ {Math.round(extraMilesFromVias)} mi added by {viaPoints.filter(v => v.trim()).length} extra {viaPoints.filter(v => v.trim()).length === 1 ? 'stop' : 'stops'}
                     </span>
                   )}
                   {viaPoints.some(v => v.trim()) && isRoundTrip && (
-                    <span style={{ fontSize: 12, color: '#166534', fontWeight: 600, background: '#f0fdf4', padding: '2px 8px', borderRadius: 4 }}>
-                      🔄 Route includes stops for round trip
+                    <span className="sx-pill sx-pill-green">
+                      🔄 Round trip — extra stops are intentional
                     </span>
                   )}
                 </div>
@@ -1916,51 +1934,81 @@ export default function FuelPage() {
                   const estCost = fuelNeeded * avgPrice
                   const estSavings = fuelNeeded * avgSavings
                   return (
-                    <div style={{ marginTop: 8, padding: '10px 12px', background: '#fff8ee', border: '1px solid #f3d9a4', borderRadius: 7 }}>
-                      <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 1, color: '#996515', textTransform: 'uppercase', marginBottom: 4 }}>
+                    <div style={{
+                      marginTop: 10, padding: '12px 14px',
+                      background: 'var(--amber-bg)',
+                      border: '1px solid var(--amber-line)',
+                      borderRadius: 'var(--r-md)',
+                    }}>
+                      <p className="sx-kicker" style={{ color: '#92400E', marginBottom: 6 }}>
                         Route Estimate (at 6 mpg)
                       </p>
-                      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', fontSize: 12 }}>
-                        <span style={{ color: '#555' }}>Fuel needed: <strong>{fuelNeeded.toFixed(0)} gal</strong></span>
-                        <span style={{ color: '#555' }}>Est. cost: <strong style={{ color: '#CC0000' }}>${estCost.toFixed(2)}</strong></span>
-                        <span style={{ color: '#555' }}>Est. savings: <strong style={{ color: '#16a34a' }}>${estSavings.toFixed(2)}</strong></span>
+                      <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', fontSize: 13 }}>
+                        <span style={{ color: 'var(--steel)' }}>
+                          Fuel needed: <strong className="sx-mono" style={{ color: 'var(--ink)' }}>{fuelNeeded.toFixed(0)} gal</strong>
+                        </span>
+                        <span style={{ color: 'var(--steel)' }}>
+                          Est. cost: <strong className="sx-mono" style={{ color: 'var(--red)' }}>${estCost.toFixed(2)}</strong>
+                        </span>
+                        <span style={{ color: 'var(--steel)' }}>
+                          Est. savings: <strong className="sx-mono" style={{ color: 'var(--green)' }}>${estSavings.toFixed(2)}</strong>
+                        </span>
                       </div>
                     </div>
                   )
                 })()}
                 {/* Fuel optimizer plan — uses fuel level from slider above */}
                 {showOptimizer && (
-                <div style={{ marginTop: 10 }}>
+                <div style={{ marginTop: 12 }}>
                     {optimizedPlan !== null && (
                       <div>
                         {optimizerError ? (
-                          <div style={{ padding: 14, background: '#fef2f2', border: '2px solid #CC0000', borderRadius: 8 }}>
-                            <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 14, fontWeight: 800, color: '#CC0000', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 6 }}>
+                          <div style={{
+                            padding: 16,
+                            background: '#FEF2F2',
+                            border: '2px solid var(--red)',
+                            borderRadius: 'var(--r-lg)',
+                            boxShadow: 'var(--sh-md)',
+                          }}>
+                            <p style={{ fontFamily: 'var(--display)', fontSize: 14, fontWeight: 600, color: 'var(--red)', letterSpacing: '0.10em', textTransform: 'uppercase', marginBottom: 8 }}>
                               ⚠️ Fuel Alert
                             </p>
-                            <p style={{ fontSize: 14, color: '#7f1d1d', fontWeight: 500, lineHeight: 1.4 }}>
+                            <p style={{ fontSize: 14, color: '#7F1D1D', fontWeight: 500, lineHeight: 1.5 }}>
                               {optimizerError}
                             </p>
-                            <p style={{ fontSize: 12, color: '#b91c1c', marginTop: 8, lineHeight: 1.4 }}>
+                            <p style={{ fontSize: 12, color: '#B91C1C', marginTop: 8, lineHeight: 1.5 }}>
                               Consider stopping at a non-Pilot station to refuel, or checking if the corridor radius should be increased.
                             </p>
                           </div>
                         ) : optimizedPlan.length === 0 ? (
-                          <div style={{ padding: 12, background: '#eaf3de', border: '1px solid #c0dd97', borderRadius: 8 }}>
-                            <p style={{ fontSize: 14, color: '#27500a', fontWeight: 600 }}>✓ No fuel stops needed — you have enough to complete the route.</p>
+                          <div style={{
+                            padding: 14,
+                            background: 'rgba(22,163,74,0.08)',
+                            border: '1px solid rgba(22,163,74,0.28)',
+                            borderRadius: 'var(--r-md)',
+                          }}>
+                            <p style={{ fontSize: 14, color: 'var(--green-deep)', fontWeight: 500 }}>
+                              ✓ No fuel stops needed — you have enough to complete the route.
+                            </p>
                           </div>
                         ) : (
                           <>
                             {/* Plan header */}
-                            <div style={{ background: '#CC0000', borderRadius: '8px 8px 0 0', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
+                            <div style={{
+                              background: 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)',
+                              borderRadius: 'var(--r-lg) var(--r-lg) 0 0',
+                              padding: '12px 16px',
+                              display: 'flex', alignItems: 'center', gap: 10,
+                              boxShadow: 'var(--sh-red)',
+                            }}>
                               <span style={{ fontSize: 18 }}>⛽</span>
-                              <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 15, fontWeight: 800, color: '#fff', letterSpacing: 1.5, textTransform: 'uppercase' }}>
+                              <p style={{ fontFamily: 'var(--display)', fontSize: 14, fontWeight: 600, color: '#fff', letterSpacing: '0.10em', textTransform: 'uppercase' }}>
                                 Your Fuel Plan · {optimizedPlan.length} {optimizedPlan.length === 1 ? 'Stop' : 'Stops'}
                               </p>
                             </div>
 
                             {/* Stops list */}
-                            <div style={{ background: '#fff', border: '1px solid #ddd', borderTop: 'none' }}>
+                            <div style={{ background: 'var(--white)', border: '1px solid var(--line)', borderTop: 'none', borderRadius: '0 0 var(--r-lg) var(--r-lg)' }}>
                               {optimizedPlan.map((stop, i) => {
                                 // Skip stops the driver has chosen to bypass (because they want to fuel at the next, cheaper stop instead)
                                 if (skippedStopIndices.has(i)) return null
@@ -1984,79 +2032,80 @@ export default function FuelPage() {
                                 }
                                 return (
                                   <div key={i} style={{
-                                    borderBottom: i < optimizedPlan.length - 1 ? '1px solid #f0f0f0' : 'none',
+                                    borderBottom: i < optimizedPlan.length - 1 ? '1px solid var(--line)' : 'none',
                                   }}>
                                     <div onClick={() => {
                                       setExpandedPlanStop(isExpanded ? null : i)
                                       if (googleMap.current) googleMap.current.panTo({ lat: stop.station.lat, lng: stop.station.lng })
                                     }} style={{
-                                      padding: '14px',
+                                      padding: '14px 16px',
                                       cursor: 'pointer',
-                                      background: isExpanded ? '#fafafa' : 'transparent',
-                                      transition: 'background 0.15s ease',
+                                      background: isExpanded ? 'var(--paper-warm)' : 'transparent',
+                                      transition: 'background var(--t-fast) var(--ease)',
                                     }}>
                                     <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
                                       {/* Stop number circle */}
                                       <div style={{
-                                        width: 32, height: 32, borderRadius: '50%', background: '#CC0000', color: '#fff',
+                                        width: 34, height: 34, borderRadius: '50%',
+                                        background: 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)',
+                                        color: '#fff',
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        fontFamily: 'Barlow Condensed, sans-serif', fontSize: 16, fontWeight: 800, flexShrink: 0,
+                                        fontFamily: 'var(--display)', fontSize: 16, fontWeight: 600, flexShrink: 0,
+                                        boxShadow: 'var(--sh-red)',
                                       }}>{i + 1}</div>
                                       <div style={{ flex: 1, minWidth: 0 }}>
-                                        <p style={{ fontSize: 15, fontWeight: 700, color: '#111', marginBottom: 2 }}>
+                                        <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)', marginBottom: 3, fontFamily: 'var(--body)' }}>
                                           {stop.station.description || 'Pilot Travel Center'} — {stop.station.city}, {stop.station.state}
                                         </p>
                                         {stop.station.address && (
-                                          <p style={{ fontSize: 12, color: '#888', marginBottom: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                          <p style={{ fontSize: 12, color: 'var(--mute)', marginBottom: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                             {stop.station.address}{stop.station.zip ? ` · ${stop.station.zip}` : ''}
                                           </p>
                                         )}
                                         {stop.station.interstate && (
-                                          <p style={{ fontSize: 12, color: '#9a3412', fontWeight: 600, marginBottom: 6 }}>
+                                          <p style={{ fontSize: 12, color: '#9A3412', fontWeight: 600, marginBottom: 6, fontFamily: 'var(--display)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
                                             🛣 {stop.station.interstate}
                                           </p>
                                         )}
-                                        <div style={{ display: 'flex', gap: 12, fontSize: 12, color: '#666', marginBottom: 8, flexWrap: 'wrap' }}>
-                                          <span>📍 Mile {stop.milesFromOrigin.toFixed(0)}</span>
-                                          <span>💵 ${stop.station.yourPrice.toFixed(2)}/gal</span>
+                                        <div style={{ display: 'flex', gap: 14, fontSize: 12, color: 'var(--mute)', marginBottom: 10, flexWrap: 'wrap' }}>
+                                          <span className="sx-mono">📍 Mile {stop.milesFromOrigin.toFixed(0)}</span>
+                                          <span className="sx-mono">💵 ${stop.station.yourPrice.toFixed(2)}/gal</span>
                                           {stop.detour !== undefined && stop.detour > 2 && (
-                                            <span style={{ color: stop.detour > 20 ? '#996515' : '#666' }}>
+                                            <span className="sx-mono" style={{ color: stop.detour > 20 ? '#92400E' : 'var(--mute)' }}>
                                               ↪ {stop.detour.toFixed(0)} mi detour
                                             </span>
                                           )}
-                                          <span style={{ color: '#888', fontSize: 11, marginLeft: 'auto' }}>
-                                            {isExpanded ? '▲ less' : '▼ maps'}
+                                          <span style={{ color: 'var(--mute-2)', fontSize: 11, marginLeft: 'auto', fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                                            {isExpanded ? '▲ Less' : '▼ Maps'}
                                           </span>
                                         </div>
                                         <div style={{
-                                          background: displayAsFull ? '#fff5f5' : '#fffbea',
-                                          border: '2px solid ' + (displayAsFull ? '#CC0000' : '#f3d9a4'),
-                                          borderRadius: 8, padding: '8px 12px',
+                                          background: displayAsFull ? '#FFF5F5' : 'var(--amber-bg)',
+                                          border: '2px solid ' + (displayAsFull ? 'var(--red)' : 'var(--amber-line)'),
+                                          borderRadius: 'var(--r-md)', padding: '10px 14px',
                                         }}>
                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <div>
-                                              <p style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#888', fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 700 }}>
-                                                Fill Amount
-                                              </p>
-                                              <p style={{ fontSize: 22, fontWeight: 800, color: '#CC0000', fontFamily: 'Barlow Condensed, sans-serif' }}>
+                                              <p className="sx-kicker" style={{ marginBottom: 2 }}>Fill Amount</p>
+                                              <p className="sx-display" style={{ fontSize: 22, color: 'var(--red)' }}>
                                                 {displayAsFull ? (
                                                   <>
                                                     Fill to Full
-                                                    <span style={{ fontSize: 11, background: '#CC0000', color: '#fff', padding: '2px 8px', borderRadius: 4, marginLeft: 8, verticalAlign: 'middle' }}>FULL</span>
+                                                    <span className="sx-pill sx-pill-red" style={{ marginLeft: 8, verticalAlign: 'middle', fontSize: 10 }}>FULL</span>
                                                   </>
                                                 ) : (
                                                   <>
                                                     {stop.gallons} <span style={{ fontSize: 14 }}>gal</span>
-                                                    <span style={{ fontSize: 11, background: '#f3d9a4', color: '#996515', padding: '2px 8px', borderRadius: 4, marginLeft: 8, verticalAlign: 'middle' }}>PARTIAL · {fillPct}%</span>
+                                                    <span className="sx-pill sx-pill-amber" style={{ marginLeft: 8, verticalAlign: 'middle', fontSize: 10 }}>Partial · {fillPct}%</span>
                                                   </>
                                                 )}
                                               </p>
                                             </div>
                                             <div style={{ textAlign: 'right' }}>
-                                              <p style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#888', fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 700 }}>Approximate Cost</p>
-                                              <p style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>${stop.cost.toFixed(2)}</p>
-                                              <p style={{ fontSize: 10, color: '#999' }}>{stop.gallons} gal × ${stop.station.yourPrice.toFixed(3)}</p>
-                                              <p style={{ fontSize: 11, color: '#16a34a', fontWeight: 600, marginTop: 2 }}>Save ${stop.savings.toFixed(2)}</p>
+                                              <p className="sx-kicker" style={{ marginBottom: 2 }}>Approximate Cost</p>
+                                              <p className="sx-mono" style={{ fontSize: 18, fontWeight: 600, color: 'var(--ink)' }}>${stop.cost.toFixed(2)}</p>
+                                              <p className="sx-mono" style={{ fontSize: 10, color: 'var(--mute-2)' }}>{stop.gallons} gal × ${stop.station.yourPrice.toFixed(3)}</p>
+                                              <p className="sx-mono" style={{ fontSize: 11, color: 'var(--green)', fontWeight: 600, marginTop: 2 }}>Save ${stop.savings.toFixed(2)}</p>
                                             </div>
                                           </div>
                                         </div>
@@ -2065,12 +2114,13 @@ export default function FuelPage() {
                                     </div>
                                     {/* Expanded section with maps links */}
                                     {isExpanded && (
-                                      <div style={{ padding: '0 14px 14px 58px', background: '#fafafa', borderTop: '1px solid #eee' }}>
-                                        <div style={{ display: 'flex', gap: 8, paddingTop: 10 }}>
+                                      <div style={{ padding: '0 16px 14px 62px', background: 'var(--paper-warm)', borderTop: '1px solid var(--line)' }}>
+                                        <div style={{ display: 'flex', gap: 10, paddingTop: 12 }}>
                                           <a
                                             href={appleMapsUrl(stop.station)}
                                             onClick={e => e.stopPropagation()}
-                                            style={{ flex: 1, textAlign: 'center', padding: '10px', background: '#fff', border: '1px solid #ddd', borderRadius: 7, textDecoration: 'none', fontSize: 13, fontWeight: 600, color: '#111', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5 }}
+                                            className="sx-btn-ghost"
+                                            style={{ flex: 1, textDecoration: 'none' }}
                                           >
                                             🍎 Open in Apple Maps
                                           </a>
@@ -2079,7 +2129,8 @@ export default function FuelPage() {
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             onClick={e => e.stopPropagation()}
-                                            style={{ flex: 1, textAlign: 'center', padding: '10px', background: '#fff', border: '1px solid #ddd', borderRadius: 7, textDecoration: 'none', fontSize: 13, fontWeight: 600, color: '#111', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5 }}
+                                            className="sx-btn-ghost"
+                                            style={{ flex: 1, textDecoration: 'none' }}
                                           >
                                             🗺 Open in Google Maps
                                           </a>
@@ -2092,32 +2143,31 @@ export default function FuelPage() {
                                       <div
                                         onClick={(e) => {
                                           e.stopPropagation()
-                                          // Toggle: skip this stop and "promote" the next one
                                           setSkippedStopIndices(prev => {
                                             const next = new Set(prev)
                                             next.add(i)
                                             return next
                                           })
-                                          // Make sure the next stop is expanded so the driver immediately sees it
                                           setExpandedPlanStop(nextCheaperStopIndex)
                                         }}
                                         style={{
-                                          margin: '0 14px 12px 14px',
-                                          padding: '10px 12px',
-                                          background: '#f0fdf4',
-                                          border: '1px solid #86efac',
-                                          borderRadius: 7,
+                                          margin: '0 16px 12px 16px',
+                                          padding: '12px 14px',
+                                          background: 'rgba(22,163,74,0.08)',
+                                          border: '1px solid rgba(22,163,74,0.28)',
+                                          borderRadius: 'var(--r-md)',
                                           cursor: 'pointer',
-                                          fontSize: 12,
-                                          color: '#166534',
-                                          lineHeight: 1.4,
+                                          fontSize: 13,
+                                          color: 'var(--green-deep)',
+                                          lineHeight: 1.5,
+                                          transition: 'all var(--t-fast) var(--ease)',
                                         }}
                                       >
-                                        <p style={{ fontWeight: 700, marginBottom: 4 }}>
-                                          💡 Save ${(stop.station.yourPrice - nextCheaperStop.station.yourPrice).toFixed(2)}/gal
+                                        <p style={{ fontWeight: 600, marginBottom: 4, fontFamily: 'var(--display)', letterSpacing: '0.04em', textTransform: 'uppercase', fontSize: 12 }}>
+                                          💡 Save <span className="sx-mono">${(stop.station.yourPrice - nextCheaperStop.station.yourPrice).toFixed(2)}/gal</span>
                                         </p>
                                         <p>
-                                          If you have enough fuel to reach <strong>{nextCheaperStop.station.city}, {nextCheaperStop.station.state}</strong> (${nextCheaperStop.station.yourPrice.toFixed(2)}/gal), fuel there instead. If not, fill in {stop.station.city} as planned.
+                                          If you have enough fuel to reach <strong>{nextCheaperStop.station.city}, {nextCheaperStop.station.state}</strong> <span className="sx-mono">(${nextCheaperStop.station.yourPrice.toFixed(2)}/gal)</span>, fuel there instead. If not, fill in {stop.station.city} as planned.
                                         </p>
                                         <p style={{ marginTop: 6, fontWeight: 600, textDecoration: 'underline' }}>
                                           Tap to switch this stop to {nextCheaperStop.station.city} →
@@ -2130,25 +2180,32 @@ export default function FuelPage() {
                             </div>
 
                             {/* Summary box */}
-                            <div style={{ background: '#111', borderRadius: '0 0 8px 8px', padding: '14px 16px', color: '#fff' }}>
-                              <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 11, fontWeight: 700, letterSpacing: 2, color: '#999', textTransform: 'uppercase', marginBottom: 8 }}>
+                            <div style={{
+                              background: 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)',
+                              borderRadius: 'var(--r-lg)',
+                              padding: '16px 18px',
+                              color: '#fff',
+                              marginTop: 12,
+                              boxShadow: 'var(--sh-md)',
+                            }}>
+                              <p className="sx-kicker" style={{ color: 'var(--mute-2)', marginBottom: 10 }}>
                                 Route Summary
                               </p>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                                <span style={{ fontSize: 13, color: '#aaa' }}>Total fuel to buy:</span>
-                                <span style={{ fontSize: 15, fontWeight: 700, color: '#fff' }}>
-                                  {optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.gallons, 0)} gallons
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, alignItems: 'baseline' }}>
+                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>Total fuel to buy:</span>
+                                <span className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>
+                                  {optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.gallons, 0)} gal
                                 </span>
                               </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                                <span style={{ fontSize: 13, color: '#aaa' }}>Total cost:</span>
-                                <span style={{ fontSize: 18, fontWeight: 800, color: '#fff', fontFamily: 'Barlow Condensed, sans-serif' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, alignItems: 'baseline' }}>
+                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>Total cost:</span>
+                                <span className="sx-mono" style={{ fontSize: 18, fontWeight: 600, color: '#fff' }}>
                                   ${optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.cost, 0).toFixed(2)}
                                 </span>
                               </div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 8, borderTop: '1px solid #333' }}>
-                                <span style={{ fontSize: 13, color: '#aaa' }}>💰 Total savings vs retail:</span>
-                                <span style={{ fontSize: 20, fontWeight: 800, color: '#16a34a', fontFamily: 'Barlow Condensed, sans-serif' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.10)', alignItems: 'baseline' }}>
+                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>💰 Total savings vs retail:</span>
+                                <span className="sx-display sx-mono" style={{ fontSize: 22, color: 'var(--green)' }}>
                                   ${optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.savings, 0).toFixed(2)}
                                 </span>
                               </div>
@@ -2159,13 +2216,18 @@ export default function FuelPage() {
                               <button
                                 onClick={() => { setShowEmailModal(true); setEmailStatus(''); }}
                                 style={{
-                                  width: '100%', padding: '14px',
-                                  background: '#2563eb', color: '#fff', border: 'none', borderRadius: 10,
-                                  cursor: 'pointer', fontSize: 15, fontWeight: 700,
-                                  fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 1.5, textTransform: 'uppercase',
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                                  boxShadow: '0 2px 8px rgba(37,99,235,0.3)',
+                                  width: '100%', padding: '14px 24px',
+                                  background: 'linear-gradient(180deg, #3B82F6 0%, #2563EB 60%, #1D4ED8 100%)',
+                                  color: '#fff', border: 'none',
+                                  borderRadius: 'var(--r-pill)',
+                                  cursor: 'pointer', fontSize: 14, fontWeight: 600,
+                                  fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+                                  boxShadow: '0 4px 12px rgba(37,99,235,0.32), 0 10px 28px rgba(37,99,235,0.20), inset 0 1px 0 rgba(255,255,255,0.10)',
+                                  transition: 'all var(--t-base) var(--ease)',
                                 }}
+                                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)' }}
+                                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}
                               >
                                 ✉ Email This Plan
                               </button>
@@ -2183,16 +2245,16 @@ export default function FuelPage() {
 
         {/* Stats bar */}
         {filteredStations.length > 0 && (
-          <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
             {[
               { label: 'Stations', value: filteredStations.length.toString() },
               { label: 'Avg Your Price', value: `$${avgPrice.toFixed(2)}` },
               { label: 'Avg Savings', value: `$${avgSavings.toFixed(2)}` },
               { label: 'Best Price', value: bestStation ? `$${bestStation.yourPrice.toFixed(2)} — ${bestStation.city}, ${bestStation.state}` : '' },
             ].map(s => (
-              <div key={s.label} style={{ background: '#fff', border: '1px solid #e5e5e5', borderRadius: 8, padding: '8px 12px', flex: 1, minWidth: 120 }}>
-                <p style={{ fontSize: 10, color: '#999', textTransform: 'uppercase', letterSpacing: 1, marginBottom: 2 }}>{s.label}</p>
-                <p style={{ fontSize: 13, fontWeight: 600, color: '#111' }}>{s.value}</p>
+              <div key={s.label} className="sx-stat" style={{ flex: 1, minWidth: 130 }}>
+                <p className="sx-stat-label">{s.label}</p>
+                <p className="sx-stat-value sx-mono">{s.value}</p>
               </div>
             ))}
           </div>
@@ -2201,11 +2263,12 @@ export default function FuelPage() {
         {/* Controls (only in all mode) */}
         {viewMode === 'all' && (
           <>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 10, flexWrap: 'wrap', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 12, flexWrap: 'wrap', alignItems: 'center' }}>
               <select
                 value={selectedState}
                 onChange={e => { setSelectedState(e.target.value); setSelectedStation(null) }}
-                style={{ fontSize: 14, padding: '8px 12px', borderRadius: 8, border: '1px solid #ddd', background: '#fff', color: '#111', flex: 1, minWidth: 140 }}
+                className="sx-input"
+                style={{ flex: 1, minWidth: 160 }}
               >
                 <option value="ALL">All States ({data?.stations.length ?? 0} stations)</option>
                 {STATE_LIST.map(s => {
@@ -2216,149 +2279,164 @@ export default function FuelPage() {
               <button
                 onClick={findClosest}
                 disabled={locating}
-                style={{
-                  fontFamily: 'Barlow Condensed, sans-serif', fontSize: 15, fontWeight: 700,
-                  padding: '9px 16px', background: locating ? '#ccc' : '#CC0000', color: '#fff',
-                  border: 'none', borderRadius: 8, cursor: locating ? 'not-allowed' : 'pointer',
-                  display: 'flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
-                }}
+                className="sx-btn"
+                style={{ padding: '12px 20px', fontSize: 13 }}
               >
                 📍 {locating ? 'Locating...' : 'Find Nearest'}
               </button>
             </div>
 
             {/* Manual location search */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 10, alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 12, alignItems: 'center' }}>
               <input
                 ref={locSearchRef}
                 value={locationSearch}
                 onChange={e => setLocationSearch(e.target.value)}
                 placeholder="🔎 Search by city, state (e.g. Amarillo, TX)"
                 autoComplete="off"
-                style={{
-                  flex: 1, fontSize: 14, padding: '9px 12px', borderRadius: 7,
-                  border: '1px solid #ddd', background: '#f8f8f8', color: '#111',
-                  boxSizing: 'border-box' as const, minWidth: 0,
-                }}
+                className="sx-input"
+                style={{ flex: 1, minWidth: 0 }}
               />
               {searchCenter && (
                 <button
                   onClick={() => { setLocationSearch(''); setSearchCenter(null) }}
-                  style={{
-                    padding: '9px 12px', background: '#fff', border: '1px solid #ddd',
-                    borderRadius: 7, cursor: 'pointer', fontSize: 12, color: '#666', fontWeight: 600,
-                  }}
+                  className="sx-btn-ghost"
                 >Clear</button>
               )}
             </div>
 
             {/* Location search result banner — best price among nearest 5 */}
             {searchCenter && bestOfNearest5 && stationsWithDistance && stationsWithDistance.length > 0 && (
-              <div style={{ background: '#f0fdf4', border: '1px solid #86efac', borderRadius: 10, padding: '12px 14px', marginBottom: 10 }}>
-                <p style={{ fontSize: 10, color: '#16a34a', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 6 }}>
+              <div style={{
+                background: 'rgba(22,163,74,0.08)',
+                border: '1px solid rgba(22,163,74,0.28)',
+                borderRadius: 'var(--r-lg)',
+                padding: '14px 16px',
+                marginBottom: 12,
+                boxShadow: 'var(--sh-sm)',
+              }}>
+                <p className="sx-kicker" style={{ color: 'var(--green-deep)', marginBottom: 8 }}>
                   🏆 Best Price Near {searchCenter.label}
                 </p>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
-                    <p style={{ fontSize: 14, fontWeight: 700, color: '#111' }}>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>
                       {bestOfNearest5.description || 'Pilot Travel Center'} — {bestOfNearest5.city}, {bestOfNearest5.state}
                     </p>
-                    <p style={{ fontSize: 11, color: '#15803d', marginTop: 2 }}>
+                    <p style={{ fontSize: 11, color: '#15803D', marginTop: 2, fontFamily: 'var(--mono)' }}>
                       {(bestOfNearest5 as any).distanceMi.toFixed(1)} mi away · cheapest of {Math.min(5, stationsWithDistance.length)} nearest
                     </p>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <p style={{ fontSize: 20, fontWeight: 800, color: '#16a34a', lineHeight: 1 }}>
+                    <p className="sx-mono sx-display" style={{ fontSize: 22, color: 'var(--green)', lineHeight: 1 }}>
                       ${bestOfNearest5.yourPrice.toFixed(2)}
                     </p>
-                    <p style={{ fontSize: 10, color: '#15803d' }}>per gallon</p>
+                    <p className="sx-kicker" style={{ color: '#15803D' }}>per gallon</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setSelectedStation(bestOfNearest5)}
                   style={{
-                    marginTop: 8, padding: '6px 12px', background: '#16a34a', color: '#fff',
-                    border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 12, fontWeight: 700,
-                    fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5, width: '100%',
+                    marginTop: 10, padding: '10px 16px',
+                    background: 'linear-gradient(180deg, #22C55E 0%, var(--green) 60%, #15803D 100%)',
+                    color: '#fff', border: 'none',
+                    borderRadius: 'var(--r-pill)',
+                    cursor: 'pointer', fontSize: 13, fontWeight: 600,
+                    fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                    width: '100%',
+                    boxShadow: '0 4px 12px rgba(22,163,74,0.30), inset 0 1px 0 rgba(255,255,255,0.10)',
+                    transition: 'all var(--t-base) var(--ease)',
                   }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}
                 >View Details</button>
               </div>
             )}
           </>
         )}
 
-        {locError && <p style={{ fontSize: 12, color: '#CC0000', marginBottom: 8 }}>{locError}</p>}
+        {locError && <p style={{ fontSize: 13, color: 'var(--red)', marginBottom: 10, fontWeight: 500 }}>{locError}</p>}
 
         {/* Closest station callout */}
         {closestStation && viewMode === 'all' && (
-          <div style={{ background: '#EAF3DE', border: '1px solid #C0DD97', borderRadius: 10, padding: '10px 14px', marginBottom: 10 }}>
-            <p style={{ fontSize: 13, fontWeight: 600, color: '#27500A' }}>
-              Nearest: {'Pilot Travel Center'} — {closestStation.city}, {closestStation.state}
+          <div style={{
+            background: 'rgba(22,163,74,0.08)',
+            border: '1px solid rgba(22,163,74,0.28)',
+            borderRadius: 'var(--r-md)',
+            padding: '12px 14px', marginBottom: 12,
+          }}>
+            <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--green-deep)' }}>
+              Nearest: Pilot Travel Center — {closestStation.city}, {closestStation.state}
             </p>
-            {closestStation.address && <p style={{ fontSize: 11, color: '#3B6D11' }}>{closestStation.address}</p>}
-            <p style={{ fontSize: 11, color: '#3B6D11' }}>
+            {closestStation.address && <p style={{ fontSize: 12, color: '#3B6D11', marginTop: 2 }}>{closestStation.address}</p>}
+            <p style={{ fontSize: 12, color: '#3B6D11', marginTop: 4, fontFamily: 'var(--mono)' }}>
               ${closestStation.yourPrice.toFixed(2)}/gal · Save ${closestStation.savings.toFixed(2)} vs retail
-              {userLocation && ` · ${haversine(userLocation.lat, userLocation.lng, closestStation.lat, closestStation.lng).toFixed(1)} miles away`}
+              {userLocation && ` · ${haversine(userLocation.lat, userLocation.lng, closestStation.lat, closestStation.lng).toFixed(1)} mi away`}
             </p>
           </div>
         )}
 
         {/* Map */}
-        <div style={{ background: '#fff', border: '1px solid #ddd', borderRadius: 10, overflow: 'hidden', marginBottom: 10 }}>
+        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden', marginBottom: 12 }}>
           <div ref={mapRef} style={{ height: 420, width: '100%' }} />
           {!mapLoaded && (
-            <div style={{ height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa', fontSize: 13 }}>
+            <div style={{ height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--mute-2)', fontSize: 13, fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
               Loading map...
             </div>
           )}
         </div>
 
-        {/* Legend — markers are always colored by Your Price (lowest = green) */}
-        <div style={{ display: 'flex', gap: 14, marginBottom: 12, fontSize: 11, color: '#666', alignItems: 'center', flexWrap: 'wrap' }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#16a34a', display: 'inline-block' }}/>
+        {/* Legend */}
+        <div style={{ display: 'flex', gap: 16, marginBottom: 14, fontSize: 11, color: 'var(--mute)', alignItems: 'center', flexWrap: 'wrap', fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 500 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
             Cheapest
           </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#ca8a04', display: 'inline-block' }}/>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#CA8A04', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
             Mid-range
           </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#dc2626', display: 'inline-block' }}/>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--red)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
             Most expensive
           </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-            <span style={{ width: 14, height: 14, borderRadius: '50%', background: '#1d4ed8', display: 'inline-block' }}/>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 14, height: 14, borderRadius: '50%', background: '#1D4ED8', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
             Your Location
           </span>
         </div>
 
         {/* Selected station detail */}
         {selectedStation && (
-          <div style={{ background: '#fff', border: '2px solid #CC0000', borderRadius: 10, padding: '14px 16px', marginBottom: 12 }}>
+          <div className="sx-card-solid sx-fade-in" style={{
+            border: '2px solid var(--red)',
+            marginBottom: 14,
+          }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 20, fontWeight: 700, color: '#111' }}>
+                <p className="sx-display" style={{ fontSize: 22, color: 'var(--ink)' }}>
                   {selectedStation.description || 'Pilot Travel Center'}
                 </p>
-                <p style={{ fontSize: 12, color: '#888' }}>Site #{selectedStation.site} · {selectedStation.city}, {selectedStation.state}</p>
+                <p style={{ fontSize: 12, color: 'var(--mute)', fontFamily: 'var(--mono)', marginTop: 2 }}>
+                  Site #{selectedStation.site} · {selectedStation.city}, {selectedStation.state}
+                </p>
               </div>
-              <button onClick={() => setSelectedStation(null)} style={{ background: 'none', border: 'none', fontSize: 20, color: '#aaa', cursor: 'pointer' }}>×</button>
+              <button onClick={() => setSelectedStation(null)} style={{ background: 'none', border: 'none', fontSize: 22, color: 'var(--mute-2)', cursor: 'pointer', lineHeight: 1, padding: 4 }}>×</button>
             </div>
 
             {selectedStation.interstate && (
-              <div style={{ marginTop: 8, padding: '6px 10px', background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 6 }}>
-                <span style={{ fontSize: 12, color: '#9a3412', fontWeight: 600 }}>🛣 {selectedStation.interstate}</span>
+              <div style={{ marginTop: 10, padding: '6px 12px', background: '#FFF7ED', border: '1px solid #FED7AA', borderRadius: 'var(--r-pill)', display: 'inline-block' }}>
+                <span style={{ fontSize: 12, color: '#9A3412', fontWeight: 600, fontFamily: 'var(--display)', letterSpacing: '0.04em', textTransform: 'uppercase' }}>🛣 {selectedStation.interstate}</span>
               </div>
             )}
 
             {selectedStation.address && (
-              <div style={{ marginTop: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#CC0000" strokeWidth="2" strokeLinecap="round" style={{ marginTop: 2, flexShrink: 0 }}>
+              <div style={{ marginTop: 12 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" strokeWidth="2" strokeLinecap="round" style={{ marginTop: 2, flexShrink: 0 }}>
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                   </svg>
-                  <span style={{ fontSize: 13, color: '#444', lineHeight: 1.4 }}>
+                  <span style={{ fontSize: 13, color: 'var(--steel)', lineHeight: 1.5 }}>
                     {selectedStation.address}<br/>
                     {selectedStation.city}, {selectedStation.state} {selectedStation.zip}
                   </span>
@@ -2367,60 +2445,60 @@ export default function FuelPage() {
             )}
 
             {selectedStation.phone && (
-              <a href={`tel:${selectedStation.phone}`} style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8, textDecoration: 'none' }}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2" strokeLinecap="round">
+              <a href={`tel:${selectedStation.phone}`} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8, textDecoration: 'none' }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--mute)" strokeWidth="2" strokeLinecap="round">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.93 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.17-1.17a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
-                <span style={{ fontSize: 13, color: '#555' }}>{selectedStation.phone}</span>
+                <span style={{ fontSize: 13, color: 'var(--steel)', fontFamily: 'var(--mono)' }}>{selectedStation.phone}</span>
               </a>
             )}
 
-            <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
+            <div style={{ display: 'flex', gap: 24, marginTop: 14 }}>
               <div>
-                <p style={{ fontSize: 10, color: '#999', textTransform: 'uppercase', letterSpacing: 1 }}>Your Price</p>
-                <p style={{ fontSize: 24, fontWeight: 700, color: '#CC0000' }}>${selectedStation.yourPrice.toFixed(2)}</p>
-                <p style={{ fontSize: 10, color: '#aaa' }}>per gallon</p>
+                <p className="sx-kicker" style={{ marginBottom: 4 }}>Your Price</p>
+                <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--red)' }}>${selectedStation.yourPrice.toFixed(2)}</p>
+                <p style={{ fontSize: 10, color: 'var(--mute-2)', fontFamily: 'var(--display)', letterSpacing: '0.10em', textTransform: 'uppercase' }}>per gallon</p>
               </div>
               <div>
-                <p style={{ fontSize: 10, color: '#999', textTransform: 'uppercase', letterSpacing: 1 }}>You Save</p>
-                <p style={{ fontSize: 24, fontWeight: 700, color: '#16a34a' }}>${selectedStation.savings.toFixed(2)}</p>
-                <p style={{ fontSize: 10, color: '#aaa' }}>vs retail</p>
+                <p className="sx-kicker" style={{ marginBottom: 4 }}>You Save</p>
+                <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--green)' }}>${selectedStation.savings.toFixed(2)}</p>
+                <p style={{ fontSize: 10, color: 'var(--mute-2)', fontFamily: 'var(--display)', letterSpacing: '0.10em', textTransform: 'uppercase' }}>vs retail</p>
               </div>
             </div>
 
             {/* Amenities Grid */}
             {(selectedStation.parking != null || selectedStation.dieselLanes != null || selectedStation.showers != null || selectedStation.catScale != null) && (
-              <div style={{ marginTop: 14, padding: '10px 12px', background: '#f8f9fa', borderRadius: 7 }}>
-                <p style={{ fontSize: 10, color: '#666', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 8 }}>Amenities</p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 6 }}>
+              <div className="sx-card-flat" style={{ marginTop: 14 }}>
+                <p className="sx-kicker" style={{ marginBottom: 8 }}>Amenities</p>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
                   {selectedStation.parking != null && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>🅿️</span>
-                      <span style={{ fontSize: 12, color: '#444' }}><strong>{selectedStation.parking}</strong> parking</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}><strong>{selectedStation.parking}</strong> parking</span>
                     </div>
                   )}
                   {selectedStation.dieselLanes != null && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>⛽</span>
-                      <span style={{ fontSize: 12, color: '#444' }}><strong>{selectedStation.dieselLanes}</strong> diesel lanes</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}><strong>{selectedStation.dieselLanes}</strong> diesel lanes</span>
                     </div>
                   )}
                   {selectedStation.dieselDefLanes != null && selectedStation.dieselDefLanes > 0 && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>🧪</span>
-                      <span style={{ fontSize: 12, color: '#444' }}><strong>{selectedStation.dieselDefLanes}</strong> DEF lanes</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}><strong>{selectedStation.dieselDefLanes}</strong> DEF lanes</span>
                     </div>
                   )}
                   {selectedStation.showers != null && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>🚿</span>
-                      <span style={{ fontSize: 12, color: '#444' }}><strong>{selectedStation.showers}</strong> showers</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}><strong>{selectedStation.showers}</strong> showers</span>
                     </div>
                   )}
                   {selectedStation.catScale === true && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>⚖️</span>
-                      <span style={{ fontSize: 12, color: '#444' }}>CAT Scale</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}>CAT Scale</span>
                     </div>
                   )}
                 </div>
@@ -2429,16 +2507,17 @@ export default function FuelPage() {
 
             {/* Facilities / Restaurants */}
             {selectedStation.facilities && (
-              <div style={{ marginTop: 10, padding: '10px 12px', background: '#fefce8', border: '1px solid #fde68a', borderRadius: 7 }}>
-                <p style={{ fontSize: 10, color: '#854d0e', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 700, marginBottom: 4 }}>🍔 Food & Services</p>
+              <div style={{ marginTop: 12, padding: '10px 14px', background: '#FEFCE8', border: '1px solid #FDE68A', borderRadius: 'var(--r-md)' }}>
+                <p className="sx-kicker" style={{ color: '#854D0E', marginBottom: 4 }}>🍔 Food & Services</p>
                 <p style={{ fontSize: 12, color: '#422006', lineHeight: 1.5 }}>{selectedStation.facilities}</p>
               </div>
             )}
 
-            <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+            <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
               <a
                 href={appleMapsUrl(selectedStation)}
-                style={{ flex: 1, textAlign: 'center', padding: '8px', background: '#f4f4f4', borderRadius: 7, textDecoration: 'none', fontSize: 12, fontWeight: 600, color: '#111', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5 }}
+                className="sx-btn-ghost"
+                style={{ flex: 1, textDecoration: 'none', fontSize: 12 }}
               >
                 🍎 Apple Maps
               </a>
@@ -2446,7 +2525,8 @@ export default function FuelPage() {
                 href={googleMapsUrl(selectedStation)}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ flex: 1, textAlign: 'center', padding: '8px', background: '#f4f4f4', borderRadius: 7, textDecoration: 'none', fontSize: 12, fontWeight: 600, color: '#111', fontFamily: 'Barlow Condensed, sans-serif', letterSpacing: 0.5 }}
+                className="sx-btn-ghost"
+                style={{ flex: 1, textDecoration: 'none', fontSize: 12 }}
               >
                 🗺 Google Maps
               </a>
@@ -2455,9 +2535,9 @@ export default function FuelPage() {
         )}
 
         {/* Station list */}
-        <div style={{ background: '#fff', border: '1px solid #e5e5e5', borderRadius: 10, overflow: 'hidden' }}>
-          <div style={{ padding: '10px 14px', borderBottom: '1px solid #f0f0f0', background: '#fafafa' }}>
-            <p style={{ fontFamily: 'Barlow Condensed, sans-serif', fontSize: 12, fontWeight: 700, letterSpacing: 1.5, color: '#999', textTransform: 'uppercase' }}>
+        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--line)', background: 'var(--paper-warm)' }}>
+            <p className="sx-kicker">
               {viewMode === 'route'
                 ? `${routeStations.length} Fuel Stops On Route · Sorted by Route Direction`
                 : searchCenter
@@ -2497,36 +2577,43 @@ export default function FuelPage() {
                   }}
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '10px 14px', borderBottom: '1px solid #f5f5f5',
+                    padding: '12px 16px', borderBottom: '1px solid var(--line)',
                     cursor: 'pointer',
                     background: selectedStation?.site === station.site ? '#FFF5F5' : 'transparent',
+                    transition: 'background var(--t-fast) var(--ease)',
+                  }}
+                  onMouseEnter={e => {
+                    if (selectedStation?.site !== station.site) e.currentTarget.style.background = 'var(--paper-warm)'
+                  }}
+                  onMouseLeave={e => {
+                    if (selectedStation?.site !== station.site) e.currentTarget.style.background = 'transparent'
                   }}
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <p style={{ fontSize: 13, fontWeight: 500, color: '#111' }}>
+                    <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink)' }}>
                       Pilot Travel Center — {station.city}, {station.state}
                     </p>
                     {station.address
-                      ? <p style={{ fontSize: 11, color: '#aaa', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{station.address}</p>
-                      : <p style={{ fontSize: 11, color: '#aaa' }}>Site #{station.site}</p>
+                      ? <p style={{ fontSize: 11, color: 'var(--mute-2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 2 }}>{station.address}</p>
+                      : <p style={{ fontSize: 11, color: 'var(--mute-2)', fontFamily: 'var(--mono)', marginTop: 2 }}>Site #{station.site}</p>
                     }
                   </div>
-                  <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 12 }}>
-                    <p style={{ fontSize: 14, fontWeight: 700, color: '#CC0000' }}>${station.yourPrice.toFixed(2)}</p>
-                    <p style={{ fontSize: 11, color: '#16a34a' }}>Save ${station.savings.toFixed(2)}</p>
+                  <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 14 }}>
+                    <p className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: 'var(--red)' }}>${station.yourPrice.toFixed(2)}</p>
+                    <p className="sx-mono" style={{ fontSize: 11, color: 'var(--green)' }}>Save ${station.savings.toFixed(2)}</p>
                     {viewMode === 'route' && routeDistanceMap.get(station.site) !== undefined && (
-                      <p style={{ fontSize: 11, color: '#888' }}>
+                      <p className="sx-mono" style={{ fontSize: 11, color: 'var(--mute)' }}>
                         Mile {(routeDistanceMap.get(station.site) ?? 0).toFixed(0)}
                       </p>
                     )}
                     {viewMode !== 'route' && searchCenter && (
-                      <p style={{ fontSize: 11, color: '#888' }}>
-                        📍 {milesBetween(searchCenter.lat, searchCenter.lng, station.lat, station.lng).toFixed(1)} mi from {searchCenter.label.split(',')[0]}
+                      <p style={{ fontSize: 11, color: 'var(--mute)' }}>
+                        📍 <span className="sx-mono">{milesBetween(searchCenter.lat, searchCenter.lng, station.lat, station.lng).toFixed(1)} mi</span> from {searchCenter.label.split(',')[0]}
                       </p>
                     )}
                     {viewMode !== 'route' && !searchCenter && userLocation && (
-                      <p style={{ fontSize: 11, color: '#888' }}>
-                        📍 {haversine(userLocation.lat, userLocation.lng, station.lat, station.lng).toFixed(1)} mi from your location
+                      <p style={{ fontSize: 11, color: 'var(--mute)' }}>
+                        📍 <span className="sx-mono">{haversine(userLocation.lat, userLocation.lng, station.lat, station.lng).toFixed(1)} mi</span> from your location
                       </p>
                     )}
                   </div>
@@ -2541,32 +2628,32 @@ export default function FuelPage() {
         <div
           onClick={() => { if (!emailSending) setShowEmailModal(false) }}
           style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.6)',
+            position: 'fixed', inset: 0,
+            background: 'rgba(11,11,12,0.55)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
             zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: 20,
+            animation: 'sx-fade-in var(--t-base) var(--ease-out)',
           }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
+            className="sx-card-solid"
             style={{
-              background: '#fff', borderRadius: 16, padding: 24,
-              width: '100%', maxWidth: 440, boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
+              padding: 26,
+              width: '100%', maxWidth: 460,
+              boxShadow: 'var(--sh-xl)',
+              border: '1px solid var(--line)',
             }}
           >
-            <h3 style={{
-              fontFamily: 'Barlow Condensed, sans-serif', fontSize: 22, fontWeight: 800,
-              color: '#111', marginBottom: 6, letterSpacing: 0.5,
-            }}>
+            <h3 className="sx-display" style={{ fontSize: 24, color: 'var(--ink)', marginBottom: 6 }}>
               ✉ Email Fuel Plan
             </h3>
-            <p style={{ fontSize: 13, color: '#666', marginBottom: 18, lineHeight: 1.5 }}>
+            <p style={{ fontSize: 13, color: 'var(--mute)', marginBottom: 20, lineHeight: 1.5 }}>
               Sends a formatted email with the route map, fuel stops, weather forecast, and price highlights.
             </p>
-            <label style={{
-              display: 'block', fontSize: 11, color: '#888', letterSpacing: 1.5,
-              textTransform: 'uppercase', fontWeight: 700, marginBottom: 6,
-              fontFamily: 'Barlow Condensed, sans-serif',
-            }}>
+            <label className="sx-kicker" style={{ display: 'block', marginBottom: 8 }}>
               Enter email / Truck # / Driver Code
             </label>
             <input
@@ -2580,11 +2667,9 @@ export default function FuelPage() {
                 if (!trimmed || trimmed.includes('@')) {
                   setLookupMatches([])
                   setLookupLoading(false)
-                  // Cancel any pending lookup
                   if (lookupTimeoutRef.current) clearTimeout(lookupTimeoutRef.current)
                   return
                 }
-                // Debounce 250ms so quick typing doesn't fire stale requests
                 setLookupLoading(true)
                 if (lookupTimeoutRef.current) clearTimeout(lookupTimeoutRef.current)
                 const seq = ++lookupSeqRef.current
@@ -2592,7 +2677,6 @@ export default function FuelPage() {
                   try {
                     const res = await fetch(`/api/recipient-lookup?q=${encodeURIComponent(trimmed)}`)
                     const json = await res.json()
-                    // Only apply if this is still the most recent request AND the input hasn't changed
                     if (seq === lookupSeqRef.current) {
                       setLookupMatches(json.matches || [])
                       setLookupLoading(false)
@@ -2610,33 +2694,42 @@ export default function FuelPage() {
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
-              style={{
-                width: '100%', padding: '14px 16px', fontSize: 16,
-                border: '2px solid #e5e5e5', borderRadius: 10,
-                fontFamily: 'inherit', outline: 'none',
-                marginBottom: 10, boxSizing: 'border-box',
-              }}
+              className="sx-input"
+              style={{ marginBottom: 12 }}
             />
             {/* Live lookup preview */}
             {lookupLoading && (
-              <div style={{ fontSize: 12, color: '#999', marginBottom: 10 }}>Looking up…</div>
+              <div style={{ fontSize: 12, color: 'var(--mute)', marginBottom: 10, fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>Looking up…</div>
             )}
             {!lookupLoading && emailAddress.trim() && !emailAddress.includes('@') && lookupMatches.length === 0 && (
               <div style={{
-                padding: '10px 14px', borderRadius: 8, marginBottom: 10,
-                background: '#fffbeb', color: '#92400e', fontSize: 12, fontWeight: 600,
+                padding: '10px 14px',
+                borderRadius: 'var(--r-md)',
+                marginBottom: 12,
+                background: 'var(--amber-bg)',
+                border: '1px solid var(--amber-line)',
+                color: '#92400E',
+                fontSize: 13,
+                fontWeight: 500,
               }}>
                 No driver found for that truck # or code. Enter a valid email instead.
               </div>
             )}
             {!lookupLoading && lookupMatches.length >= 1 && (
               <div style={{
-                padding: '10px 14px', borderRadius: 8, marginBottom: 10,
-                background: '#f0fdf4', color: '#166534', fontSize: 13,
+                padding: '10px 14px',
+                borderRadius: 'var(--r-md)',
+                marginBottom: 12,
+                background: 'rgba(22,163,74,0.08)',
+                border: '1px solid rgba(22,163,74,0.28)',
+                color: 'var(--green-deep)',
+                fontSize: 13,
               }}>
-                <div style={{ fontWeight: 700, marginBottom: 2 }}>✓ Found {lookupMatches.length === 1 ? 'driver' : `${lookupMatches.length} drivers`}:</div>
+                <div style={{ fontWeight: 600, marginBottom: 2 }}>
+                  ✓ Found {lookupMatches.length === 1 ? 'driver' : `${lookupMatches.length} drivers`}:
+                </div>
                 {lookupMatches.map((m, i) => (
-                  <div key={i} style={{ fontSize: 12, color: '#15803d' }}>
+                  <div key={i} style={{ fontSize: 12, color: '#15803D' }}>
                     {m.first} {m.last}
                   </div>
                 ))}
@@ -2644,10 +2737,14 @@ export default function FuelPage() {
             )}
             {emailStatus && (
               <div style={{
-                padding: '10px 14px', borderRadius: 8, marginBottom: 14,
-                background: emailStatus.startsWith('✓') ? '#f0fdf4' : '#fef2f2',
-                color: emailStatus.startsWith('✓') ? '#166534' : '#991b1b',
-                fontSize: 13, fontWeight: 600,
+                padding: '12px 14px',
+                borderRadius: 'var(--r-md)',
+                marginBottom: 14,
+                background: emailStatus.startsWith('✓') ? 'rgba(22,163,74,0.08)' : '#FEF2F2',
+                border: '1px solid ' + (emailStatus.startsWith('✓') ? 'rgba(22,163,74,0.28)' : '#FECACA'),
+                color: emailStatus.startsWith('✓') ? 'var(--green-deep)' : '#991B1B',
+                fontSize: 13,
+                fontWeight: 500,
               }}>
                 {emailStatus}
               </div>
@@ -2656,11 +2753,9 @@ export default function FuelPage() {
               <button
                 onClick={() => { if (!emailSending) setShowEmailModal(false) }}
                 disabled={emailSending}
+                className="sx-btn-ghost"
                 style={{
-                  flex: 1, padding: '12px', border: '2px solid #e5e5e5',
-                  background: '#fff', color: '#555', borderRadius: 10, cursor: 'pointer',
-                  fontSize: 14, fontWeight: 700, fontFamily: 'Barlow Condensed, sans-serif',
-                  letterSpacing: 1, textTransform: 'uppercase',
+                  flex: 1,
                   opacity: emailSending ? 0.5 : 1,
                 }}
               >
@@ -2673,7 +2768,6 @@ export default function FuelPage() {
                     setEmailStatus('Please enter email, truck #, or driver code')
                     return
                   }
-                  // Resolve email(s) to send to
                   let recipients: string[] = []
                   if (trimmed.includes('@')) {
                     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
@@ -2760,12 +2854,23 @@ export default function FuelPage() {
                 }}
                 disabled={emailSending || !emailAddress.trim() || (lookupLoading) || (!emailAddress.includes('@') && lookupMatches.length === 0 && emailAddress.trim().length > 0)}
                 style={{
-                  flex: 2, padding: '12px',
-                  background: emailSending ? '#666' : '#2563eb', color: '#fff', border: 'none',
-                  borderRadius: 10, cursor: emailSending ? 'wait' : 'pointer',
-                  fontSize: 14, fontWeight: 700, fontFamily: 'Barlow Condensed, sans-serif',
-                  letterSpacing: 1, textTransform: 'uppercase',
+                  flex: 2,
+                  padding: '14px 24px',
+                  background: emailSending
+                    ? 'var(--mute)'
+                    : 'linear-gradient(180deg, #3B82F6 0%, #2563EB 60%, #1D4ED8 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 'var(--r-pill)',
+                  cursor: emailSending ? 'wait' : 'pointer',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: 'var(--display)',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  boxShadow: emailSending ? 'var(--sh-sm)' : '0 4px 12px rgba(37,99,235,0.32), 0 10px 28px rgba(37,99,235,0.20), inset 0 1px 0 rgba(255,255,255,0.10)',
                   opacity: (emailSending || !emailAddress.trim() || (!emailAddress.includes('@') && lookupMatches.length === 0 && emailAddress.trim().length > 0)) ? 0.6 : 1,
+                  transition: 'all var(--t-base) var(--ease)',
                 }}
               >
                 {emailSending ? 'Sending...' : 'Send Email'}
