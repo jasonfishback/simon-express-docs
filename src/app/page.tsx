@@ -9,46 +9,64 @@ export default function HomePage() {
 
   return (
     <div style={{
-      minHeight: '100dvh', // dynamic viewport height — accounts for iOS Safari URL bar
-      background: 'linear-gradient(180deg, #0B0B0C 0%, #17181A 100%)',
+      minHeight: '100dvh',
+      background: 'var(--paper)',
       fontFamily: 'var(--body)',
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
       maxWidth: '100vw',
-      overflow: 'hidden',
     }}>
-      {/* Header — full bleed, pulls in safe-area inset */}
+      {/* Top accent bar — brand red, like the main site */}
+      <div style={{
+        height: 4,
+        background: 'var(--red)',
+        flexShrink: 0,
+      }} />
+
+      {/* Header — light, frosted, sticky look */}
       <header style={{
-        background: 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)',
-        borderBottom: '4px solid var(--red)',
+        background: 'rgba(255,255,255,0.78)',
+        borderBottom: '1px solid rgba(11,11,12,0.06)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
         paddingTop: 'calc(20px + env(safe-area-inset-top))',
-        paddingBottom: 16,
-        paddingLeft: 20,
-        paddingRight: 20,
+        paddingBottom: 18,
+        paddingLeft: 16,
+        paddingRight: 16,
         textAlign: 'center',
-        boxShadow: 'var(--sh-md)',
+        boxShadow: 'var(--sh-sm)',
       }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo.png"
-          alt="Simon Express"
-          style={{ maxWidth: 280, width: '100%', display: 'block', margin: '0 auto' }}
-        />
+        {/* Logo card — shaded box so the white-bg logo blends cleanly */}
+        <div style={{
+          display: 'inline-block',
+          background: 'linear-gradient(180deg, #FFFFFF 0%, var(--paper) 100%)',
+          border: '1px solid var(--line)',
+          borderRadius: 'var(--r-lg)',
+          padding: '14px 24px',
+          boxShadow: 'var(--sh-sm)',
+        }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/logo.png"
+            alt="Simon Express"
+            style={{ maxWidth: 240, width: '100%', display: 'block', margin: '0 auto' }}
+          />
+        </div>
         <p style={{
           fontFamily: 'var(--display)',
-          fontSize: 12,
-          letterSpacing: '0.18em',
-          color: 'var(--mute-2)',
+          fontSize: 11,
+          letterSpacing: '0.20em',
+          color: 'var(--mute)',
           textTransform: 'uppercase',
-          marginTop: 10,
-          fontWeight: 500,
+          marginTop: 12,
+          fontWeight: 600,
         }}>
           Driver Portal
         </p>
       </header>
 
-      {/* Main — full-width buttons on mobile */}
+      {/* Main — full-width frosted glass cards */}
       <main style={{
         flex: 1,
         display: 'flex',
@@ -62,15 +80,15 @@ export default function HomePage() {
         <p
           className="sx-kicker"
           style={{
-            color: 'var(--mute-2)',
-            marginBottom: 8,
+            color: 'var(--mute)',
+            marginBottom: 4,
             textAlign: 'center',
           }}
         >
           Select a section
         </p>
 
-        {/* Document Submission card */}
+        {/* Document Submission card — frosted glass, red accent */}
         <button
           onClick={() => router.push('/docs')}
           onTouchStart={() => setPressed('docs')}
@@ -84,18 +102,20 @@ export default function HomePage() {
             padding: '28px 24px',
             background: pressed === 'docs'
               ? 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)'
-              : 'linear-gradient(180deg, #1C1D20 0%, #0F1012 100%)',
+              : 'rgba(255,255,255,0.78)',
+            backdropFilter: pressed === 'docs' ? undefined : 'saturate(180%) blur(20px)',
+            WebkitBackdropFilter: pressed === 'docs' ? undefined : 'saturate(180%) blur(20px)',
             border: '1px solid',
-            borderColor: pressed === 'docs' ? 'var(--red-dark)' : 'rgba(255,255,255,0.08)',
+            borderColor: pressed === 'docs' ? 'var(--red-dark)' : 'rgba(11,11,12,0.06)',
             borderRadius: 'var(--r-xl)',
             cursor: 'pointer',
             textAlign: 'left',
             transition: 'all var(--t-fast) var(--ease)',
             transform: pressed === 'docs' ? 'scale(0.98)' : 'scale(1)',
             boxShadow: pressed === 'docs'
-              ? 'var(--sh-red), inset 0 1px 0 rgba(255,255,255,0.10)'
-              : '0 2px 6px rgba(0,0,0,0.40), 0 12px 32px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.06)',
-            color: '#fff',
+              ? 'var(--sh-red), var(--sh-inset)'
+              : 'var(--sh-md)',
+            color: pressed === 'docs' ? '#fff' : 'var(--ink)',
             fontFamily: 'var(--body)',
             WebkitTapHighlightColor: 'transparent',
           }}
@@ -103,11 +123,13 @@ export default function HomePage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             <div style={{
               width: 60, height: 60,
-              background: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'rgba(215,25,32,0.15)',
+              background: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'rgba(215,25,32,0.10)',
+              border: '1px solid',
+              borderColor: pressed === 'docs' ? 'rgba(255,255,255,0.30)' : 'rgba(215,25,32,0.18)',
               borderRadius: 'var(--r-lg)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0,
-              transition: 'background var(--t-fast) var(--ease)',
+              transition: 'all var(--t-fast) var(--ease)',
             }}>
               <svg
                 width="30" height="30" viewBox="0 0 24 24" fill="none"
@@ -125,7 +147,7 @@ export default function HomePage() {
                 className="sx-display"
                 style={{
                   fontSize: 22,
-                  color: '#fff',
+                  color: pressed === 'docs' ? '#fff' : 'var(--ink)',
                   marginBottom: 4,
                 }}
               >
@@ -133,7 +155,7 @@ export default function HomePage() {
               </p>
               <p style={{
                 fontSize: 13,
-                color: pressed === 'docs' ? 'rgba(255,255,255,0.85)' : 'var(--mute-2)',
+                color: pressed === 'docs' ? 'rgba(255,255,255,0.85)' : 'var(--mute)',
                 lineHeight: 1.4,
               }}>
                 Submit BOL, lumper receipts &amp; paperwork to billing
@@ -144,7 +166,7 @@ export default function HomePage() {
             marginTop: 18,
             paddingTop: 14,
             borderTop: '1px solid',
-            borderColor: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.08)',
+            borderColor: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'var(--line)',
             display: 'flex',
             gap: 6,
             flexWrap: 'wrap',
@@ -157,17 +179,17 @@ export default function HomePage() {
                 letterSpacing: '0.10em',
                 padding: '4px 10px',
                 borderRadius: 'var(--r-pill)',
-                background: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'rgba(215,25,32,0.15)',
+                background: pressed === 'docs' ? 'rgba(255,255,255,0.20)' : 'rgba(215,25,32,0.08)',
                 color: pressed === 'docs' ? '#fff' : 'var(--red)',
                 textTransform: 'uppercase',
                 border: '1px solid',
-                borderColor: pressed === 'docs' ? 'rgba(255,255,255,0.25)' : 'rgba(215,25,32,0.20)',
+                borderColor: pressed === 'docs' ? 'rgba(255,255,255,0.30)' : 'rgba(215,25,32,0.20)',
               }}>{tag}</span>
             ))}
           </div>
         </button>
 
-        {/* Fuel card */}
+        {/* Fuel card — frosted glass, green accent */}
         <button
           onClick={() => router.push('/fuel')}
           onTouchStart={() => setPressed('fuel')}
@@ -181,18 +203,20 @@ export default function HomePage() {
             padding: '28px 24px',
             background: pressed === 'fuel'
               ? 'linear-gradient(180deg, #22C55E 0%, var(--green) 60%, #15803D 100%)'
-              : 'linear-gradient(180deg, #1C1D20 0%, #0F1012 100%)',
+              : 'rgba(255,255,255,0.78)',
+            backdropFilter: pressed === 'fuel' ? undefined : 'saturate(180%) blur(20px)',
+            WebkitBackdropFilter: pressed === 'fuel' ? undefined : 'saturate(180%) blur(20px)',
             border: '1px solid',
-            borderColor: pressed === 'fuel' ? '#15803D' : 'rgba(255,255,255,0.08)',
+            borderColor: pressed === 'fuel' ? '#15803D' : 'rgba(11,11,12,0.06)',
             borderRadius: 'var(--r-xl)',
             cursor: 'pointer',
             textAlign: 'left',
             transition: 'all var(--t-fast) var(--ease)',
             transform: pressed === 'fuel' ? 'scale(0.98)' : 'scale(1)',
             boxShadow: pressed === 'fuel'
-              ? '0 4px 12px rgba(22,163,74,0.32), 0 10px 28px rgba(22,163,74,0.28), inset 0 1px 0 rgba(255,255,255,0.10)'
-              : '0 2px 6px rgba(0,0,0,0.40), 0 12px 32px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.06)',
-            color: '#fff',
+              ? '0 4px 12px rgba(22,163,74,0.32), 0 10px 28px rgba(22,163,74,0.28), var(--sh-inset)'
+              : 'var(--sh-md)',
+            color: pressed === 'fuel' ? '#fff' : 'var(--ink)',
             fontFamily: 'var(--body)',
             WebkitTapHighlightColor: 'transparent',
           }}
@@ -200,11 +224,13 @@ export default function HomePage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
             <div style={{
               width: 60, height: 60,
-              background: pressed === 'fuel' ? 'rgba(255,255,255,0.20)' : 'rgba(22,163,74,0.15)',
+              background: pressed === 'fuel' ? 'rgba(255,255,255,0.20)' : 'rgba(22,163,74,0.10)',
+              border: '1px solid',
+              borderColor: pressed === 'fuel' ? 'rgba(255,255,255,0.30)' : 'rgba(22,163,74,0.20)',
               borderRadius: 'var(--r-lg)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0,
-              transition: 'background var(--t-fast) var(--ease)',
+              transition: 'all var(--t-fast) var(--ease)',
             }}>
               <svg
                 width="30" height="30" viewBox="0 0 24 24" fill="none"
@@ -222,7 +248,7 @@ export default function HomePage() {
                 className="sx-display"
                 style={{
                   fontSize: 22,
-                  color: '#fff',
+                  color: pressed === 'fuel' ? '#fff' : 'var(--ink)',
                   marginBottom: 4,
                 }}
               >
@@ -230,7 +256,7 @@ export default function HomePage() {
               </p>
               <p style={{
                 fontSize: 13,
-                color: pressed === 'fuel' ? 'rgba(255,255,255,0.85)' : 'var(--mute-2)',
+                color: pressed === 'fuel' ? 'rgba(255,255,255,0.85)' : 'var(--mute)',
                 lineHeight: 1.4,
               }}>
                 Daily fuel prices, savings &amp; nearest station finder
@@ -241,7 +267,7 @@ export default function HomePage() {
             marginTop: 18,
             paddingTop: 14,
             borderTop: '1px solid',
-            borderColor: pressed === 'fuel' ? 'rgba(255,255,255,0.20)' : 'rgba(255,255,255,0.08)',
+            borderColor: pressed === 'fuel' ? 'rgba(255,255,255,0.20)' : 'var(--line)',
             display: 'flex',
             alignItems: 'center',
             gap: 8,
@@ -257,7 +283,7 @@ export default function HomePage() {
               className="sx-mono"
               style={{
                 fontSize: 12,
-                color: pressed === 'fuel' ? 'rgba(255,255,255,0.80)' : 'var(--mute)',
+                color: pressed === 'fuel' ? 'rgba(255,255,255,0.85)' : 'var(--mute)',
                 letterSpacing: '0.02em',
               }}
             >
@@ -271,13 +297,14 @@ export default function HomePage() {
       <footer style={{
         textAlign: 'center',
         padding: '20px 20px calc(20px + env(safe-area-inset-bottom))',
-        borderTop: '1px solid rgba(255,255,255,0.06)',
+        borderTop: '1px solid var(--line)',
+        background: 'var(--paper-warm)',
       }}>
         <p
           className="sx-mono"
           style={{
             fontSize: 11,
-            color: 'var(--steel)',
+            color: 'var(--mute)',
             letterSpacing: '0.04em',
           }}
         >
