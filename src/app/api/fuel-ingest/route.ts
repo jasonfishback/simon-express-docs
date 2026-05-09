@@ -13,43 +13,23 @@ import { enrichStations } from '@/lib/fuel/enrich'
 const DEFAULT_FROM = 'DailyPricing@pilotflyingj.com'
 const DEFAULT_SUBJECT = 'Pricing - Pilot Flying J'
 
-function isAuthorized(req: NextRequest): { ok: boolean; debug: any } {
+function isAuthorized(req: NextRequest): boolean {
   // Accept either CRON_SECRET (Vercel-standard, used by Vercel Cron) or
   // INGEST_API_KEY (legacy, used for manual curl triggers). At least one
   // must be set, and the incoming token must match it.
   const cronSecret = process.env.CRON_SECRET || ''
   const ingestKey = process.env.INGEST_API_KEY || ''
+  if (!cronSecret && !ingestKey) return false
+
   const auth = req.headers.get('authorization') || ''
+  if (cronSecret && auth === `Bearer ${cronSecret}`) return true
+  if (ingestKey && auth === `Bearer ${ingestKey}`) return true
+
   const keyParam = req.nextUrl.searchParams.get('key') || ''
-  const ua = req.headers.get('user-agent') || ''
-  const isVercelCron = ua.toLowerCase().includes('vercel-cron')
+  if (cronSecret && keyParam === cronSecret) return true
+  if (ingestKey && keyParam === ingestKey) return true
 
-  // Debug snapshot — never includes any secret value, only presence/length/match flags
-  const debug = {
-    env_CRON_SECRET_present: !!cronSecret,
-    env_CRON_SECRET_len: cronSecret.length,
-    env_INGEST_API_KEY_present: !!ingestKey,
-    env_INGEST_API_KEY_len: ingestKey.length,
-    auth_header_present: !!auth,
-    auth_header_starts_with_bearer: auth.toLowerCase().startsWith('bearer '),
-    auth_header_token_len: auth.startsWith('Bearer ') ? auth.length - 7 : 0,
-    key_param_present: !!keyParam,
-    key_param_len: keyParam.length,
-    user_agent: ua.substring(0, 80),
-    is_vercel_cron: isVercelCron,
-    matches_CRON_SECRET_via_header: !!cronSecret && auth === `Bearer ${cronSecret}`,
-    matches_INGEST_API_KEY_via_header: !!ingestKey && auth === `Bearer ${ingestKey}`,
-    matches_CRON_SECRET_via_param: !!cronSecret && keyParam === cronSecret,
-    matches_INGEST_API_KEY_via_param: !!ingestKey && keyParam === ingestKey,
-  }
-
-  if (!cronSecret && !ingestKey) return { ok: false, debug }
-  if (cronSecret && auth === `Bearer ${cronSecret}`) return { ok: true, debug }
-  if (ingestKey && auth === `Bearer ${ingestKey}`) return { ok: true, debug }
-  if (cronSecret && keyParam === cronSecret) return { ok: true, debug }
-  if (ingestKey && keyParam === ingestKey) return { ok: true, debug }
-
-  return { ok: false, debug }
+  return false
 }
 
 interface ParsedStation {
@@ -116,11 +96,8 @@ function parsePilotXls(buffer: Buffer): ParsedStation[] {
 }
 
 export async function GET(req: NextRequest) {
-  const authCheck = isAuthorized(req)
-  if (!authCheck.ok) {
-    console.warn('[fuel-ingest] 401 — auth debug:', JSON.stringify(authCheck.debug))
-    // TEMPORARY: return debug in response body so we can diagnose without log access
-    return NextResponse.json({ error: 'Unauthorized', debug: authCheck.debug }, { status: 401 })
+  if (!isAuthorized(req)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   const mailbox = process.env.OUTLOOK_FUEL_MAILBOX
