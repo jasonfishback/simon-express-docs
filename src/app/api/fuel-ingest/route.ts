@@ -1,4 +1,5 @@
 ﻿import { NextRequest, NextResponse } from 'next/server'
+import { put } from '@vercel/blob'
 import * as XLSX from 'xlsx'
 import {
   findFolderIdByName,
@@ -125,9 +126,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ ...summary, message: 'No new fuel emails to process.' })
     }
 
-    const origin = req.nextUrl.origin
-    const fuelUploadUrl = `${origin}/api/fuel-upload`
-
     for (const msg of messages) {
       const detail: any = { id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
       try {
@@ -169,27 +167,20 @@ export async function GET(req: NextRequest) {
           console.warn(`Fuel ingest: ${cacheMisses.length} stations missing from coord cache:`, cacheMisses.join(', '))
         }
 
-        // POST to /api/fuel-upload as JSON (the format it expects)
+        // Write directly to Vercel Blob — no internal HTTP call.
+        // Going through /api/fuel-upload caused 401s because Vercel Cron hits
+        // the protected deployment URL, and inner fetches inherit that origin
+        // and get bounced by Deployment Protection before reaching the handler.
         const updatedAt = new Date().toISOString().split('T')[0]
-        console.log(`[fuel-ingest] POST -> ${fuelUploadUrl} stations=${enriched.length} updatedAt=${updatedAt} apiKey_len=${fuelApiKey.length}`)
-        let uploadRes: Response
-        try {
-          uploadRes = await fetch(fuelUploadUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ apiKey: fuelApiKey, stations: enriched, updatedAt }),
-          })
-        } catch (fetchErr: any) {
-          console.error(`[fuel-ingest] inner fetch FAILED:`, fetchErr?.message || fetchErr)
-          throw new Error(`Inner fetch to fuel-upload failed: ${fetchErr?.message || fetchErr}`)
-        }
-        const uploadBodyText = await uploadRes.text().catch(() => '<unreadable>')
-        console.log(`[fuel-ingest] upload status=${uploadRes.status} body=${uploadBodyText.substring(0, 500)}`)
-        if (!uploadRes.ok) {
-          throw new Error(`fuel-upload returned ${uploadRes.status}: ${uploadBodyText.substring(0, 300)}`)
-        }
-        let uploadJson: any = {}
-        try { uploadJson = JSON.parse(uploadBodyText) } catch {}
+        const fuelData = { updatedAt, stations: enriched }
+        const blob = await put('fuel-data.json', JSON.stringify(fuelData), {
+          access: 'public',
+          addRandomSuffix: false,
+          contentType: 'application/json',
+          allowOverwrite: true,
+        })
+        console.log(`[fuel-ingest] Blob written: ${blob.url} (${enriched.length} stations, updatedAt=${updatedAt})`)
+        const uploadJson = { success: true, count: enriched.length, updatedAt, blobUrl: blob.url }
         detail.status = 'uploaded'
         detail.uploadResponse = uploadJson
 
