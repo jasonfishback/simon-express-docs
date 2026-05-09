@@ -171,16 +171,25 @@ export async function GET(req: NextRequest) {
 
         // POST to /api/fuel-upload as JSON (the format it expects)
         const updatedAt = new Date().toISOString().split('T')[0]
-        const uploadRes = await fetch(fuelUploadUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ apiKey: fuelApiKey, stations: enriched, updatedAt }),
-        })
-        if (!uploadRes.ok) {
-          const errText = await uploadRes.text()
-          throw new Error(`fuel-upload returned ${uploadRes.status}: ${errText.substring(0, 300)}`)
+        console.log(`[fuel-ingest] POST -> ${fuelUploadUrl} stations=${enriched.length} updatedAt=${updatedAt} apiKey_len=${fuelApiKey.length}`)
+        let uploadRes: Response
+        try {
+          uploadRes = await fetch(fuelUploadUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ apiKey: fuelApiKey, stations: enriched, updatedAt }),
+          })
+        } catch (fetchErr: any) {
+          console.error(`[fuel-ingest] inner fetch FAILED:`, fetchErr?.message || fetchErr)
+          throw new Error(`Inner fetch to fuel-upload failed: ${fetchErr?.message || fetchErr}`)
         }
-        const uploadJson = await uploadRes.json().catch(() => ({}))
+        const uploadBodyText = await uploadRes.text().catch(() => '<unreadable>')
+        console.log(`[fuel-ingest] upload status=${uploadRes.status} body=${uploadBodyText.substring(0, 500)}`)
+        if (!uploadRes.ok) {
+          throw new Error(`fuel-upload returned ${uploadRes.status}: ${uploadBodyText.substring(0, 300)}`)
+        }
+        let uploadJson: any = {}
+        try { uploadJson = JSON.parse(uploadBodyText) } catch {}
         detail.status = 'uploaded'
         detail.uploadResponse = uploadJson
 
