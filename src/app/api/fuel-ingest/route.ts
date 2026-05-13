@@ -190,14 +190,18 @@ export async function GET(req: NextRequest) {
       } catch (err: any) {
         detail.status = 'error'
         detail.error = err?.message || String(err)
-        summary.errors.push(`${msg.subject}: ${err?.message || err}`)
+        const msgText = `${msg.subject}: ${err?.message || err}`
+        summary.errors.push(msgText)
+        console.error(`[fuel-ingest] per-message error: ${msgText}`, err?.stack || '')
       }
       summary.details.push(detail)
     }
 
     return NextResponse.json(summary)
   } catch (err: any) {
-    summary.errors.push(err?.message || String(err))
-    return NextResponse.json({ ...summary, error: err?.message || 'Internal error' }, { status: 500 })
+    const msgText = err?.message || String(err)
+    summary.errors.push(msgText)
+    console.error(`[fuel-ingest] FATAL: ${msgText}`, err?.stack || '')
+    return NextResponse.json({ ...summary, error: msgText || 'Internal error' }, { status: 500 })
   }
 }

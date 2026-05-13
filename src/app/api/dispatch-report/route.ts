@@ -24,16 +24,23 @@ interface FuelStation {
   city: string
 }
 
-// Authenticate the incoming request
+// Authenticate the incoming request.
+// Accepts either CRON_SECRET (Vercel-standard, used by Vercel Cron) or
+// INGEST_API_KEY (legacy, used for manual curl triggers). At least one
+// must be set, and the incoming token must match it. Mirrors fuel-ingest.
 function isAuthorized(req: NextRequest): boolean {
-  const cronSecret = process.env.INGEST_API_KEY
-  if (!cronSecret) return false
-  // Vercel Cron sends an Authorization header
-  const auth = req.headers.get('authorization')
-  if (auth === `Bearer ${cronSecret}`) return true
-  // Allow manual ?key= override for testing
-  const keyParam = req.nextUrl.searchParams.get('key')
-  if (keyParam === cronSecret) return true
+  const cronSecret = process.env.CRON_SECRET || ''
+  const ingestKey = process.env.INGEST_API_KEY || ''
+  if (!cronSecret && !ingestKey) return false
+
+  const auth = req.headers.get('authorization') || ''
+  if (cronSecret && auth === `Bearer ${cronSecret}`) return true
+  if (ingestKey && auth === `Bearer ${ingestKey}`) return true
+
+  const keyParam = req.nextUrl.searchParams.get('key') || ''
+  if (cronSecret && keyParam === cronSecret) return true
+  if (ingestKey && keyParam === ingestKey) return true
+
   return false
 }
 
