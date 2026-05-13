@@ -5,12 +5,38 @@ export async function getGraphToken(): Promise<string> {
   if (cachedToken && cachedToken.expiresAt > Date.now() + 120_000) return cachedToken.value
   const tenantId = process.env.AZURE_TENANT_ID
   const clientId = process.env.AZURE_CLIENT_ID
+  if (!tenantId || !clientId) throw new Error('Missing AZURE_TENANT_ID or AZURE_CLIENT_ID.')
+
+  // Prefer Vercel OIDC federated credentials (no secret rotation needed).
+  // VERCEL_OIDC_TOKEN is auto-injected when OIDC is enabled on the Vercel
+  // project AND Microsoft Entra has a Federated Credential registered for
+  // this app pointing to Vercel's issuer with the matching subject claim.
+  // Falls back to AZURE_CLIENT_SECRET if OIDC isn't yet configured.
+  const oidcToken = process.env.VERCEL_OIDC_TOKEN
   const clientSecret = process.env.AZURE_CLIENT_SECRET
-  if (!tenantId || !clientId || !clientSecret) throw new Error('Missing Azure credentials.')
+  if (!oidcToken && !clientSecret) {
+    throw new Error('Neither VERCEL_OIDC_TOKEN nor AZURE_CLIENT_SECRET is set.')
+  }
+
   const tokenUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
-  const body = new URLSearchParams({ grant_type: 'client_credentials', client_id: clientId, client_secret: clientSecret, scope: 'https://graph.microsoft.com/.default' })
+  const body = new URLSearchParams({
+    grant_type: 'client_credentials',
+    client_id: clientId,
+    scope: 'https://graph.microsoft.com/.default',
+  })
+  if (oidcToken) {
+    body.set('client_assertion_type', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer')
+    body.set('client_assertion', oidcToken)
+  } else {
+    body.set('client_secret', clientSecret!)
+  }
+
   const res = await fetch(tokenUrl, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
-  if (!res.ok) { const text = await res.text(); throw new Error(`Failed to get Graph token: ${res.status} ${text}`) }
+  if (!res.ok) {
+    const text = await res.text()
+    const mode = oidcToken ? 'OIDC federation' : 'client_secret'
+    throw new Error(`Failed to get Graph token (${mode}): ${res.status} ${text}`)
+  }
   const json = (await res.json()) as { access_token: string; expires_in: number }
   cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000 }
   return cachedToken.value
