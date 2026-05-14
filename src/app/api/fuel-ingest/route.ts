@@ -10,6 +10,7 @@ import {
   moveMessage,
 } from '@/lib/graph'
 import { enrichStations } from '@/lib/fuel/enrich'
+import { recordHeartbeat } from '@/lib/heartbeat'
 
 const DEFAULT_FROM = 'DailyPricing@pilotflyingj.com'
 const DEFAULT_SUBJECT = 'Pricing - Pilot Flying J'
@@ -123,6 +124,11 @@ export async function GET(req: NextRequest) {
     const messages = await listFuelMessages(mailbox, folderId, fromAddress, subjectContains)
     summary.found = messages.length
     if (messages.length === 0) {
+      await recordHeartbeat('fuel_ingest', {
+        status: 'ok',
+        recordCount: 0,
+        message: 'no new emails',
+      })
       return NextResponse.json({ ...summary, message: 'No new fuel emails to process.' })
     }
 
@@ -197,11 +203,21 @@ export async function GET(req: NextRequest) {
       summary.details.push(detail)
     }
 
+    await recordHeartbeat('fuel_ingest', {
+      status: 'ok',
+      recordCount: summary.processed,
+      message: summary.errors.length > 0 ? `${summary.errors.length} per-message errors` : null,
+    })
     return NextResponse.json(summary)
   } catch (err: any) {
     const msgText = err?.message || String(err)
     summary.errors.push(msgText)
     console.error(`[fuel-ingest] FATAL: ${msgText}`, err?.stack || '')
+    await recordHeartbeat('fuel_ingest', {
+      status: 'error',
+      recordCount: null,
+      message: String(msgText).slice(0, 200),
+    })
     return NextResponse.json({ ...summary, error: msgText || 'Internal error' }, { status: 500 })
   }
 }
