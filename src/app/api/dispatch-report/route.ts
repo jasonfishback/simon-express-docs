@@ -15,6 +15,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { getUsageSinceDays, UsageEntry } from '@/lib/usage-log'
 import { FUEL_RECIPIENTS } from '@/lib/recipients'
+import { recordHeartbeat } from '@/lib/heartbeat'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -302,9 +303,19 @@ export async function GET(req: NextRequest) {
 
     if (error) {
       console.error('Resend error in dispatch report:', error)
+      await recordHeartbeat('dispatch_report', {
+        status: 'error',
+        recordCount: null,
+        message: String((error as any)?.message || (error as any)?.name || 'resend error').slice(0, 200),
+      })
       return NextResponse.json({ error: 'Failed to send report', details: error }, { status: 500 })
     }
 
+    await recordHeartbeat('dispatch_report', {
+      status: 'ok',
+      recordCount: null,
+      message: null,
+    })
     return NextResponse.json({
       success: true,
       id: data?.id,
@@ -317,6 +328,11 @@ export async function GET(req: NextRequest) {
     })
   } catch (err: any) {
     console.error('Dispatch report error:', err)
+    await recordHeartbeat('dispatch_report', {
+      status: 'error',
+      recordCount: null,
+      message: String(err?.message || err).slice(0, 200),
+    })
     return NextResponse.json({ error: err?.message || 'Internal error' }, { status: 500 })
   }
 }
