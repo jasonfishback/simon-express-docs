@@ -1,7 +1,10 @@
 // src/app/api/health/route.ts
 // GET endpoint returning the heartbeat state of each cron.
-// Auth: same INGEST_API_KEY/CRON_SECRET pair as the other endpoints
+// Auth accepts any of: CRON_SECRET, INGEST_API_KEY, DOCS_HEALTH_KEY.
 // (Bearer header OR ?key=). Not public.
+// DOCS_HEALTH_KEY is the dedicated key for the kpi site's health dashboard
+// — separate from INGEST_API_KEY so we can rotate cross-repo access without
+// touching the cron auth path.
 
 import { NextRequest, NextResponse } from 'next/server'
 import { readHeartbeats } from '@/lib/heartbeat'
@@ -12,15 +15,18 @@ export const dynamic = 'force-dynamic'
 function isAuthorized(req: NextRequest): boolean {
   const cronSecret = process.env.CRON_SECRET || ''
   const ingestKey = process.env.INGEST_API_KEY || ''
-  if (!cronSecret && !ingestKey) return false
+  const docsHealthKey = process.env.DOCS_HEALTH_KEY || ''
+  if (!cronSecret && !ingestKey && !docsHealthKey) return false
 
   const auth = req.headers.get('authorization') || ''
   if (cronSecret && auth === `Bearer ${cronSecret}`) return true
   if (ingestKey && auth === `Bearer ${ingestKey}`) return true
+  if (docsHealthKey && auth === `Bearer ${docsHealthKey}`) return true
 
   const keyParam = req.nextUrl.searchParams.get('key') || ''
   if (cronSecret && keyParam === cronSecret) return true
   if (ingestKey && keyParam === ingestKey) return true
+  if (docsHealthKey && keyParam === docsHealthKey) return true
 
   return false
 }
