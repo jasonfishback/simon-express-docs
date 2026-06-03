@@ -179,14 +179,25 @@ export async function GET(req: NextRequest) {
         // and get bounced by Deployment Protection before reaching the handler.
         const updatedAt = new Date().toISOString().split('T')[0]
         const fuelData = { updatedAt, stations: enriched }
-        const blob = await put('fuel-data.json', JSON.stringify(fuelData), {
+        const fuelDataJson = JSON.stringify(fuelData)
+        // Live blob (what the optimizer reads)
+        const blob = await put('fuel-data.json', fuelDataJson, {
           access: 'public',
           addRandomSuffix: false,
           contentType: 'application/json',
           allowOverwrite: true,
         })
-        console.log(`[fuel-ingest] Blob written: ${blob.url} (${enriched.length} stations, updatedAt=${updatedAt})`)
-        const uploadJson = { success: true, count: enriched.length, updatedAt, blobUrl: blob.url }
+        // Dated archive snapshot (preserves daily history for trend analysis).
+        // Same content, but the dated filename means it's never overwritten.
+        const snapshotName = `fuel-data-${updatedAt}.json`
+        const snapshotBlob = await put(snapshotName, fuelDataJson, {
+          access: 'public',
+          addRandomSuffix: false,
+          contentType: 'application/json',
+          allowOverwrite: true,
+        })
+        console.log(`[fuel-ingest] Blob written: ${blob.url} (${enriched.length} stations, updatedAt=${updatedAt}); snapshot: ${snapshotBlob.url}`)
+        const uploadJson = { success: true, count: enriched.length, updatedAt, blobUrl: blob.url, snapshotUrl: snapshotBlob.url }
         detail.status = 'uploaded'
         detail.uploadResponse = uploadJson
 
