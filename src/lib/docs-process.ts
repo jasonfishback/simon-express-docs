@@ -29,5 +29,6 @@ export async function imageToPdfBase64(input: Buffer): Promise<string> {
   const h = height * scale;
   const dataUrl = `data:image/jpeg;base64,${jpeg.toString('base64')}`;
   doc.addImage(dataUrl, 'JPEG', (pageW - w) / 2, (pageH - h) / 2, w, h);
-  return (doc.output('arraybuffer') as ArrayBuffer && Buffer.from(doc.output('arraybuffer') as ArrayBuffer).toString('base64'));
+  const buf = doc.output('arraybuffer') as ArrayBuffer;
+  return Buffer.from(buf).toString('base64');
 }
