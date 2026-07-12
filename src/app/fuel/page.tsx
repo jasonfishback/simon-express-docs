@@ -1236,7 +1236,9 @@ export default function FuelPage() {
               const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
               const roomInTank = TANK - fuelAtStation
               if (roomInTank >= MIN_FILL) {
-                let fill = Math.min(roomInTank, gallonsToEndWithReserve)
+                // A1 fix: size the fill by what's MISSING (needed minus fuel already onboard),
+                // not the full end-to-end requirement stacked on top of the fuel in the tank.
+                let fill = Math.min(roomInTank, Math.max(0, gallonsToEndWithReserve - fuelAtStation))
                 if (fill < MIN_FILL) fill = Math.min(MIN_FILL, roomInTank)
                 const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
                 if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
@@ -1249,7 +1251,7 @@ export default function FuelPage() {
                     fill = Math.min(caFill, roomInTank)
                   }
                 }
-                fill = Math.min(Math.round(fill), Math.floor(roomInTank))
+                fill = Math.min(Math.ceil(fill), Math.floor(roomInTank)) // ceil: rounding down could land a hair short of the reserve
                 if (fill < 1) break
                 const tankAfterFill = fuelAtStation + fill
                 const resultsInFullTank = tankAfterFill >= TANK - 5
@@ -1297,7 +1299,9 @@ export default function FuelPage() {
               const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
               const roomInTank = TANK - fuelAtStation
               if (roomInTank >= MIN_FILL) {  // Only proceed if there's enough room to meaningfully refuel
-                let fill = Math.min(roomInTank, gallonsToEndWithReserve)
+                // A1 fix: size the fill by what's MISSING (needed minus fuel already onboard),
+                // not the full end-to-end requirement stacked on top of the fuel in the tank.
+                let fill = Math.min(roomInTank, Math.max(0, gallonsToEndWithReserve - fuelAtStation))
                 if (fill < MIN_FILL) fill = Math.min(MIN_FILL, roomInTank)
                 const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
                 if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
@@ -1310,7 +1314,7 @@ export default function FuelPage() {
                     fill = Math.min(caFill, roomInTank)
                   }
                 }
-                fill = Math.min(Math.round(fill), Math.floor(roomInTank))
+                fill = Math.min(Math.ceil(fill), Math.floor(roomInTank)) // ceil: rounding down could land a hair short of the reserve
                 if (fill < 1) break
                 const tankAfterFill = fuelAtStation + fill
                 const resultsInFullTank = tankAfterFill >= TANK - 5
@@ -1356,7 +1360,9 @@ export default function FuelPage() {
             const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
             const roomInTank = TANK - fuelAtStation
 
-            let fill = Math.min(roomInTank, gallonsToEndWithReserve)
+            // A1 fix: size the fill by what's MISSING (needed minus fuel already onboard),
+            // not the full end-to-end requirement stacked on top of the fuel in the tank.
+            let fill = Math.min(roomInTank, Math.max(0, gallonsToEndWithReserve - fuelAtStation))
             if (fill < MIN_FILL) fill = Math.min(MIN_FILL, roomInTank)
             const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
             if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
@@ -1370,7 +1376,7 @@ export default function FuelPage() {
                 fill = Math.min(caFill, roomInTank)
               }
             }
-            fill = Math.min(Math.round(fill), Math.floor(roomInTank))
+            fill = Math.min(Math.ceil(fill), Math.floor(roomInTank)) // ceil: rounding down could land a hair short of the reserve
             if (fill < 1) break
 
             const tankAfterFill = fuelAtStation + fill
@@ -1403,11 +1409,16 @@ export default function FuelPage() {
         if (roomInTank < MIN_FILL) {
           // Advance past this station and look for another further along.
           // Use a slightly-forward position so the next iteration doesn't re-pick the same station.
-          pos = chosen.pos + 1
+          // A2 fix: advancing costs fuel — burn the skipped miles.
+          const newPos = chosen.pos + 1
+          fuel -= (newPos - pos) / MPG
+          pos = newPos
           continue
         }
 
-        let fill = Math.min(roomInTank, gallonsToEndWithReserve)
+        // A1 fix: size the fill by what's MISSING (needed minus fuel already onboard),
+        // not the full end-to-end requirement stacked on top of the fuel in the tank.
+        let fill = Math.min(roomInTank, Math.max(0, gallonsToEndWithReserve - fuelAtStation))
         if (fill < MIN_FILL) fill = Math.min(MIN_FILL, roomInTank)
         // If this station is in the lowest 15% of prices on this route, fill completely
         const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
@@ -1432,7 +1443,7 @@ export default function FuelPage() {
           // If no non-CA station is ahead (destination is in CA too), fill normally
         }
 
-        fill = Math.min(Math.round(fill), Math.floor(roomInTank))
+        fill = Math.min(Math.ceil(fill), Math.floor(roomInTank)) // ceil: rounding down could land a hair short of the reserve
         if (fill < 1) break
 
         const tankAfterFill = fuelAtStation + fill
