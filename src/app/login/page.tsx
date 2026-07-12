@@ -129,7 +129,6 @@ function LoginForm() {
             value={code}
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             onKeyDown={(e) => e.key === 'Enter' && submit()}
-            placeholder="e.g. SUNTH"
             autoComplete="off"
             autoCapitalize="characters"
             autoCorrect="off"
