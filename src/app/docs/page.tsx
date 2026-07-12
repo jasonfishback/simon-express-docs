@@ -1,7 +1,9 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import styles from './page.module.css'
+import DriverBadge from '@/components/DriverBadge'
+import { getDriverFromDocumentCookie } from '@/lib/driver-auth'
 
 type Tag = 'bol' | 'lumper' | 'receipt' | 'other'
 
@@ -153,6 +155,12 @@ export default function Home() {
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const idRef = useRef(0)
+
+  // Logged-in driver (sx_driver cookie) → prefill the name field once.
+  useEffect(() => {
+    const d = getDriverFromDocumentCookie()
+    if (d?.name) setDriverName((prev) => prev || d.name || '')
+  }, [])
 
   const readDataUrl = (file: File): Promise<string> =>
     new Promise((res, rej) => {
@@ -374,6 +382,9 @@ export default function Home() {
       </div>
       <h1 className={styles.screenTitle}>Document Submission</h1>
       <p className={styles.screenSubtitle}>Submit BOL, lumper receipts &amp; paperwork</p>
+      <div style={{ marginTop: 6 }}>
+        <DriverBadge />
+      </div>
 
       {screen === 'form' && (
         <main className={styles.formView}>
