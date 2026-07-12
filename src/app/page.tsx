@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import DriverBadge from '@/components/DriverBadge'
 
 export default function HomePage() {
   const router = useRouter()
@@ -64,6 +65,9 @@ export default function HomePage() {
         }}>
           Driver Portal
         </p>
+        <div style={{ marginTop: 8 }}>
+          <DriverBadge />
+        </div>
       </header>
 
       {/* Main — full-width frosted glass cards, top-aligned for mobile */}

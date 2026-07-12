@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import stationAmenities from '../../data/station-amenities.json'
+import DriverBadge from '@/components/DriverBadge'
+import { getDriverFromDocumentCookie } from '@/lib/driver-auth'
 
 interface Station {
   site: string
@@ -38,6 +40,16 @@ const STATE_LIST = [
 ]
 
 type ViewMode = 'all' | 'route'
+
+/** The logged-in driver's current load (from /api/current-load → kpi). */
+interface CurrentLoad {
+  order_num: string
+  origin: string | null
+  destination: string | null
+  ship_date: string | null
+  delivery_date: string | null
+  customer: string | null
+}
 
 /**
  * Build a Google Maps URL that routes to the ACTUAL STREET ADDRESS of a station.
@@ -127,6 +139,11 @@ export default function FuelPage() {
   const [viewMode, setViewMode] = useState<ViewMode>('route')
   const [origin, setOrigin] = useState('')
   const [destination, setDestination] = useState('')
+  // Logged-in driver's current load — the route planner DEFAULTS to it
+  // (origin/destination pre-filled); "Plan a different route" reveals the
+  // manual inputs. Manual entry is untouched when no load is found.
+  const [currentLoad, setCurrentLoad] = useState<CurrentLoad | null>(null)
+  const [useMyLoad, setUseMyLoad] = useState(false)
   const [viaPoints, setViaPoints] = useState<string[]>([])
   const [extraMilesFromVias, setExtraMilesFromVias] = useState<number>(0)
   const [isRoundTrip, setIsRoundTrip] = useState<boolean>(false)
@@ -553,6 +570,38 @@ export default function FuelPage() {
     )
     googleMap.current.fitBounds(bounds, { top: 20, right: 20, bottom: 20, left: 20 })
   }, [selectedStation, searchCenter, mapLoaded])
+
+  // ── Current-load default (logged-in drivers) ──────────────────────────────
+  // Pre-fill origin/destination from the load and keep the visible inputs in
+  // sync (they're uncontrolled defaultValue inputs because Google Places
+  // autocomplete owns them — same pattern as "Use my location").
+  const applyLoadRoute = useCallback((load: CurrentLoad) => {
+    const o = (load.origin || '').trim()
+    const d = (load.destination || '').trim()
+    if (!o || !d) return
+    setOrigin(o)
+    setDestination(d)
+    if (originRef.current) originRef.current.value = o
+    if (destRef.current) destRef.current.value = d
+  }, [])
+
+  useEffect(() => {
+    if (!getDriverFromDocumentCookie()) return
+    let cancelled = false
+    fetch('/api/current-load', { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => {
+        if (cancelled || !j?.ok || !j.load?.order_num) return
+        const load = j.load as CurrentLoad
+        if (!(load.origin || '').trim() || !(load.destination || '').trim()) return
+        setCurrentLoad(load)
+        setUseMyLoad(true)
+        applyLoadRoute(load)
+      })
+      .catch(() => {}) // no load / kpi down → manual entry as always
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const findClosest = () => {
     setLocating(true)
@@ -1625,6 +1674,9 @@ export default function FuelPage() {
         >
           ← Back
         </a>
+        <div style={{ marginLeft: 'auto' }}>
+          <DriverBadge />
+        </div>
       </div>
       <h1 style={{
         fontFamily: 'var(--display)',
@@ -1719,6 +1771,58 @@ export default function FuelPage() {
               Plan Your Route
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+              {/* Current-load default — logged-in drivers with an active load
+                  start here; origin/destination are already filled in. */}
+              {currentLoad && useMyLoad && (
+                <div style={{
+                  padding: '14px 16px',
+                  background: 'rgba(22,163,74,0.06)',
+                  border: '1px solid rgba(22,163,74,0.25)',
+                  borderRadius: 'var(--r-md)',
+                  boxShadow: 'var(--sh-sm)',
+                }}>
+                  <p className="sx-kicker" style={{ color: 'var(--green-deep)' }}>
+                    🚚 Your Current Load
+                  </p>
+                  <p className="sx-display" style={{ fontSize: 17, marginTop: 8, color: 'var(--ink)' }}>
+                    {currentLoad.origin} → {currentLoad.destination}
+                  </p>
+                  <p className="sx-mono" style={{ fontSize: 12, color: 'var(--mute)', marginTop: 5 }}>
+                    #{currentLoad.order_num}
+                    {currentLoad.customer ? ` · ${currentLoad.customer}` : ''}
+                    {currentLoad.delivery_date ? ` · del ${String(currentLoad.delivery_date).slice(0, 10)}` : ''}
+                  </p>
+                  <button
+                    className="sx-btn-soft"
+                    style={{ marginTop: 12 }}
+                    onClick={() => setUseMyLoad(false)}
+                  >
+                    ✏️ Plan a different route
+                  </button>
+                </div>
+              )}
+              {currentLoad && !useMyLoad && (
+                <button
+                  className="sx-btn-soft"
+                  style={{
+                    alignSelf: 'flex-start',
+                    borderColor: 'rgba(22,163,74,0.35)',
+                    background: 'rgba(22,163,74,0.06)',
+                    color: 'var(--green-deep)',
+                  }}
+                  onClick={() => { setUseMyLoad(true); applyLoadRoute(currentLoad) }}
+                >
+                  🚚 Use my current load (#{currentLoad.order_num})
+                </button>
+              )}
+              {/* Manual route entry — hidden (but kept mounted so Google
+                  Places autocomplete stays attached to the inputs) while the
+                  current-load default is active. */}
+              <div style={{
+                display: currentLoad && useMyLoad ? 'none' : 'flex',
+                flexDirection: 'column',
+                gap: 10,
+              }}>
               <input
                 ref={originRef}
                 defaultValue={origin}
@@ -1894,6 +1998,7 @@ export default function FuelPage() {
                 autoComplete="off"
                 className="sx-input"
               />
+              </div>{/* /manual route entry */}
               {/* Fuel level slider */}
               <div className="sx-card-flat">
                 <p className="sx-kicker" style={{ marginBottom: 10, color: 'var(--steel)' }}>
