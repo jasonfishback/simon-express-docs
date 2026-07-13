@@ -52,6 +52,20 @@ interface CurrentLoad {
 }
 
 /**
+ * Anchor a free-text place to the US before it hits Google Directions.
+ * "ONTARIO, CA" famously geocodes to Ontario, CANADA (the whole province) and
+ * Directions returns ZERO_RESULTS — which killed route planning for a real
+ * Dallas → Ontario load (Kevin, 7/12). Appending ", USA" resolves it to
+ * Ontario, California. Applied to every origin/destination/via string; skips
+ * anything that already names the country. All Simon freight is US domestic.
+ */
+function usPlace(s: string): string {
+  const t = s.trim()
+  if (!t || /\busa\b|\bunited states\b/i.test(t)) return t
+  return `${t}, USA`
+}
+
+/**
  * Build a Google Maps URL that routes to the ACTUAL STREET ADDRESS of a station.
  * Google Maps geocodes the address text and plots driving directions to that specific building,
  * not just a pin at arbitrary coordinates. Falls back to lat/lng only if no address is available.
@@ -680,13 +694,13 @@ export default function FuelPage() {
 
     const doRoute = () => {
       const routeRequest: any = {
-        origin: origin.trim(),
-        destination: destination.trim(),
+        origin: usPlace(origin),
+        destination: usPlace(destination),
         travelMode: G.maps.TravelMode.DRIVING,
         avoidTolls: true,
       }
       if (validVias.length > 0) {
-        routeRequest.waypoints = validVias.map(loc => ({ location: loc, stopover: true }))
+        routeRequest.waypoints = validVias.map(loc => ({ location: usPlace(loc), stopover: true }))
         routeRequest.optimizeWaypoints = false // keep the order the user specified
       }
       directionsService.route(routeRequest, (result: any, status: any) => {
@@ -1079,8 +1093,8 @@ export default function FuelPage() {
     if (validVias.length > 0) {
       const directService = new G.maps.DirectionsService()
       directService.route({
-        origin: origin.trim(),
-        destination: destination.trim(),
+        origin: usPlace(origin),
+        destination: usPlace(destination),
         travelMode: G.maps.TravelMode.DRIVING,
         avoidTolls: true,
       }, (directResult: any, directStatus: any) => {
