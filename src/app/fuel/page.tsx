@@ -167,6 +167,13 @@ export default function FuelPage() {
   const [routeStations, setRouteStations] = useState<Station[]>([])
   const [routeLoading, setRouteLoading] = useState(false)
   const [routeError, setRouteError] = useState('')
+  // Where the plan actually starts (GPS vs load origin) — shown to the driver.
+  const [routeStartNote, setRouteStartNote] = useState('')
+  // Truck's mile marker along the displayed route (0 = load origin). The
+  // optimizer only uses stations AHEAD of this — drivers don't go backwards.
+  const [truckStartMile, setTruckStartMile] = useState(0)
+  const truckMarkerRef = useRef<any>(null)
+  const truckPulseTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const [routeInfo, setRouteInfo] = useState<{distance: string, duration: string, miles: number} | null>(null)
   const [currentFuelEighths, setCurrentFuelEighths] = useState<number>(4) // 0-8, default 1/2 tank
   const [routeDistanceMap, setRouteDistanceMap] = useState<Map<string, number>>(new Map()) // station site -> miles from origin
@@ -668,11 +675,51 @@ export default function FuelPage() {
 
     setRouteLoading(true)
     setRouteError('')
+    setRouteStartNote('')
     setRouteStations([])
     setRouteInfo(null)
 
     const G = (window as any).google
     if (!G) { setRouteError('Google Maps not loaded.'); setRouteLoading(false); return }
+
+    // Defaulted-load planning starts from where the truck actually IS — a
+    // driver halfway to Ontario must not get a plan that starts back in
+    // Dallas (Jason 7/13). The FULL load route still displays on the map; the
+    // truck's GPS is projected onto it (red pulsing blip) and the optimizer
+    // only considers stations AHEAD of that mile marker. "Plan a different
+    // route" manual entries are used exactly as typed, no GPS.
+    let gpsStart: { lat: number, lng: number } | null = null
+    if (useMyLoad) {
+      gpsStart = await new Promise<{ lat: number, lng: number } | null>((resolve) => {
+        if (!navigator.geolocation) return resolve(null)
+        navigator.geolocation.getCurrentPosition(
+          (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+          () => resolve(null),
+          { enableHighAccuracy: true, timeout: 8000 },
+        )
+      })
+      if (!gpsStart) {
+        setRouteStartNote(`Couldn't get your location — planning the full route from ${origin}. Allow location access to plan from where you are.`)
+      }
+    }
+
+    // Red pulsing blip where the truck currently is.
+    const placeTruckBlip = (pos: { lat: number, lng: number }) => {
+      if (truckPulseTimerRef.current) clearInterval(truckPulseTimerRef.current)
+      if (truckMarkerRef.current) truckMarkerRef.current.setMap(null)
+      const icon = (scale: number, opacity: number) => ({
+        path: G.maps.SymbolPath.CIRCLE, scale,
+        fillColor: '#D71920', fillOpacity: opacity,
+        strokeColor: '#ffffff', strokeWeight: 2,
+      })
+      const marker = new G.maps.Marker({ position: pos, map: googleMap.current, icon: icon(8, 1), zIndex: 9999, title: 'Your truck is here' })
+      truckMarkerRef.current = marker
+      let big = false
+      truckPulseTimerRef.current = setInterval(() => {
+        big = !big
+        marker.setIcon(icon(big ? 12 : 7, big ? 0.55 : 1))
+      }, 600)
+    }
 
     // Clear previous route
     if (routeRendererRef.current) {
@@ -933,6 +980,28 @@ export default function FuelPage() {
           return false
         }).map(d => d.station).sort((a, b) => (distMap.get(a.site) || 0) - (distMap.get(b.site) || 0))
 
+        // Project the truck's GPS onto the route: the fuel plan starts at that
+        // mile marker (stations behind the truck are excluded), while the map
+        // still shows the FULL load route with a red blip at the truck.
+        let startMile = 0
+        if (gpsStart) {
+          let minDist = Infinity, closestIdx = 0
+          for (let i = 0; i < routePoints.length; i++) {
+            const d = haversine(gpsStart.lat, gpsStart.lng, routePoints[i].lat, routePoints[i].lng)
+            if (d < minDist) { minDist = d; closestIdx = i }
+          }
+          if (minDist <= 30) {
+            startMile = routeCumulativeMiles[closestIdx] || 0
+            setRouteStartNote(startMile > 5
+              ? `📍 Your truck is at ~mile ${Math.round(startMile)} of ${Math.round(totalMiles)} — the fuel plan starts from where you are, not from ${origin}`
+              : '📍 Routing from your current position (start of the route)')
+          } else {
+            setRouteStartNote(`📍 You're ${Math.round(minDist)} mi off this route — planning the full route from ${origin}`)
+          }
+          placeTruckBlip(gpsStart)
+        }
+        setTruckStartMile(startMile)
+
         setRouteDistanceMap(distMap)
         setRouteDetourMap(detourMap)
         setRouteStations(nearby)
@@ -944,7 +1013,7 @@ export default function FuelPage() {
         setSelectedStation(null)
         setRouteAlerts(alerts)
         // Auto-run optimizer with the freshly-computed data
-        optimizeFuel(nearby, distMap, totalMiles, detourMap)
+        optimizeFuel(nearby, distMap, totalMiles, detourMap, startMile)
 
         // Sample weather at 8 evenly-spaced points along the route to detect severe conditions
         // (More samples = better chance of catching state-by-state variations on long routes)
@@ -1119,7 +1188,12 @@ export default function FuelPage() {
       setExtraMilesFromVias(0)
       doRoute()
     }
-  }, [origin, destination, viaPoints, corridorMiles, data])
+  }, [origin, destination, viaPoints, corridorMiles, data, useMyLoad])
+
+  // Stop the truck-blip pulse when leaving the page.
+  useEffect(() => () => {
+    if (truckPulseTimerRef.current) clearInterval(truckPulseTimerRef.current)
+  }, [])
 
   const clearRoute = () => {
     if (routeRendererRef.current) {
@@ -1146,14 +1220,16 @@ export default function FuelPage() {
   // Auto re-run optimizer when fuel level changes
   useEffect(() => {
     if (routeInfo && routeStations.length > 0 && viewMode === 'route') {
-      optimizeFuel(routeStations, routeDistanceMap, routeInfo.miles, routeDetourMap)
+      optimizeFuel(routeStations, routeDistanceMap, routeInfo.miles, routeDetourMap, truckStartMile)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFuelEighths])
 
   // Fuel optimizer: finds cheapest fill strategy, penalizing stations that require
   // long detours off the main route (> 20 miles detour unless savings justify it).
-  const optimizeFuel = (stations: Station[], distMap: Map<string, number>, totalMiles: number, detourMap: Map<string, number> = new Map()) => {
+  // startMile = the truck's current position along the route (GPS-projected);
+  // the plan only burns fuel and buys stations from there forward.
+  const optimizeFuel = (stations: Station[], distMap: Map<string, number>, totalMiles: number, detourMap: Map<string, number> = new Map(), startMile = 0) => {
     if (totalMiles === 0) { setOptimizedPlan(null); setOptimizerError(''); setSkippedStopIndices(new Set()); return }
     const TANK = 240, MIN_FUEL = 60, MIN_FILL = 50, MPG = 6, THRESHOLD = 0.20
     // Corridor = stations within 10 miles of route. These are always preferred.
@@ -1165,7 +1241,7 @@ export default function FuelPage() {
     // Mid-detour station must save at least this much per gallon vs cheapest corridor option to be picked
     const MID_DETOUR_SAVINGS_THRESHOLD = 0.20  // 20 cents/gal
     const currentFuel = (currentFuelEighths / 8) * TANK
-    const fuelToBurn = totalMiles / MPG
+    const fuelToBurn = (totalMiles - startMile) / MPG
 
     // Corridor stations with position and detour data
     // Filter out backward stations: if the station's position along route is less than its detour,
@@ -1177,7 +1253,8 @@ export default function FuelPage() {
         detour: detourMap.get(s.site) ?? 0,
       }))
       .filter(s => {
-        if (s.pos <= 0 || s.pos >= totalMiles) return false
+        // Behind the truck (or origin, when no GPS) = never a candidate.
+        if (s.pos <= startMile || s.pos >= totalMiles) return false
         // Exclude stations that are clearly behind origin (backward direction)
         // A station whose position-from-origin is less than half its detour is probably backward
         if (s.pos < s.detour * 0.5) return false
@@ -1267,7 +1344,7 @@ export default function FuelPage() {
 
     const buildPlan = (selector: (cands: Array<{station: Station, pos: number, detour: number}>) => {station: Station, pos: number, detour: number}): {plan: Stop[], unreachable: boolean} => {
       const plan: Stop[] = []
-      let pos = 0, fuel = currentFuel
+      let pos = startMile, fuel = currentFuel
       let unreachable = false
       for (let iter = 0; iter < 30; iter++) {
         const distLeft = totalMiles - pos
@@ -2083,6 +2160,7 @@ export default function FuelPage() {
               </div>
             </div>
             {routeError && <p style={{ fontSize: 13, color: 'var(--red)', marginTop: 10, fontWeight: 500 }}>{routeError}</p>}
+            {routeStartNote && <p style={{ fontSize: 13, color: 'var(--ink, #18181b)', marginTop: 10, fontWeight: 600 }}>{routeStartNote}</p>}
             {routeInfo && (
               <>
                 <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
