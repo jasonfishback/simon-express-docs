@@ -182,6 +182,11 @@ export default function FuelPage() {
   const [caEscapeMiles, setCaEscapeMiles] = useState(0)
   const [nextLoad, setNextLoad] = useState<CurrentLoad | null>(null)
   const nextLoadRef = useRef<CurrentLoad | null>(null)
+  // The TRUCK's Omnitracs position (from kpi, ≤4h old) — the routing origin
+  // for the defaulted load. NEVER the phone's GPS: whoever opens the page
+  // (dispatch, Jason) isn't necessarily sitting in the truck (7/13: Jason ran
+  // Kevin's Dallas→Ontario route from Utah and the blip landed in Utah).
+  const truckPosRef = useRef<{ lat: number, lng: number } | null>(null)
   const [nextRouteSuggestion, setNextRouteSuggestion] = useState<{
     station: Station, miles: number, toward: string, assumed: boolean, nextOrder: string | null,
   } | null>(null)
@@ -640,6 +645,11 @@ export default function FuelPage() {
         const next = (j.next_load ?? null) as CurrentLoad | null
         setNextLoad(next)
         nextLoadRef.current = next
+        // Truck position from Omnitracs (may be null when the feed is stale).
+        const tp = j.truck_position as { lat: number, lon: number } | null | undefined
+        truckPosRef.current = tp && typeof tp.lat === 'number' && typeof tp.lon === 'number'
+          ? { lat: tp.lat, lng: tp.lon }
+          : null
       })
       .catch(() => {}) // no load / kpi down → manual entry as always
     return () => { cancelled = true }
@@ -704,24 +714,18 @@ export default function FuelPage() {
     const G = (window as any).google
     if (!G) { setRouteError('Google Maps not loaded.'); setRouteLoading(false); return }
 
-    // Defaulted-load planning starts from where the truck actually IS — a
-    // driver halfway to Ontario must not get a plan that starts back in
-    // Dallas (Jason 7/13). The FULL load route still displays on the map; the
-    // truck's GPS is projected onto it (red pulsing blip) and the optimizer
-    // only considers stations AHEAD of that mile marker. "Plan a different
-    // route" manual entries are used exactly as typed, no GPS.
+    // Defaulted-load planning starts from where the TRUCK actually is — its
+    // Omnitracs position from kpi, never this phone's GPS (dispatch or Jason
+    // may be running the page from Utah while the truck is in Texas, 7/13).
+    // The FULL load route still displays on the map; the truck position is
+    // projected onto it (red pulsing blip) and the optimizer only considers
+    // stations AHEAD of that mile marker. "Plan a different route" manual
+    // entries are used exactly as typed, no truck position involved.
     let gpsStart: { lat: number, lng: number } | null = null
     if (useMyLoad) {
-      gpsStart = await new Promise<{ lat: number, lng: number } | null>((resolve) => {
-        if (!navigator.geolocation) return resolve(null)
-        navigator.geolocation.getCurrentPosition(
-          (pos) => resolve({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-          () => resolve(null),
-          { enableHighAccuracy: true, timeout: 8000 },
-        )
-      })
+      gpsStart = truckPosRef.current
       if (!gpsStart) {
-        setRouteStartNote(`Couldn't get your location — planning the full route from ${origin}. Allow location access to plan from where you are.`)
+        setRouteStartNote(`No recent truck GPS from Omnitracs — planning the full route from ${origin}.`)
       }
     }
 
@@ -1015,10 +1019,10 @@ export default function FuelPage() {
           if (minDist <= 30) {
             startMile = routeCumulativeMiles[closestIdx] || 0
             setRouteStartNote(startMile > 5
-              ? `📍 Your truck is at ~mile ${Math.round(startMile)} of ${Math.round(totalMiles)} — the fuel plan starts from where you are, not from ${origin}`
-              : '📍 Routing from your current position (start of the route)')
+              ? `🛰️ Your truck (Omnitracs) is at ~mile ${Math.round(startMile)} of ${Math.round(totalMiles)} — the fuel plan starts from the truck, not from ${origin}`
+              : '🛰️ Truck is at the start of the route (Omnitracs position)')
           } else {
-            setRouteStartNote(`📍 You're ${Math.round(minDist)} mi off this route — planning the full route from ${origin}`)
+            setRouteStartNote(`🛰️ Truck's Omnitracs position is ${Math.round(minDist)} mi off this route — planning the full route from ${origin}`)
           }
           placeTruckBlip(gpsStart)
         }
