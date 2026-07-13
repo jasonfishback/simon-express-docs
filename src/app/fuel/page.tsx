@@ -174,6 +174,17 @@ export default function FuelPage() {
   const [truckStartMile, setTruckStartMile] = useState(0)
   const truckMarkerRef = useRef<any>(null)
   const truckPulseTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  // California-escape planning: when the load delivers in CA, the plan buys
+  // enough fuel BEFORE the border to deliver and drive CA_ESCAPE_MILES back
+  // out — avoiding California prices entirely (Kevin 7/13). The driver's next
+  // load (from kpi, when dispatch has it) refines where "out" is; 90% of the
+  // time it's back toward Salt Lake City.
+  const [caEscapeMiles, setCaEscapeMiles] = useState(0)
+  const [nextLoad, setNextLoad] = useState<CurrentLoad | null>(null)
+  const nextLoadRef = useRef<CurrentLoad | null>(null)
+  const [nextRouteSuggestion, setNextRouteSuggestion] = useState<{
+    station: Station, miles: number, toward: string, assumed: boolean, nextOrder: string | null,
+  } | null>(null)
   const [routeInfo, setRouteInfo] = useState<{distance: string, duration: string, miles: number} | null>(null)
   const [currentFuelEighths, setCurrentFuelEighths] = useState<number>(4) // 0-8, default 1/2 tank
   const [routeDistanceMap, setRouteDistanceMap] = useState<Map<string, number>>(new Map()) // station site -> miles from origin
@@ -618,6 +629,10 @@ export default function FuelPage() {
         setCurrentLoad(load)
         setUseMyLoad(true)
         applyLoadRoute(load)
+        // Next assigned load (may be null) — used for CA-escape planning.
+        const next = (j.next_load ?? null) as CurrentLoad | null
+        setNextLoad(next)
+        nextLoadRef.current = next
       })
       .catch(() => {}) // no load / kpi down → manual entry as always
     return () => { cancelled = true }
@@ -1002,6 +1017,16 @@ export default function FuelPage() {
         }
         setTruckStartMile(startMile)
 
+        // California delivery? Budget escape fuel so the driver can deliver
+        // AND get out of CA on fuel bought before the border. end_address is
+        // Google's resolved destination, e.g. "Ontario, CA 91761, USA".
+        const endAddress = String(result.routes[0].legs[result.routes[0].legs.length - 1]?.end_address ?? '')
+        const destInCA = /,\s*CA[\s,]/.test(endAddress)
+        const CA_ESCAPE_MILES = 250
+        const escapeMiles = destInCA ? CA_ESCAPE_MILES : 0
+        setCaEscapeMiles(escapeMiles)
+        setNextRouteSuggestion(null)
+
         setRouteDistanceMap(distMap)
         setRouteDetourMap(detourMap)
         setRouteStations(nearby)
@@ -1013,7 +1038,56 @@ export default function FuelPage() {
         setSelectedStation(null)
         setRouteAlerts(alerts)
         // Auto-run optimizer with the freshly-computed data
-        optimizeFuel(nearby, distMap, totalMiles, detourMap, startMile)
+        optimizeFuel(nearby, distMap, totalMiles, detourMap, startMile, escapeMiles)
+
+        // CA trip: also suggest the first cheap NON-CA station on the likely
+        // NEXT route out — the driver's next assigned load when kpi has it,
+        // else the 90%-case assumption of heading back to Salt Lake City.
+        if (destInCA && data) {
+          const next = nextLoadRef.current
+          const nextDest = (next?.destination ?? '').trim()
+          const useNext = !!nextDest && !/,\s*CA\b/i.test(nextDest)
+          const toward = useNext ? nextDest : 'Salt Lake City, UT'
+          new G.maps.DirectionsService().route({
+            origin: usPlace(destination),
+            destination: usPlace(toward),
+            travelMode: G.maps.TravelMode.DRIVING,
+            avoidTolls: true,
+          }, (escRes: any, escStatus: any) => {
+            if (escStatus !== 'OK' || !escRes?.routes?.[0]?.overview_path?.length) return
+            const path = escRes.routes[0].overview_path
+            const pt = (p: any) => ({ lat: typeof p.lat === 'function' ? p.lat() : p.lat, lng: typeof p.lng === 'function' ? p.lng() : p.lng })
+            const cum: number[] = [0]
+            for (let i = 1; i < path.length; i++) {
+              const a = pt(path[i - 1]), b = pt(path[i])
+              cum.push(cum[i - 1] + haversine(a.lat, a.lng, b.lat, b.lng))
+            }
+            let best: { station: Station, miles: number } | null = null
+            data.stations.forEach(s => {
+              if (s.state === 'CA') return
+              let minD = Infinity, idx = 0
+              for (let i = 0; i < path.length; i++) {
+                const p = pt(path[i])
+                const d = haversine(s.lat, s.lng, p.lat, p.lng)
+                if (d < minD) { minD = d; idx = i }
+              }
+              if (minD > 10) return
+              const pos = cum[idx]
+              if (pos > 400) return
+              if (!best || s.yourPrice < best.station.yourPrice) best = { station: s, miles: pos }
+            })
+            if (best) {
+              const b = best as { station: Station, miles: number }
+              setNextRouteSuggestion({
+                station: b.station,
+                miles: Math.round(b.miles),
+                toward,
+                assumed: !useNext,
+                nextOrder: useNext ? (next?.order_num ?? null) : null,
+              })
+            }
+          })
+        }
 
         // Sample weather at 8 evenly-spaced points along the route to detect severe conditions
         // (More samples = better chance of catching state-by-state variations on long routes)
@@ -1220,7 +1294,7 @@ export default function FuelPage() {
   // Auto re-run optimizer when fuel level changes
   useEffect(() => {
     if (routeInfo && routeStations.length > 0 && viewMode === 'route') {
-      optimizeFuel(routeStations, routeDistanceMap, routeInfo.miles, routeDetourMap, truckStartMile)
+      optimizeFuel(routeStations, routeDistanceMap, routeInfo.miles, routeDetourMap, truckStartMile, caEscapeMiles)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFuelEighths])
@@ -1229,8 +1303,14 @@ export default function FuelPage() {
   // long detours off the main route (> 20 miles detour unless savings justify it).
   // startMile = the truck's current position along the route (GPS-projected);
   // the plan only burns fuel and buys stations from there forward.
-  const optimizeFuel = (stations: Station[], distMap: Map<string, number>, totalMiles: number, detourMap: Map<string, number> = new Map(), startMile = 0) => {
+  // escapeMiles = extra miles the driver must be able to run PAST the
+  // destination on arrival fuel. Used for California deliveries: buy enough at
+  // the last cheap non-CA station to deliver AND get back out (~250 mi reaches
+  // Vegas/Kingman-grade fuel) instead of paying CA prices to leave (Kevin,
+  // 7/13). Stations stay limited to the real route; only the fuel budget grows.
+  const optimizeFuel = (stations: Station[], distMap: Map<string, number>, totalMiles: number, detourMap: Map<string, number> = new Map(), startMile = 0, escapeMiles = 0) => {
     if (totalMiles === 0) { setOptimizedPlan(null); setOptimizerError(''); setSkippedStopIndices(new Set()); return }
+    const planEndMile = totalMiles + escapeMiles
     const TANK = 240, MIN_FUEL = 60, MIN_FILL = 50, MPG = 6, THRESHOLD = 0.20
     // Corridor = stations within 10 miles of route. These are always preferred.
     const CORRIDOR_DETOUR = 10
@@ -1241,7 +1321,7 @@ export default function FuelPage() {
     // Mid-detour station must save at least this much per gallon vs cheapest corridor option to be picked
     const MID_DETOUR_SAVINGS_THRESHOLD = 0.20  // 20 cents/gal
     const currentFuel = (currentFuelEighths / 8) * TANK
-    const fuelToBurn = (totalMiles - startMile) / MPG
+    const fuelToBurn = (planEndMile - startMile) / MPG
 
     // Corridor stations with position and detour data
     // Filter out backward stations: if the station's position along route is less than its detour,
@@ -1347,7 +1427,7 @@ export default function FuelPage() {
       let pos = startMile, fuel = currentFuel
       let unreachable = false
       for (let iter = 0; iter < 30; iter++) {
-        const distLeft = totalMiles - pos
+        const distLeft = planEndMile - pos
         if (fuel - (distLeft / MPG) >= MIN_FUEL) {
           break
         }
@@ -1372,7 +1452,7 @@ export default function FuelPage() {
             if (firstStopCandidates.length > 0) {
               const chosen = selector(firstStopCandidates)
               const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
-              const distFromStation = totalMiles - chosen.pos
+              const distFromStation = planEndMile - chosen.pos
               const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
               const roomInTank = TANK - fuelAtStation
               if (roomInTank >= MIN_FILL) {
@@ -1435,7 +1515,7 @@ export default function FuelPage() {
               // Use the deferred candidates for picking the cheapest (rather than ALL candidates)
               const chosen = selector(eligibleStations)
               const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
-              const distFromStation = totalMiles - chosen.pos
+              const distFromStation = planEndMile - chosen.pos
               const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
               const roomInTank = TANK - fuelAtStation
               if (roomInTank >= MIN_FILL) {  // Only proceed if there's enough room to meaningfully refuel
@@ -1496,7 +1576,7 @@ export default function FuelPage() {
             // Use the deferred candidates instead of the full set
             const chosen = selector(reachableAfterMin)
             const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
-            const distFromStation = totalMiles - chosen.pos
+            const distFromStation = planEndMile - chosen.pos
             const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
             const roomInTank = TANK - fuelAtStation
 
@@ -1540,7 +1620,7 @@ export default function FuelPage() {
 
         const chosen = selector(cands)
         const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
-        const distFromStation = totalMiles - chosen.pos
+        const distFromStation = planEndMile - chosen.pos
         const gallonsToEndWithReserve = (distFromStation / MPG) + MIN_FUEL
         const roomInTank = TANK - fuelAtStation
 
@@ -2161,6 +2241,25 @@ export default function FuelPage() {
             </div>
             {routeError && <p style={{ fontSize: 13, color: 'var(--red)', marginTop: 10, fontWeight: 500 }}>{routeError}</p>}
             {routeStartNote && <p style={{ fontSize: 13, color: 'var(--ink, #18181b)', marginTop: 10, fontWeight: 600 }}>{routeStartNote}</p>}
+            {caEscapeMiles > 0 && (
+              <p style={{ fontSize: 13, marginTop: 8, fontWeight: 600, color: 'var(--ink, #18181b)' }}>
+                🐻 California delivery: this plan buys enough fuel BEFORE the border to deliver <em>and</em> drive ~{caEscapeMiles} more miles out of CA — so you never pay California prices.
+              </p>
+            )}
+            {nextRouteSuggestion && (
+              <div style={{ marginTop: 10, padding: '10px 12px', borderRadius: 10, border: '1px solid rgba(215,25,32,.35)', background: 'rgba(215,25,32,.06)', fontSize: 13 }}>
+                <div style={{ fontWeight: 700, marginBottom: 2 }}>
+                  ⛽ First cheap fuel AFTER delivery{nextRouteSuggestion.nextOrder
+                    ? ` — your next load #${nextRouteSuggestion.nextOrder} heads to ${nextRouteSuggestion.toward}`
+                    : ` — assuming you head back toward ${nextRouteSuggestion.toward}`}
+                </div>
+                <div>
+                  {(nextRouteSuggestion.station.description || 'Pilot')} · {nextRouteSuggestion.station.city}, {nextRouteSuggestion.station.state}
+                  {' '}· <span className="sx-mono" style={{ fontWeight: 700 }}>${nextRouteSuggestion.station.yourPrice.toFixed(2)}</span>
+                  {' '}· ~{nextRouteSuggestion.miles} mi past your delivery
+                </div>
+              </div>
+            )}
             {routeInfo && (
               <>
                 <div style={{ marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
