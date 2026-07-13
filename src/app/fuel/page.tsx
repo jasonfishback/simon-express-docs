@@ -502,6 +502,13 @@ export default function FuelPage() {
           { featureType: 'transit', elementType: 'labels', stylers: [{ visibility: 'off' }] },
         ],
         fullscreenControl: false,
+        // No Street View on the fuel map — the pegman is one stray thumb-drag
+        // away on a phone and swaps the whole map into the panorama camera
+        // (Kevin hit it 7/13). Rotate/POI taps disabled for the same reason:
+        // this map is for routes and fuel stops, nothing else.
+        streetViewControl: false,
+        rotateControl: false,
+        clickableIcons: false,
       })
       infoWindowRef.current = new G.maps.InfoWindow()
     }
