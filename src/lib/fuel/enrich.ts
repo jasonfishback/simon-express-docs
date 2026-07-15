@@ -12,7 +12,18 @@ interface CoordEntry {
   phone: string
   /** TA cache carries the official pretty name ("TA Tuscaloosa"). */
   name?: string
+  // Amenities, where the locator source publishes them (TA's location
+  // master; Love's exit/highway). Same field names the /fuel page already
+  // renders for PFJ stations via station-amenities.json.
+  interstate?: string
+  parking?: number
+  dieselLanes?: number
+  showers?: number
+  catScale?: boolean
+  facilities?: string
 }
+
+const AMENITY_KEYS = ['interstate', 'parking', 'dieselLanes', 'showers', 'catScale', 'facilities'] as const
 
 // Per-brand coordinate caches, keyed `${site}|${state}`. All built from the
 // chains' official location data: station-coords.json from Pilot's location
@@ -40,6 +51,12 @@ export interface EnrichedStation extends ParsedStation {
   phone: string
   lat: number
   lng: number
+  interstate?: string
+  parking?: number
+  dieselLanes?: number
+  showers?: number
+  catScale?: boolean
+  facilities?: string
 }
 
 export interface EnrichResult {
@@ -70,6 +87,10 @@ export function enrichStations(rows: ParsedStation[]): EnrichResult {
 
     if (cached) {
       hits++
+      const amenities: Partial<Pick<CoordEntry, (typeof AMENITY_KEYS)[number]>> = {}
+      for (const k of AMENITY_KEYS) {
+        if (cached[k] != null) (amenities as any)[k] = cached[k]
+      }
       stations.push({
         ...r,
         brand,
@@ -79,6 +100,7 @@ export function enrichStations(rows: ParsedStation[]): EnrichResult {
         phone: cached.phone,
         lat: Math.round(cached.lat * 10000) / 10000,
         lng: Math.round(cached.lng * 10000) / 10000,
+        ...amenities,
       })
       continue
     }

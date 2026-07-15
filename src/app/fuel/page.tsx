@@ -2878,7 +2878,7 @@ export default function FuelPage() {
                   {selectedStation.catScale === true && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontSize: 14 }}>⚖️</span>
-                      <span style={{ fontSize: 12, color: 'var(--steel)' }}>CAT Scale</span>
+                      <span style={{ fontSize: 12, color: 'var(--steel)' }}>{(selectedStation.brand || 'pfj') === 'pfj' ? 'CAT Scale' : 'Truck Scale'}</span>
                     </div>
                   )}
                 </div>
