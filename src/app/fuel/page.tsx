@@ -7,6 +7,9 @@ import { getDriverFromDocumentCookie } from '@/lib/driver-auth'
 
 interface Station {
   site: string
+  // Brand of the station. Missing = 'pfj' (pre-multibrand blobs). Love's and
+  // TA/Petro arrive via the England Logistics cost-plus feed.
+  brand?: 'pfj' | 'loves' | 'ta'
   city: string
   state: string
   yourPrice: number
@@ -34,9 +37,10 @@ interface FuelData {
 }
 
 const STATE_LIST = [
-  'AL','AR','AZ','CA','CO','CT','FL','GA','IA','ID','IL','IN','KS','KY','LA',
-  'MA','MD','MI','MN','MO','MS','MT','NC','ND','NE','NJ','NM','NV','NY','OH',
-  'OK','OR','PA','SC','SD','TN','TX','UT','VA','WA','WI','WV','WY'
+  'AL','AR','AZ','CA','CO','CT','DE','FL','GA','IA','ID','IL','IN','KS','KY',
+  'LA','MA','MD','ME','MI','MN','MO','MS','MT','NC','ND','NE','NH','NJ','NM',
+  'NV','NY','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VA','VT','WA',
+  'WI','WV','WY'
 ]
 
 type ViewMode = 'all' | 'route'
@@ -65,19 +69,26 @@ function usPlace(s: string): string {
   return `${t}, USA`
 }
 
+/** Display name for a station across all brands. `description` is the PFJ
+ *  amenity-file name ("Flying J"), `name` comes from the feed/coord caches
+ *  ("Love's Travel Stop", "TA Tuscaloosa"). */
+function stationLabel(s: { description?: string; name?: string }): string {
+  return s.description || s.name || 'Pilot Travel Center'
+}
+
 /**
  * Build a Google Maps URL that routes to the ACTUAL STREET ADDRESS of a station.
  * Google Maps geocodes the address text and plots driving directions to that specific building,
  * not just a pin at arbitrary coordinates. Falls back to lat/lng only if no address is available.
  */
-function googleMapsUrl(s: { address?: string; city: string; state: string; zip?: string; lat: number; lng: number; description?: string }): string {
+function googleMapsUrl(s: { address?: string; city: string; state: string; zip?: string; lat: number; lng: number; description?: string; name?: string }): string {
   if (s.address && s.address.trim()) {
     const parts = [s.address, s.city, s.state, s.zip].filter(Boolean).join(', ')
     // Pass the full street address as the query. Google Maps will geocode to the exact address.
     return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(parts)}`
   }
   // No street address — fall back to coordinates with station label
-  const label = (s.description || 'Pilot Travel Center') + ' ' + s.city + ', ' + s.state
+  const label = stationLabel(s) + ' ' + s.city + ', ' + s.state
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(label)}`
 }
 
@@ -86,12 +97,12 @@ function googleMapsUrl(s: { address?: string; city: string; state: string; zip?:
  * Apple Maps' `address=` parameter geocodes the address text to a specific street location
  * (this is different from `ll=lat,lng` which only drops a pin at arbitrary coordinates).
  */
-function appleMapsUrl(s: { address?: string; city: string; state: string; zip?: string; lat: number; lng: number; description?: string }): string {
+function appleMapsUrl(s: { address?: string; city: string; state: string; zip?: string; lat: number; lng: number; description?: string; name?: string }): string {
   if (s.address && s.address.trim()) {
     const parts = [s.address, s.city, s.state, s.zip].filter(Boolean).join(', ')
     return `https://maps.apple.com/?address=${encodeURIComponent(parts)}`
   }
-  const label = (s.description || 'Pilot Travel Center') + ' ' + s.city + ', ' + s.state
+  const label = stationLabel(s) + ' ' + s.city + ', ' + s.state
   return `https://maps.apple.com/?q=${encodeURIComponent(label)}`
 }
 
@@ -231,6 +242,9 @@ export default function FuelPage() {
       if (!json?.stations) return json
       const amenityMap = stationAmenities as Record<string, Partial<Station> & { city?: string, state?: string }>
       const enriched = json.stations.map(s => {
+        // Amenity file is PFJ-only — a Love's/TA site number would collide
+        // with an unrelated Pilot store number.
+        if ((s.brand || 'pfj') !== 'pfj') return s
         // Extract store number from site (could be "PFJ #123" or just "123" or "044")
         const siteMatch = String(s.site).match(/(\d+)/)
         const storeNumRaw = siteMatch ? siteMatch[1] : null
@@ -537,7 +551,7 @@ export default function FuelPage() {
           strokeColor: '#ffffff',
           strokeWeight: 1.5,
         },
-        title: `Pilot Travel Center\n${station.city}, ${station.state} — $${station.yourPrice.toFixed(2)}`,
+        title: `${stationLabel(station)}\n${station.city}, ${station.state} — $${station.yourPrice.toFixed(2)}`,
       })
 
       marker.addListener('click', () => {
@@ -1375,7 +1389,7 @@ export default function FuelPage() {
 
     if (byPos.length === 0) {
       setOptimizedPlan([])
-      setOptimizerError('No Pilot stations found along this route. You may need to get alternate fueling.')
+      setOptimizerError('No in-network stations found along this route. You may need to get alternate fueling.')
       return
     }
 
@@ -1713,7 +1727,7 @@ export default function FuelPage() {
 
     if (greedyResult.unreachable && fewestResult.unreachable) {
       setOptimizedPlan([])
-      setOptimizerError('⚠️ Insufficient fuel to reach any Pilot station on this route. You may need to get alternate fueling before continuing.')
+      setOptimizerError('⚠️ Insufficient fuel to reach any in-network station on this route. You may need to get alternate fueling before continuing.')
       return
     }
 
@@ -1881,7 +1895,7 @@ export default function FuelPage() {
         textTransform: 'uppercase',
         padding: '6px 16px 12px',
       }}>
-        Daily prices · Pilot Travel Centers
+        Daily prices · Pilot · Flying J · Love's · TA Petro
       </p>
 
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '8px 16px 40px' }}>
@@ -1894,7 +1908,7 @@ export default function FuelPage() {
               <strong style={{ color: 'var(--ink)', fontFamily: 'var(--mono)', fontWeight: 600 }}>{data.updatedAt}</strong>
             </p>
             <p style={{ fontSize: 11, color: 'var(--mute-2)', fontFamily: 'var(--display)', textTransform: 'uppercase', letterSpacing: '0.12em', fontWeight: 500 }}>
-              US Direct Bill — Pilot Travel Centers
+              US Direct Bill — In-Network Truck Stops
             </p>
           </div>
         )}
@@ -2265,7 +2279,7 @@ export default function FuelPage() {
                     : ` — assuming you head back toward ${nextRouteSuggestion.toward}`}
                 </div>
                 <div>
-                  {(nextRouteSuggestion.station.description || 'Pilot')} · {nextRouteSuggestion.station.city}, {nextRouteSuggestion.station.state}
+                  {stationLabel(nextRouteSuggestion.station)} · {nextRouteSuggestion.station.city}, {nextRouteSuggestion.station.state}
                   {' '}· <span className="sx-mono" style={{ fontWeight: 700 }}>${nextRouteSuggestion.station.yourPrice.toFixed(2)}</span>
                   {' '}· ~{nextRouteSuggestion.miles} mi past your delivery
                 </div>
@@ -2343,7 +2357,7 @@ export default function FuelPage() {
                               {optimizerError}
                             </p>
                             <p style={{ fontSize: 12, color: '#B91C1C', marginTop: 8, lineHeight: 1.5 }}>
-                              Consider stopping at a non-Pilot station to refuel, or checking if the corridor radius should be increased.
+                              Consider stopping at an out-of-network station to refuel, or checking if the corridor radius should be increased.
                             </p>
                           </div>
                         ) : optimizedPlan.length === 0 ? (
@@ -2421,7 +2435,7 @@ export default function FuelPage() {
                                       }}>{i + 1}</div>
                                       <div style={{ flex: 1, minWidth: 0 }}>
                                         <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)', marginBottom: 3, fontFamily: 'var(--body)' }}>
-                                          {stop.station.description || 'Pilot Travel Center'} — {stop.station.city}, {stop.station.state}
+                                          {stationLabel(stop.station)} — {stop.station.city}, {stop.station.state}
                                         </p>
                                         {stop.station.address && (
                                           <p style={{ fontSize: 12, color: 'var(--mute)', marginBottom: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -2687,7 +2701,7 @@ export default function FuelPage() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>
-                      {bestOfNearest5.description || 'Pilot Travel Center'} — {bestOfNearest5.city}, {bestOfNearest5.state}
+                      {stationLabel(bestOfNearest5)} — {bestOfNearest5.city}, {bestOfNearest5.state}
                     </p>
                     <p style={{ fontSize: 11, color: '#15803D', marginTop: 2, fontFamily: 'var(--mono)' }}>
                       {(bestOfNearest5 as any).distanceMi.toFixed(1)} mi away · cheapest of {Math.min(5, stationsWithDistance.length)} nearest
@@ -2732,7 +2746,7 @@ export default function FuelPage() {
             padding: '12px 14px', marginBottom: 12,
           }}>
             <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--green-deep)' }}>
-              Nearest: Pilot Travel Center — {closestStation.city}, {closestStation.state}
+              Nearest: {stationLabel(closestStation)} — {closestStation.city}, {closestStation.state}
             </p>
             {closestStation.address && <p style={{ fontSize: 12, color: '#3B6D11', marginTop: 2 }}>{closestStation.address}</p>}
             <p style={{ fontSize: 12, color: '#3B6D11', marginTop: 4, fontFamily: 'var(--mono)' }}>
@@ -2781,7 +2795,7 @@ export default function FuelPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
                 <p className="sx-display" style={{ fontSize: 22, color: 'var(--ink)' }}>
-                  {selectedStation.description || 'Pilot Travel Center'}
+                  {stationLabel(selectedStation)}
                 </p>
                 <p style={{ fontSize: 12, color: 'var(--mute)', fontFamily: 'var(--mono)', marginTop: 2 }}>
                   Site #{selectedStation.site} · {selectedStation.city}, {selectedStation.state}
@@ -2957,7 +2971,7 @@ export default function FuelPage() {
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink)' }}>
-                      Pilot Travel Center — {station.city}, {station.state}
+                      {stationLabel(station)} — {station.city}, {station.state}
                     </p>
                     {station.address
                       ? <p style={{ fontSize: 11, color: 'var(--mute-2)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', marginTop: 2 }}>{station.address}</p>

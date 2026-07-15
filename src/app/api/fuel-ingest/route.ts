@@ -1,18 +1,18 @@
-﻿import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
-import * as XLSX from 'xlsx'
 import {
   findFolderIdByName,
   listFuelMessages,
   getMessageAttachments,
   markMessageRead,
   deleteMessage,
+  FuelAttachment,
 } from '@/lib/graph'
-import { enrichStations } from '@/lib/fuel/enrich'
+import { parsePilotXls, parseLovesXlsx, parseTaXls, ParsedStation, FuelBrand } from '@/lib/fuel/parse'
+import { enrichStations, EnrichedStation } from '@/lib/fuel/enrich'
 import { recordHeartbeat } from '@/lib/heartbeat'
 
-const DEFAULT_FROM = 'DailyPricing@pilotflyingj.com'
-const DEFAULT_SUBJECT = 'Pricing - Pilot Flying J'
+export const maxDuration = 60
 
 function isAuthorized(req: NextRequest): boolean {
   // Accept either CRON_SECRET (Vercel-standard, used by Vercel Cron) or
@@ -33,67 +33,79 @@ function isAuthorized(req: NextRequest): boolean {
   return false
 }
 
-interface ParsedStation {
-  site: string
-  city: string
-  state: string
-  retailPrice: number
-  yourPrice: number
-  savings: number
+// ── Feed definitions ────────────────────────────────────────────────────────
+// Each daily pricing email is a "feed": matched by sender + subject, parsed
+// into brand-tagged station rows. A feed only ever replaces the brands it
+// actually delivered — the Pilot email can't wipe Love's prices and vice
+// versa. Emails arrive at different times of day, so the merged blob always
+// carries each brand's last-known prices with a per-brand freshness stamp.
+interface FeedDef {
+  key: string
+  from: string            // exact address, or "@domain.com" for any sender at that domain
+  subjectContains: string
+  // Parse every relevant attachment into station rows (may span brands).
+  parse: (attachments: FuelAttachment[]) => { stations: ParsedStation[]; parsedFiles: string[] }
 }
 
-// Parse a Pilot Flying J pricing .xls file (binary) and extract station rows.
-// Header is on row 5 (0-indexed), data starts row 6. Filters out non-DSL rows
-// just in case any other product types ever appear.
-function parsePilotXls(buffer: Buffer): ParsedStation[] {
-  const wb = XLSX.read(buffer, { type: 'buffer' })
-  const sheet = wb.Sheets[wb.SheetNames[0]]
-  // Get raw 2D array — header: 1 means use the first row as keys but we don't want that.
-  // Easier: get values as array-of-arrays so we can index by column number.
-  const rows = XLSX.utils.sheet_to_json<any[]>(sheet, { header: 1, raw: true, defval: null })
-  const stations: ParsedStation[] = []
-  // Find header row by looking for "Site" + "City" + "ST" in the same row
-  let headerRow = -1
-  for (let i = 0; i < Math.min(rows.length, 20); i++) {
-    const r = rows[i] || []
-    if (
-      String(r[0] || '').trim() === 'Site' &&
-      String(r[1] || '').trim() === 'City' &&
-      String(r[2] || '').trim() === 'ST'
-    ) {
-      headerRow = i
-      break
-    }
+const isSpreadsheet = (a: FuelAttachment) =>
+  /\.(xls|xlsx)$/i.test(a.name) || a.contentType.includes('spreadsheet') || a.contentType.includes('excel')
+
+const FEEDS: FeedDef[] = [
+  {
+    key: 'pilot',
+    from: process.env.OUTLOOK_FUEL_FROM || 'DailyPricing@pilotflyingj.com',
+    subjectContains: process.env.OUTLOOK_FUEL_SUBJECT || 'Pricing - Pilot Flying J',
+    parse: (attachments) => {
+      const xls = attachments.find(isSpreadsheet)
+      if (!xls) return { stations: [], parsedFiles: [] }
+      return {
+        stations: parsePilotXls(Buffer.from(xls.contentBytes, 'base64')),
+        parsedFiles: [xls.name],
+      }
+    },
+  },
+  {
+    key: 'england',
+    // Forwarded daily by England Logistics (Love's + TA/Petro cost-plus).
+    from: '@englandlogistics.com',
+    subjectContains: 'Cost-Plus',
+    parse: (attachments) => {
+      const stations: ParsedStation[] = []
+      const parsedFiles: string[] = []
+      for (const a of attachments.filter(isSpreadsheet)) {
+        const buffer = Buffer.from(a.contentBytes, 'base64')
+        if (/loves/i.test(a.name)) {
+          stations.push(...parseLovesXlsx(buffer))
+          parsedFiles.push(a.name)
+        } else if (/ta\s?petro|tapetro/i.test(a.name)) {
+          stations.push(...parseTaXls(buffer))
+          parsedFiles.push(a.name)
+        }
+      }
+      return { stations, parsedFiles }
+    },
+  },
+]
+
+interface FuelBlob {
+  updatedAt: string
+  stations: EnrichedStation[]
+  // Per-brand freshness: when each brand's prices last arrived + row count.
+  brands?: Partial<Record<FuelBrand, { updatedAt: string; count: number }>>
+}
+
+async function loadCurrentBlob(): Promise<FuelBlob | null> {
+  const blobUrl = process.env.FUEL_BLOB_URL
+  if (!blobUrl) return null
+  try {
+    const res = await fetch(blobUrl, { cache: 'no-store' })
+    if (!res.ok) return null
+    const data = await res.json()
+    if (!Array.isArray(data?.stations)) return null
+    return data as FuelBlob
+  } catch {
+    return null
   }
-  if (headerRow < 0) {
-    throw new Error('Could not find header row (Site / City / ST) in Pilot xls')
-  }
-  for (let i = headerRow + 1; i < rows.length; i++) {
-    const r = rows[i] || []
-    const site = r[0]
-    const city = r[1]
-    const state = r[2]
-    const prod = r[3]
-    const retail = r[17]
-    const yours = r[19]
-    const savings = r[20]
-    // Skip blank rows or non-diesel rows
-    if (site == null || city == null || state == null) continue
-    if (prod != null && String(prod).trim().toUpperCase() !== 'DSL') continue
-    const yourNum = Number(yours)
-    const retailNum = Number(retail)
-    const savNum = Number(savings)
-    if (!isFinite(yourNum) || yourNum <= 0) continue
-    stations.push({
-      site: String(site).trim(),
-      city: String(city).trim(),
-      state: String(state).trim().toUpperCase(),
-      retailPrice: isFinite(retailNum) ? retailNum : 0,
-      yourPrice: yourNum,
-      savings: isFinite(savNum) ? savNum : 0,
-    })
-  }
-  return stations
 }
 
 export async function GET(req: NextRequest) {
@@ -103,12 +115,8 @@ export async function GET(req: NextRequest) {
 
   const mailbox = process.env.OUTLOOK_FUEL_MAILBOX
   const folderName = process.env.OUTLOOK_FUEL_FOLDER || 'KPI-FEED'
-  const fromAddress = process.env.OUTLOOK_FUEL_FROM || DEFAULT_FROM
-  const subjectContains = process.env.OUTLOOK_FUEL_SUBJECT || DEFAULT_SUBJECT
-  const fuelApiKey = process.env.FUEL_API_KEY
 
   if (!mailbox) return NextResponse.json({ error: 'OUTLOOK_FUEL_MAILBOX not set' }, { status: 500 })
-  if (!fuelApiKey) return NextResponse.json({ error: 'FUEL_API_KEY not set' }, { status: 500 })
 
   const summary: any = { mailbox, folder: folderName, found: 0, processed: 0, skipped: 0, errors: [] as string[], details: [] as any[] }
 
@@ -118,9 +126,94 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: `Folder "${folderName}" not found in mailbox ${mailbox}.` }, { status: 404 })
     }
 
-    const messages = await listFuelMessages(mailbox, folderId, fromAddress, subjectContains)
-    summary.found = messages.length
-    if (messages.length === 0) {
+    for (const feed of FEEDS) {
+      const messages = await listFuelMessages(mailbox, folderId, feed.from, feed.subjectContains)
+      summary.found += messages.length
+
+      for (const msg of messages) {
+        const detail: any = { feed: feed.key, id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
+        try {
+          const attachments = await getMessageAttachments(mailbox, msg.id)
+          const { stations, parsedFiles } = feed.parse(attachments)
+          detail.parsedFiles = parsedFiles
+          detail.parsedStations = stations.length
+
+          if (stations.length === 0) {
+            // Matching email with no parseable pricing file — leave it (read)
+            // for eyes, don't delete data we couldn't extract.
+            detail.status = 'no-pricing-attachment'
+            detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
+            summary.skipped++
+            await markMessageRead(mailbox, msg.id)
+            summary.details.push(detail)
+            continue
+          }
+
+          // Enrich with cached coords/address/name per brand.
+          const { stations: enriched, cacheHits, cacheMisses } = enrichStations(stations)
+          detail.cacheHits = cacheHits
+          detail.cacheMisses = cacheMisses.length
+          if (cacheMisses.length > 0) {
+            detail.cacheMissKeys = cacheMisses.slice(0, 30)
+            console.warn(`[fuel-ingest] ${cacheMisses.length} stations missing from coord cache:`, cacheMisses.slice(0, 30).join(', '))
+          }
+          if (enriched.length === 0) {
+            throw new Error('All parsed stations were dropped in enrichment — coord cache may be missing')
+          }
+
+          // Merge: replace only the brands this email actually delivered.
+          const delivered = Array.from(new Set(enriched.map(s => s.brand))) as FuelBrand[]
+          const current = await loadCurrentBlob()
+          const kept = (current?.stations || []).filter(s => !delivered.includes((s.brand || 'pfj') as FuelBrand))
+          const merged = [...kept, ...enriched]
+
+          const emailDate = (msg.receivedDateTime || new Date().toISOString()).split('T')[0]
+          const brands: FuelBlob['brands'] = { ...(current?.brands || {}) }
+          for (const b of delivered) {
+            brands[b] = { updatedAt: emailDate, count: enriched.filter(s => s.brand === b).length }
+          }
+          // Backfill a stamp for pre-multibrand PFJ rows we kept.
+          if (!brands.pfj && kept.some(s => (s.brand || 'pfj') === 'pfj')) {
+            brands.pfj = { updatedAt: current?.updatedAt || emailDate, count: kept.filter(s => (s.brand || 'pfj') === 'pfj').length }
+          }
+          const updatedAt = Object.values(brands).reduce((max, b) => (b && b.updatedAt > max ? b.updatedAt : max), emailDate)
+
+          const fuelData: FuelBlob = { updatedAt, stations: merged, brands }
+          const fuelDataJson = JSON.stringify(fuelData)
+          // Live blob (what both optimizers read)
+          const blob = await put('fuel-data.json', fuelDataJson, {
+            access: 'public',
+            addRandomSuffix: false,
+            contentType: 'application/json',
+            allowOverwrite: true,
+          })
+          // Dated archive snapshot (daily history for trend analysis / kpi
+          // price-history backfills). Keyed by processing date.
+          const today = new Date().toISOString().split('T')[0]
+          const snapshotBlob = await put(`fuel-data-${today}.json`, fuelDataJson, {
+            access: 'public',
+            addRandomSuffix: false,
+            contentType: 'application/json',
+            allowOverwrite: true,
+          })
+          console.log(`[fuel-ingest] ${feed.key}: blob written (${merged.length} stations, brands=${delivered.join('+')}, updatedAt=${updatedAt}); snapshot: ${snapshotBlob.url}`)
+          detail.uploadResponse = { success: true, count: merged.length, delivered, updatedAt, blobUrl: blob.url, snapshotUrl: snapshotBlob.url }
+
+          await deleteMessage(mailbox, msg.id)
+          detail.status = 'deleted'
+          summary.processed++
+        } catch (err: any) {
+          detail.status = 'error'
+          detail.error = err?.message || String(err)
+          const msgText = `${msg.subject}: ${err?.message || err}`
+          summary.errors.push(msgText)
+          console.error(`[fuel-ingest] per-message error: ${msgText}`, err?.stack || '')
+        }
+        summary.details.push(detail)
+      }
+    }
+
+    if (summary.found === 0) {
       await recordHeartbeat('fuel_ingest', {
         status: 'ok',
         recordCount: 0,
@@ -129,90 +222,8 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ ...summary, message: 'No new fuel emails to process.' })
     }
 
-    for (const msg of messages) {
-      const detail: any = { id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
-      try {
-        const attachments = await getMessageAttachments(mailbox, msg.id)
-        // Pilot sends a single .xls. Find it.
-        const xlsAttachment = attachments.find(a =>
-          /\.(xls|xlsx)$/i.test(a.name) ||
-          a.contentType.includes('spreadsheet') ||
-          a.contentType.includes('excel')
-        )
-        if (!xlsAttachment) {
-          detail.status = 'no-attachment'
-          detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
-          summary.skipped++
-          await markMessageRead(mailbox, msg.id)
-          summary.details.push(detail)
-          continue
-        }
-
-        // Decode base64 -> Buffer -> parse Excel inline
-        const buffer = Buffer.from(xlsAttachment.contentBytes, 'base64')
-        const stations = parsePilotXls(buffer)
-        detail.attachmentName = xlsAttachment.name
-        detail.attachmentSize = xlsAttachment.size
-        detail.parsedStations = stations.length
-
-        if (stations.length === 0) {
-          throw new Error('Parser returned 0 stations — file format may have changed')
-        }
-
-        // Enrich pricing rows with cached lat/lng/address/zip/phone.
-        // Without this, /api/fuel-upload would write rows missing coords,
-        // which makes the route planner return zero matches on every search.
-        const { stations: enriched, cacheHits, cacheMisses } = enrichStations(stations)
-        detail.cacheHits = cacheHits
-        detail.cacheMisses = cacheMisses.length
-        if (cacheMisses.length > 0) {
-          detail.cacheMissKeys = cacheMisses
-          console.warn(`Fuel ingest: ${cacheMisses.length} stations missing from coord cache:`, cacheMisses.join(', '))
-        }
-
-        // Write directly to Vercel Blob — no internal HTTP call.
-        // Going through /api/fuel-upload caused 401s because Vercel Cron hits
-        // the protected deployment URL, and inner fetches inherit that origin
-        // and get bounced by Deployment Protection before reaching the handler.
-        const updatedAt = new Date().toISOString().split('T')[0]
-        const fuelData = { updatedAt, stations: enriched }
-        const fuelDataJson = JSON.stringify(fuelData)
-        // Live blob (what the optimizer reads)
-        const blob = await put('fuel-data.json', fuelDataJson, {
-          access: 'public',
-          addRandomSuffix: false,
-          contentType: 'application/json',
-          allowOverwrite: true,
-        })
-        // Dated archive snapshot (preserves daily history for trend analysis).
-        // Same content, but the dated filename means it's never overwritten.
-        const snapshotName = `fuel-data-${updatedAt}.json`
-        const snapshotBlob = await put(snapshotName, fuelDataJson, {
-          access: 'public',
-          addRandomSuffix: false,
-          contentType: 'application/json',
-          allowOverwrite: true,
-        })
-        console.log(`[fuel-ingest] Blob written: ${blob.url} (${enriched.length} stations, updatedAt=${updatedAt}); snapshot: ${snapshotBlob.url}`)
-        const uploadJson = { success: true, count: enriched.length, updatedAt, blobUrl: blob.url, snapshotUrl: snapshotBlob.url }
-        detail.status = 'uploaded'
-        detail.uploadResponse = uploadJson
-
-        await deleteMessage(mailbox, msg.id)
-        detail.status = 'deleted'
-        summary.processed++
-      } catch (err: any) {
-        detail.status = 'error'
-        detail.error = err?.message || String(err)
-        const msgText = `${msg.subject}: ${err?.message || err}`
-        summary.errors.push(msgText)
-        console.error(`[fuel-ingest] per-message error: ${msgText}`, err?.stack || '')
-      }
-      summary.details.push(detail)
-    }
-
     await recordHeartbeat('fuel_ingest', {
-      status: 'ok',
+      status: summary.errors.length > 0 && summary.processed === 0 ? 'error' : 'ok',
       recordCount: summary.processed,
       message: summary.errors.length > 0 ? `${summary.errors.length} per-message errors` : null,
     })

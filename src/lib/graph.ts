@@ -1,8 +1,10 @@
 ﻿const GRAPH_BASE = 'https://graph.microsoft.com/v1.0'
-let cachedToken: { value: string; expiresAt: number } | null = null
+let cachedToken: { value: string; expiresAt: number; viaOidc: boolean } | null = null
 
-export async function getGraphToken(): Promise<string> {
-  if (cachedToken && cachedToken.expiresAt > Date.now() + 120_000) return cachedToken.value
+export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<string> {
+  if (cachedToken && cachedToken.expiresAt > Date.now() + 120_000 && !(opts?.skipOidc && cachedToken.viaOidc)) {
+    return cachedToken.value
+  }
   const tenantId = process.env.AZURE_TENANT_ID
   const clientId = process.env.AZURE_CLIENT_ID
   if (!tenantId || !clientId) throw new Error('Missing AZURE_TENANT_ID or AZURE_CLIENT_ID.')
@@ -11,11 +13,15 @@ export async function getGraphToken(): Promise<string> {
   // VERCEL_OIDC_TOKEN is auto-injected when OIDC is enabled on the Vercel
   // project AND Microsoft Entra has a Federated Credential registered for
   // this app pointing to Vercel's issuer with the matching subject claim.
-  // Falls back to AZURE_CLIENT_SECRET if OIDC isn't yet configured.
-  const oidcToken = process.env.VERCEL_OIDC_TOKEN
+  // Falls back to AZURE_CLIENT_SECRET if OIDC isn't configured — or, via
+  // skipOidc, when an OIDC-minted token was just REJECTED by Graph: the
+  // 7/15 deploy started injecting VERCEL_OIDC_TOKEN and Graph bounced its
+  // exchanged tokens with "Lifetime validation failed" while the client
+  // secret kept working, which took the fuel cron down.
+  const oidcToken = opts?.skipOidc ? undefined : process.env.VERCEL_OIDC_TOKEN
   const clientSecret = process.env.AZURE_CLIENT_SECRET
   if (!oidcToken && !clientSecret) {
-    throw new Error('Neither VERCEL_OIDC_TOKEN nor AZURE_CLIENT_SECRET is set.')
+    throw new Error('Neither VERCEL_OIDC_TOKEN nor AZURE_CLIENT_SECRET is set (or OIDC skipped with no secret fallback).')
   }
 
   const tokenUrl = `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`
@@ -35,16 +41,28 @@ export async function getGraphToken(): Promise<string> {
   if (!res.ok) {
     const text = await res.text()
     const mode = oidcToken ? 'OIDC federation' : 'client_secret'
+    // OIDC exchange refused and we have a secret → try the secret path.
+    if (oidcToken && clientSecret) {
+      console.warn(`Graph token via OIDC failed (${res.status}) — falling back to client_secret`)
+      return getGraphToken({ skipOidc: true })
+    }
     throw new Error(`Failed to get Graph token (${mode}): ${res.status} ${text}`)
   }
   const json = (await res.json()) as { access_token: string; expires_in: number }
-  cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000 }
+  cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000, viaOidc: !!oidcToken }
   return cachedToken.value
 }
 
 async function graph<T>(path: string, init?: RequestInit): Promise<T> {
   const token = await getGraphToken()
-  const res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } })
+  let res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } })
+  if (res.status === 401 && process.env.AZURE_CLIENT_SECRET) {
+    // Graph rejected the token (seen with OIDC-minted tokens: "Lifetime
+    // validation failed"). Re-mint via client secret and retry once.
+    cachedToken = null
+    const retryToken = await getGraphToken({ skipOidc: true })
+    res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${retryToken}`, 'Content-Type': 'application/json' } })
+  }
   if (!res.ok) { const text = await res.text(); throw new Error(`Graph ${init?.method || 'GET'} ${path} failed: ${res.status} ${text}`) }
   if (res.status === 204) return null as unknown as T
   return (await res.json()) as T
