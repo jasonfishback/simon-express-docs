@@ -3,11 +3,10 @@ import { put } from '@vercel/blob'
 import * as XLSX from 'xlsx'
 import {
   findFolderIdByName,
-  ensureChildFolder,
   listFuelMessages,
   getMessageAttachments,
   markMessageRead,
-  moveMessage,
+  deleteMessage,
 } from '@/lib/graph'
 import { enrichStations } from '@/lib/fuel/enrich'
 import { recordHeartbeat } from '@/lib/heartbeat'
@@ -104,7 +103,6 @@ export async function GET(req: NextRequest) {
 
   const mailbox = process.env.OUTLOOK_FUEL_MAILBOX
   const folderName = process.env.OUTLOOK_FUEL_FOLDER || 'KPI-FEED'
-  const processedSubfolder = process.env.OUTLOOK_PROCESSED_FOLDER || 'Processed'
   const fromAddress = process.env.OUTLOOK_FUEL_FROM || DEFAULT_FROM
   const subjectContains = process.env.OUTLOOK_FUEL_SUBJECT || DEFAULT_SUBJECT
   const fuelApiKey = process.env.FUEL_API_KEY
@@ -119,7 +117,6 @@ export async function GET(req: NextRequest) {
     if (!folderId) {
       return NextResponse.json({ error: `Folder "${folderName}" not found in mailbox ${mailbox}.` }, { status: 404 })
     }
-    const processedFolderId = await ensureChildFolder(mailbox, folderId, processedSubfolder)
 
     const messages = await listFuelMessages(mailbox, folderId, fromAddress, subjectContains)
     summary.found = messages.length
@@ -201,8 +198,8 @@ export async function GET(req: NextRequest) {
         detail.status = 'uploaded'
         detail.uploadResponse = uploadJson
 
-        await moveMessage(mailbox, msg.id, processedFolderId)
-        detail.status = 'archived'
+        await deleteMessage(mailbox, msg.id)
+        detail.status = 'deleted'
         summary.processed++
       } catch (err: any) {
         detail.status = 'error'

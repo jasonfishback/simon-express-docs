@@ -86,16 +86,27 @@ export async function ensureChildFolder(mailbox: string, parentId: string, name:
 
 export interface FuelMessage { id: string; subject: string; receivedDateTime: string; from?: string }
 
+// List candidate feed messages in the folder. Deliberately NO server-side
+// $filter: Graph's filtered folder views are eventually consistent and can
+// omit recently-arrived items for hours (the unread 7/14 Pilot email sat
+// invisible to `$filter=isRead eq false` for ~20h while showing up fine in a
+// plain listing). The folder only ever holds a handful of messages, so we
+// pull the newest 25 and filter unread/sender/subject in code.
 export async function listFuelMessages(mailbox: string, folderId: string, fromAddress: string, subjectContains: string): Promise<FuelMessage[]> {
-  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/${folderId}/messages?$filter=isRead eq false&$select=id,subject,receivedDateTime,from&$orderby=receivedDateTime asc&$top=20`
-  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }> }>(path)
+  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/${folderId}/messages?$select=id,subject,receivedDateTime,from,isRead&$orderby=receivedDateTime desc&$top=25`
+  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; isRead?: boolean; from?: { emailAddress?: { address?: string } } }> }>(path)
   return res.value
     .filter(m => {
-      const senderOk = (m.from?.emailAddress?.address || '').toLowerCase() === fromAddress.toLowerCase()
+      if (m.isRead) return false
+      const sender = (m.from?.emailAddress?.address || '').toLowerCase()
+      const want = fromAddress.toLowerCase()
+      // Exact address, or "@domain.com" to match any sender at that domain.
+      const senderOk = want.startsWith('@') ? sender.endsWith(want) : sender === want
       const subjectOk = (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase())
       return senderOk && subjectOk
     })
     .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
+    .reverse() // oldest first so multiple pending days apply in order
 }
 
 export interface FuelAttachment { id: string; name: string; contentType: string; contentBytes: string; size: number }
@@ -114,5 +125,17 @@ export async function markMessageRead(mailbox: string, messageId: string): Promi
 
 export async function moveMessage(mailbox: string, messageId: string, destinationFolderId: string): Promise<void> {
   await graph(`/users/${encodeURIComponent(mailbox)}/messages/${messageId}/move`, { method: 'POST', body: JSON.stringify({ destinationId: destinationFolderId }) })
+}
+
+// Delete (to Deleted Items). A 404 means another run already handled it —
+// concurrent cron fires raced on this before — so treat it as success.
+export async function deleteMessage(mailbox: string, messageId: string): Promise<void> {
+  try {
+    await graph(`/users/${encodeURIComponent(mailbox)}/messages/${messageId}`, { method: 'DELETE' })
+  } catch (err: any) {
+    const msg = String(err?.message || '')
+    if (msg.includes(' 404 ') || msg.includes('ErrorItemNotFound')) return
+    throw err
+  }
 }
 
