@@ -37,8 +37,11 @@ export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<stri
     body.set('client_secret', clientSecret!)
   }
 
+  // cache: 'no-store' is REQUIRED. Next.js patches fetch and was caching this
+  // POST to the token endpoint, so warm lambdas replayed a long-expired token
+  // and every Graph call 401'd with "Lifetime validation failed, the token is
+  // expired" (intermittently, on cache hits). no-store forces a fresh token.
   const res = await fetch(tokenUrl, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString(), cache: 'no-store' })
-  const azureDate = res.headers.get('date')
   if (!res.ok) {
     const text = await res.text()
     const mode = oidcToken ? 'OIDC federation' : 'client_secret'
@@ -50,14 +53,6 @@ export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<stri
     throw new Error(`Failed to get Graph token (${mode}): ${res.status} ${text}`)
   }
   const json = (await res.json()) as { access_token: string; expires_in: number }
-  // TEMP DIAG (fuel-graph-diag): distinguish clock-skew vs stale-token. Log the
-  // token's iat/nbf/exp, the lambda's raw now, and Azure's own Date header.
-  try {
-    const p = JSON.parse(Buffer.from(json.access_token.split('.')[1], 'base64').toString())
-    const nowMs = Date.now()
-    const now = Math.floor(nowMs / 1000)
-    console.log(`[graph-diag] via ${oidcToken ? 'OIDC' : 'client_secret'} appid=${p.appid} | lambda_now=${now} (${new Date(nowMs).toISOString()}) | azure_date=${azureDate} | tok.iat=${p.iat} tok.nbf=${p.nbf} tok.exp=${p.exp} | exp-now=${p.exp - now}s iat-now=${p.iat - now}s`)
-  } catch (e: any) { console.log(`[graph-diag] token decode failed: ${e?.message}`) }
   cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000, viaOidc: !!oidcToken }
   return cachedToken.value
 }
@@ -66,13 +61,10 @@ async function graph<T>(path: string, init?: RequestInit): Promise<T> {
   const token = await getGraphToken()
   let res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' } })
   if (res.status === 401 && process.env.AZURE_CLIENT_SECRET) {
-    // Graph rejected the token (seen with OIDC-minted tokens: "Lifetime
-    // validation failed"). Re-mint via client secret and retry once.
-    console.log(`[graph-diag] 401 on ${init?.method || 'GET'} ${path.split('?')[0]} — re-minting via client_secret and retrying`)
+    // Defensive: on any 401, drop the cache and re-mint via client secret once.
     cachedToken = null
     const retryToken = await getGraphToken({ skipOidc: true })
     res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${retryToken}`, 'Content-Type': 'application/json' } })
-    console.log(`[graph-diag] retry status: ${res.status}`)
   }
   if (!res.ok) { const text = await res.text(); throw new Error(`Graph ${init?.method || 'GET'} ${path} failed: ${res.status} ${text}`) }
   if (res.status === 204) return null as unknown as T
@@ -115,18 +107,22 @@ export async function ensureChildFolder(mailbox: string, parentId: string, name:
 
 export interface FuelMessage { id: string; subject: string; receivedDateTime: string; from?: string }
 
-// List candidate feed messages in the folder. Deliberately NO server-side
-// $filter: Graph's filtered folder views are eventually consistent and can
-// omit recently-arrived items for hours (the unread 7/14 Pilot email sat
-// invisible to `$filter=isRead eq false` for ~20h while showing up fine in a
-// plain listing). The folder only ever holds a handful of messages, so we
-// pull the newest 25 and filter unread/sender/subject in code.
+// List candidate feed messages in the folder. Two deliberate choices:
+//   1. NO server-side $filter — Graph's filtered folder views are eventually
+//      consistent and can omit recently-arrived items for hours (the unread
+//      7/14 Pilot email sat invisible to `$filter=isRead eq false` for ~20h
+//      while showing up fine in a plain listing).
+//   2. We do NOT filter on isRead. Handled emails are DELETED, so anything
+//      still in the folder is unhandled — even if a human (or our own
+//      investigation) opened it and marked it read. The 7/15 England
+//      Love's/TA email was skipped for exactly this reason. Match is by
+//      sender + subject only; the shared folder's McLeod feed emails don't
+//      match, so they're never touched.
 export async function listFuelMessages(mailbox: string, folderId: string, fromAddress: string, subjectContains: string): Promise<FuelMessage[]> {
-  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/${folderId}/messages?$select=id,subject,receivedDateTime,from,isRead&$orderby=receivedDateTime desc&$top=25`
-  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; isRead?: boolean; from?: { emailAddress?: { address?: string } } }> }>(path)
+  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/${folderId}/messages?$select=id,subject,receivedDateTime,from&$orderby=receivedDateTime desc&$top=25`
+  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }> }>(path)
   return res.value
     .filter(m => {
-      if (m.isRead) return false
       const sender = (m.from?.emailAddress?.address || '').toLowerCase()
       const want = fromAddress.toLowerCase()
       // Exact address, or "@domain.com" to match any sender at that domain.

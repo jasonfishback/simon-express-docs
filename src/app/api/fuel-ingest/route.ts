@@ -4,7 +4,6 @@ import {
   findFolderIdByName,
   listFuelMessages,
   getMessageAttachments,
-  markMessageRead,
   deleteMessage,
   FuelAttachment,
 } from '@/lib/graph'
@@ -13,6 +12,9 @@ import { enrichStations, EnrichedStation } from '@/lib/fuel/enrich'
 import { recordHeartbeat } from '@/lib/heartbeat'
 
 export const maxDuration = 60
+// force-dynamic disables Next.js route/fetch caching for this handler (matches
+// the kpi cron routes). Belt-and-suspenders with the token fetch's no-store.
+export const dynamic = 'force-dynamic'
 
 function isAuthorized(req: NextRequest): boolean {
   // Accept either CRON_SECRET (Vercel-standard, used by Vercel Cron) or
@@ -139,12 +141,14 @@ export async function GET(req: NextRequest) {
           detail.parsedStations = stations.length
 
           if (stations.length === 0) {
-            // Matching email with no parseable pricing file — leave it (read)
-            // for eyes, don't delete data we couldn't extract.
-            detail.status = 'no-pricing-attachment'
+            // Sender+subject matched but there's no parseable pricing file
+            // (a reply, a bounce, a format change). Delete it so it doesn't
+            // re-list every tick — we no longer use isRead to skip handled
+            // mail. A real pricing email always carries its spreadsheet.
+            detail.status = 'no-pricing-attachment-deleted'
             detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
             summary.skipped++
-            await markMessageRead(mailbox, msg.id)
+            await deleteMessage(mailbox, msg.id)
             summary.details.push(detail)
             continue
           }
