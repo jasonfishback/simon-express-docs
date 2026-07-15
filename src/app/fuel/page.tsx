@@ -76,6 +76,15 @@ function stationLabel(s: { description?: string; name?: string }): string {
   return s.description || s.name || 'Pilot Travel Center'
 }
 
+/** Stable per-station identity. Site numbers are PER-BRAND namespaces — Pilot
+ *  #209 (Van Horn TX) and Love's #209 (Greenwood LA) are different stations
+ *  700 mi apart — so ANY map keyed by site alone collides across brands and
+ *  scrambles route positions (43% of stations share a site number with another
+ *  brand). Always key route maps and station-identity checks by brand+site. */
+function stationKey(s: { brand?: string; site: string | number }): string {
+  return `${s.brand || 'pfj'}|${s.site}`
+}
+
 /**
  * Build a Google Maps URL that routes to the ACTUAL STREET ADDRESS of a station.
  * Google Maps geocodes the address text and plots driving directions to that specific building,
@@ -454,10 +463,10 @@ export default function FuelPage() {
     if (viewMode === 'route') {
       // If optimizer is showing and has generated a plan, only show suggested stops
       if (showOptimizer && optimizedPlan && optimizedPlan.length > 0) {
-        return optimizedPlan.some(stop => stop.station.site === s.site)
+        return optimizedPlan.some(stop => stationKey(stop.station) === stationKey(s))
       }
       // Otherwise show all corridor stations
-      return routeStations.some(r => r.site === s.site)
+      return routeStations.some(r => stationKey(r) === stationKey(s))
     }
     return selectedState === 'ALL' || s.state === selectedState
   }) ?? []
@@ -1009,16 +1018,16 @@ export default function FuelPage() {
         const nearby = stationDistances.filter(({ station, minDist, closestIdx }) => {
           if (minDist <= corridorMiles) {
             const mileFromOrigin = routeCumulativeMiles[closestIdx]
-            distMap.set(station.site, mileFromOrigin)
+            distMap.set(stationKey(station), mileFromOrigin)
             // Detour = 2 * straight-line distance from route (out and back)
-            detourMap.set(station.site, minDist * 2)
+            detourMap.set(stationKey(station), minDist * 2)
             // Look for exit info near this station
             const exit = findExitForMile(mileFromOrigin)
-            if (exit) stationExitInfo.set(station.site, exit)
+            if (exit) stationExitInfo.set(stationKey(station), exit)
             return true
           }
           return false
-        }).map(d => d.station).sort((a, b) => (distMap.get(a.site) || 0) - (distMap.get(b.site) || 0))
+        }).map(d => d.station).sort((a, b) => (distMap.get(stationKey(a)) || 0) - (distMap.get(stationKey(b)) || 0))
 
         // Project the truck's GPS onto the route: the fuel plan starts at that
         // mile marker (stations behind the truck are excluded), while the map
@@ -1354,8 +1363,8 @@ export default function FuelPage() {
     const byPos = stations
       .map(s => ({
         station: s,
-        pos: distMap.get(s.site) ?? -1,
-        detour: detourMap.get(s.site) ?? 0,
+        pos: distMap.get(stationKey(s)) ?? -1,
+        detour: detourMap.get(stationKey(s)) ?? 0,
       }))
       .filter(s => {
         // Behind the truck (or origin, when no GPS) = never a candidate.
@@ -1802,7 +1811,7 @@ export default function FuelPage() {
           duration: routeInfo?.duration || '',
           stops: optimizedPlan.map(s => ({
             ...s,
-            exitInfo: routeExitInfo.get(s.station.site) || null,
+            exitInfo: routeExitInfo.get(stationKey(s.station)) || null,
           })),
           routeSummary: routeSummary.length > 0 ? routeSummary : undefined,
           originLatLng,
@@ -2933,8 +2942,8 @@ export default function FuelPage() {
               .sort((a, b) => {
                 if (viewMode === 'route') {
                   // In route mode, sort by distance from origin (direction of travel)
-                  const aMiles = routeDistanceMap.get(a.site) ?? 0
-                  const bMiles = routeDistanceMap.get(b.site) ?? 0
+                  const aMiles = routeDistanceMap.get(stationKey(a)) ?? 0
+                  const bMiles = routeDistanceMap.get(stationKey(b)) ?? 0
                   return aMiles - bMiles
                 }
                 // Manual location search takes priority over device location
@@ -2950,7 +2959,7 @@ export default function FuelPage() {
               })
               .map(station => (
                 <div
-                  key={station.site}
+                  key={stationKey(station)}
                   onClick={() => {
                     setSelectedStation(station)
                     if (googleMap.current) googleMap.current.panTo({ lat: station.lat, lng: station.lng })
@@ -2959,14 +2968,14 @@ export default function FuelPage() {
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     padding: '12px 16px', borderBottom: '1px solid var(--line)',
                     cursor: 'pointer',
-                    background: selectedStation?.site === station.site ? '#FFF5F5' : 'transparent',
+                    background: selectedStation && stationKey(selectedStation) === stationKey(station) ? '#FFF5F5' : 'transparent',
                     transition: 'background var(--t-fast) var(--ease)',
                   }}
                   onMouseEnter={e => {
-                    if (selectedStation?.site !== station.site) e.currentTarget.style.background = 'var(--paper-warm)'
+                    if (!selectedStation || stationKey(selectedStation) !== stationKey(station)) e.currentTarget.style.background = 'var(--paper-warm)'
                   }}
                   onMouseLeave={e => {
-                    if (selectedStation?.site !== station.site) e.currentTarget.style.background = 'transparent'
+                    if (!selectedStation || stationKey(selectedStation) !== stationKey(station)) e.currentTarget.style.background = 'transparent'
                   }}
                 >
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -2981,9 +2990,9 @@ export default function FuelPage() {
                   <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 14 }}>
                     <p className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: 'var(--red)' }}>${station.yourPrice.toFixed(2)}</p>
                     <p className="sx-mono" style={{ fontSize: 11, color: 'var(--green)' }}>Save ${station.savings.toFixed(2)}</p>
-                    {viewMode === 'route' && routeDistanceMap.get(station.site) !== undefined && (
+                    {viewMode === 'route' && routeDistanceMap.get(stationKey(station)) !== undefined && (
                       <p className="sx-mono" style={{ fontSize: 11, color: 'var(--mute)' }}>
-                        Mile {(routeDistanceMap.get(station.site) ?? 0).toFixed(0)}
+                        Mile {(routeDistanceMap.get(stationKey(station)) ?? 0).toFixed(0)}
                       </p>
                     )}
                     {viewMode !== 'route' && searchCenter && (
@@ -3201,7 +3210,7 @@ export default function FuelPage() {
                           duration: routeInfo?.duration || '',
                           stops: optimizedPlan.map(s => ({
                             ...s,
-                            exitInfo: routeExitInfo.get(s.station.site) || null,
+                            exitInfo: routeExitInfo.get(stationKey(s.station)) || null,
                           })),
                           routeSummary: routeSummary.length > 0 ? routeSummary : undefined,
                           originLatLng,
