@@ -207,6 +207,7 @@ export default function FuelPage() {
   // (dispatch, Jason) isn't necessarily sitting in the truck (7/13: Jason ran
   // Kevin's Dallas→Ontario route from Utah and the blip landed in Utah).
   const truckPosRef = useRef<{ lat: number, lng: number } | null>(null)
+  const truckPosLastRef = useRef<{ lat: number, lng: number, at: string } | null>(null)
   const [nextRouteSuggestion, setNextRouteSuggestion] = useState<{
     station: Station, miles: number, toward: string, assumed: boolean, nextOrder: string | null,
   } | null>(null)
@@ -668,10 +669,16 @@ export default function FuelPage() {
         const next = (j.next_load ?? null) as CurrentLoad | null
         setNextLoad(next)
         nextLoadRef.current = next
-        // Truck position from Omnitracs (may be null when the feed is stale).
+        // Truck position from Omnitracs. `truck_position` is fresh (≤4h) and
+        // drives the plan's start mile; `truck_position_last` is the last-known
+        // ping at any age and only positions the red map blip.
         const tp = j.truck_position as { lat: number, lon: number } | null | undefined
         truckPosRef.current = tp && typeof tp.lat === 'number' && typeof tp.lon === 'number'
           ? { lat: tp.lat, lng: tp.lon }
+          : null
+        const tpl = j.truck_position_last as { lat: number, lon: number, at: string } | null | undefined
+        truckPosLastRef.current = tpl && typeof tpl.lat === 'number' && typeof tpl.lon === 'number'
+          ? { lat: tpl.lat, lng: tpl.lon, at: tpl.at }
           : null
       })
       .catch(() => {}) // no load / kpi down → manual entry as always
@@ -1033,6 +1040,8 @@ export default function FuelPage() {
         // mile marker (stations behind the truck are excluded), while the map
         // still shows the FULL load route with a red blip at the truck.
         let startMile = 0
+        // A FRESH (≤4h) position projects onto the route as the plan's start
+        // mile: the plan only burns fuel / buys stations from there forward.
         if (gpsStart) {
           let minDist = Infinity, closestIdx = 0
           for (let i = 0; i < routePoints.length; i++) {
@@ -1047,9 +1056,22 @@ export default function FuelPage() {
           } else {
             setRouteStartNote(`🛰️ Truck's Omnitracs position is ${Math.round(minDist)} mi off this route — planning the full route from ${origin}`)
           }
-          placeTruckBlip(gpsStart)
         }
         setTruckStartMile(startMile)
+
+        // Always drop the red blip at the truck's LAST-known ping (even when
+        // it's too stale to route from) so you can see where the truck is —
+        // e.g. a truck sitting AT the destination is why a plan shows no stops.
+        const blip = truckPosLastRef.current
+        if (useMyLoad && blip) {
+          placeTruckBlip({ lat: blip.lat, lng: blip.lng })
+          if (!gpsStart) {
+            const ageMs = Date.now() - Date.parse(blip.at)
+            const ageH = ageMs / 3_600_000
+            const ageTxt = ageH < 1 ? 'under an hour' : ageH < 48 ? `~${Math.round(ageH)}h` : `~${Math.round(ageH / 24)}d`
+            setRouteStartNote(`🛰️ Truck last pinged ${ageTxt} ago (shown on map) — too old to route from, so planning the full route from ${origin}`)
+          }
+        }
 
         // California delivery? Budget escape fuel so the driver can deliver
         // AND get out of CA on fuel bought before the border. end_address is
