@@ -5,7 +5,13 @@
   "address": "100 North Carter Rd",
   "zip": "23005",
   "phone": "804-798-6011",
-  "name": "TA Ashland"
+  "name": "TA Ashland",
+  "interstate": "I-95 & Rt. 54, Exit 92",
+  "parking": 183,
+  "dieselLanes": 8,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Fuddruckers"
  },
  "5025|NC": {
   "lat": 36.0635,
@@ -13,7 +19,13 @@
   "address": "1101 NC Highway 61",
   "zip": "27377",
   "phone": "336-449-6060",
-  "name": "TA Greensboro"
+  "name": "TA Greensboro",
+  "interstate": "I-85/I-40 & Hwy 61, Exit 138",
+  "parking": 173,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Burger King, Popeyes"
  },
  "5036|PA": {
   "lat": 41.1729,
@@ -21,7 +33,13 @@
   "address": "245 Allegheny Blvd.",
   "zip": "15825",
   "phone": "814-849-3051",
-  "name": "TA Brookville"
+  "name": "TA Brookville",
+  "interstate": "I-80 & Rt. 36, Exit 78",
+  "parking": 221,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Taco Bell"
  },
  "5022|NJ": {
   "lat": 40.9317,
@@ -29,7 +47,13 @@
   "address": "2 Simpson Road",
   "zip": "07832",
   "phone": "908-496-4124",
-  "name": "TA Columbia"
+  "name": "TA Columbia",
+  "interstate": "I-80 at Rt. 94, Exit 4A",
+  "parking": 172,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Country Pride, Pizza Hut Express, Taco Bell Express"
  },
  "5002|AZ": {
   "lat": 32.7737,
@@ -37,7 +61,13 @@
   "address": "2949 North Toltec Road",
   "zip": "85131",
   "phone": "520-466-7363",
-  "name": "TA Eloy"
+  "name": "TA Eloy",
+  "interstate": "I-10, Exit 203, Toltec Rd.",
+  "parking": 234,
+  "dieselLanes": 12,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "A&W All American Food, Sbarro, Taco Bell"
  },
  "5024|NM": {
   "lat": 35.5059,
@@ -45,7 +75,13 @@
   "address": "3404 W Historical Highway 66",
   "zip": "87301",
   "phone": "505-863-6801",
-  "name": "TA Gallup"
+  "name": "TA Gallup",
+  "interstate": "I-40 & Hwy 66, Exit 16",
+  "parking": 76,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5013|IN": {
   "lat": 41.573,
@@ -53,7 +89,13 @@
   "address": "2510 Burr St.",
   "zip": "46406",
   "phone": "219-845-3721",
-  "name": "TA Gary"
+  "name": "TA Gary",
+  "interstate": "I-80/ I-94, Exit 6, Burr St.",
+  "parking": 318,
+  "dieselLanes": 16,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Taco Bell"
  },
  "5028|OH": {
   "lat": 39.84,
@@ -61,7 +103,13 @@
   "address": "6762 US Rte 127",
   "zip": "45320",
   "phone": "937-456-5522",
-  "name": "TA Dayton"
+  "name": "TA Dayton",
+  "interstate": "I-70 & U.S. 127, Exit 10",
+  "parking": 198,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King"
  },
  "5037|PA": {
   "lat": 40.355,
@@ -69,7 +117,13 @@
   "address": "7848 Linglestown Road",
   "zip": "17112",
   "phone": "717-652-4556",
-  "name": "TA Harrisburg"
+  "name": "TA Harrisburg",
+  "interstate": "I-81 & S.R. 39, Manada Hill Exit 77",
+  "parking": 178,
+  "dieselLanes": 9,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5003|NM": {
   "lat": 32.2977,
@@ -77,7 +131,13 @@
   "address": "202 N. Motel Blvd",
   "zip": "88007",
   "phone": "575-527-7400",
-  "name": "TA Las Cruces"
+  "name": "TA Las Cruces",
+  "interstate": "I-10, Exit 139, Hwy 292",
+  "parking": 201,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut Express, Taco Bell"
  },
  "5030|OH": {
   "lat": 41.0322,
@@ -85,7 +145,13 @@
   "address": "8834 Lake Road",
   "zip": "44273",
   "phone": "330-769-2053",
-  "name": "TA Lodi"
+  "name": "TA Lodi",
+  "interstate": "I-71 & I-76 at Rt. 224, Exit 209",
+  "parking": 237,
+  "dieselLanes": 9,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP, Burger King, Popeyes, Starbucks"
  },
  "5005|AL": {
   "lat": 33.1759,
@@ -93,7 +159,13 @@
   "address": "3501 Buttermilk Road",
   "zip": "35453",
   "phone": "205-554-0215",
-  "name": "TA Tuscaloosa"
+  "name": "TA Tuscaloosa",
+  "interstate": "I-20/159 & Buttermilk Rd., Exit 77",
+  "parking": 151,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "5044|TX": {
   "lat": 29.7967,
@@ -101,7 +173,13 @@
   "address": "6800 Thompson Road",
   "zip": "77521",
   "phone": "281-424-7772",
-  "name": "TA Baytown"
+  "name": "TA Baytown",
+  "interstate": "I-10 & Thompson Rd., Exit 789",
+  "parking": 173,
+  "dieselLanes": 12,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "214|MD": {
   "lat": 39.6436,
@@ -109,7 +187,12 @@
   "address": "1400 Elkton Road",
   "zip": "21921",
   "phone": "410-398-7000",
-  "name": "TA Elkton"
+  "name": "TA Elkton",
+  "interstate": "I-95, Exit 109B",
+  "parking": 151,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true
  },
  "5009|CT": {
   "lat": 41.9177,
@@ -117,7 +200,13 @@
   "address": "327 Ruby Road",
   "zip": "06279",
   "phone": "860-684-0499",
-  "name": "TA Willington"
+  "name": "TA Willington",
+  "interstate": "I-84, Exit 71 Ruby Rd.",
+  "parking": 240,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Country Pride, Burger King"
  },
  "5004|NM": {
   "lat": 34.9443,
@@ -125,7 +214,13 @@
   "address": "2634 Historic Route 66",
   "zip": "88435",
   "phone": "575-935-9939",
-  "name": "TA Santa Rosa"
+  "name": "TA Santa Rosa",
+  "interstate": "I-40 & U.S. 66, 54 & 84, Exit 277",
+  "parking": 116,
+  "dieselLanes": 11,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes, Subway"
  },
  "118|OH": {
   "lat": 39.9538,
@@ -133,7 +228,13 @@
   "address": "940 US RT 42 NE",
   "zip": "43140",
   "phone": "740-852-3810",
-  "name": "TA London"
+  "name": "TA London",
+  "interstate": "I-70 & U.S. 42, Exit 79",
+  "parking": 138,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "5039|SC": {
   "lat": 34.914,
@@ -141,7 +242,13 @@
   "address": "1402 East Main St.",
   "zip": "29334",
   "phone": "864-433-0711",
-  "name": "TA Spartanburg"
+  "name": "TA Spartanburg",
+  "interstate": "I-85 & S.R. 290, Exit 63",
+  "parking": 187,
+  "dieselLanes": 8,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5007|CA": {
   "lat": 34.0647,
@@ -149,7 +256,13 @@
   "address": "4325 E. Guasti Rd.",
   "zip": "91761",
   "phone": "909-390-7800",
-  "name": "Petro Ontario"
+  "name": "Petro Ontario",
+  "interstate": "I-10 & Milliken Ave. Exit 57",
+  "parking": 559,
+  "dieselLanes": 16,
+  "showers": 30,
+  "catScale": true,
+  "facilities": "Iron Skillet, Burger King, Popeyes"
  },
  "5017|KY": {
   "lat": 38.9172,
@@ -157,7 +270,13 @@
   "address": "145 Richwood Road",
   "zip": "41094",
   "phone": "859-485-4111",
-  "name": "TA Walton"
+  "name": "TA Walton",
+  "interstate": "I-75/I-71 & S.R. 338, Exit 175",
+  "parking": 60,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Highway Kitchen, KFC"
  },
  "189|OH": {
   "lat": 41.8765,
@@ -165,7 +284,13 @@
   "address": "5551 St Rt 193",
   "zip": "44048",
   "phone": "440-224-2035",
-  "name": "TA Kingsville"
+  "name": "TA Kingsville",
+  "interstate": "I-90, Exit 235",
+  "parking": 158,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King"
  },
  "5012|IL": {
   "lat": 42.4857,
@@ -173,7 +298,12 @@
   "address": "16650 W. Russell Road",
   "zip": "60099",
   "phone": "847-395-5580",
-  "name": "TA Chicago North"
+  "name": "TA Chicago North",
+  "interstate": "I-94 & Russell, Illinois/Wisconsin Line",
+  "parking": 215,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true
  },
  "5047|WV": {
   "lat": 40.0694,
@@ -181,7 +311,13 @@
   "address": "270 W. Alexander Road",
   "zip": "26060",
   "phone": "304-547-1521",
-  "name": "TA Wheeling"
+  "name": "TA Wheeling",
+  "interstate": "I-70 at Dallas Pike, Exit 11",
+  "parking": 168,
+  "dieselLanes": 8,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5006|AR": {
   "lat": 35.1364,
@@ -189,7 +325,13 @@
   "address": "408 Highway 149 North",
   "zip": "72331",
   "phone": "870-657-2105",
-  "name": "TA Earle"
+  "name": "TA Earle",
+  "interstate": "I-40, Exit 260",
+  "parking": 137,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut Express, Taco Bell"
  },
  "5001|IL": {
   "lat": 39.1364,
@@ -197,7 +339,13 @@
   "address": "1702 West Evergreen Ave",
   "zip": "62401",
   "phone": "217-347-7183",
-  "name": "TA Effingham"
+  "name": "TA Effingham",
+  "interstate": "I-57 & I-70 State Route 32 & 33, Exit 160",
+  "parking": 137,
+  "dieselLanes": 11,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Dunkin', Popeyes, Sbarro"
  },
  "5032|OK": {
   "lat": 35.458,
@@ -205,7 +353,13 @@
   "address": "801 South Council Road",
   "zip": "73128",
   "phone": "405-787-7411",
-  "name": "TA Oklahoma City East"
+  "name": "TA Oklahoma City East",
+  "interstate": "I-40, Exit 142",
+  "parking": 175,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "186|OH": {
   "lat": 39.9389,
@@ -213,7 +367,13 @@
   "address": "10679 Lancaster Road, SE",
   "zip": "43025",
   "phone": "740-467-2900",
-  "name": "TA Hebron"
+  "name": "TA Hebron",
+  "interstate": "I-70 at Ohio 37, Exit 126",
+  "parking": 130,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Popeyes, Sbarro"
  },
  "5050|CA": {
   "lat": 33.7139,
@@ -221,7 +381,13 @@
   "address": "46155 Dillon Road",
   "zip": "92236",
   "phone": "760-342-6200",
-  "name": "TA Coachella"
+  "name": "TA Coachella",
+  "interstate": "I-10 at Exit 146 (Dillon Rd.)",
+  "parking": 205,
+  "dieselLanes": 12,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Arby's, Popeyes, Taco Bell"
  },
  "319|IL": {
   "lat": 38.3134,
@@ -229,7 +395,13 @@
   "address": "4510 Broadway St",
   "zip": "62864",
   "phone": "618-244-4242",
-  "name": "TA Mt Vernon"
+  "name": "TA Mt Vernon",
+  "interstate": "I-57 & I-64, Exit 95",
+  "parking": 136,
+  "dieselLanes": 8,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "342|IL": {
   "lat": 42.1451,
@@ -237,7 +409,13 @@
   "address": "19 N. 430 US Hwy 20",
   "zip": "60140",
   "phone": "847-683-4550",
-  "name": "TA Elgin"
+  "name": "TA Elgin",
+  "interstate": "I-90, Exit 42",
+  "parking": 92,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "676|GA": {
   "lat": 33.5524,
@@ -245,7 +423,13 @@
   "address": "2021 Eatonton Road",
   "zip": "30650",
   "phone": "706-342-4176",
-  "name": "TA Madison"
+  "name": "TA Madison",
+  "interstate": "I-20 & U.S. 441, Exit 114",
+  "parking": 149,
+  "dieselLanes": 7,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "785|LA": {
   "lat": 32.3886,
@@ -253,7 +437,13 @@
   "address": "224 Highway 65 South",
   "zip": "71282",
   "phone": "318-574-5900",
-  "name": "TA Tallulah"
+  "name": "TA Tallulah",
+  "interstate": "I-20 & U.S. 65, Exit 171",
+  "parking": 135,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "756|MS": {
   "lat": 32.3962,
@@ -261,7 +451,13 @@
   "address": "2150 Russell Mt. Gilead Road",
   "zip": "39301",
   "phone": "601-483-7611",
-  "name": "TA Meridian"
+  "name": "TA Meridian",
+  "interstate": "I-20 & I-59, Exit 160",
+  "parking": 90,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "212|NJ": {
   "lat": 40.6594,
@@ -269,7 +465,13 @@
   "address": "975 State Route 173",
   "zip": "08804",
   "phone": "908-479-4136",
-  "name": "TA Bloomsbury"
+  "name": "TA Bloomsbury",
+  "interstate": "I-78, Bloomsbury Exit 7",
+  "parking": 122,
+  "dieselLanes": 9,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Country Pride, Burger King"
  },
  "729|TX": {
   "lat": 32.9074,
@@ -277,7 +479,13 @@
   "address": "2105 South Goliad St.",
   "zip": "75032",
   "phone": "972-722-7450",
-  "name": "TA Rockwall"
+  "name": "TA Rockwall",
+  "interstate": "I-30 at Route 205, Exit 68",
+  "parking": 100,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut Express"
  },
  "307|WI": {
   "lat": 43.1745,
@@ -285,7 +493,13 @@
   "address": "5901 Highway 51",
   "zip": "53532",
   "phone": "608-249-9000",
-  "name": "TA Madison"
+  "name": "TA Madison",
+  "interstate": "I-90 & I-94, Exit 132",
+  "parking": 118,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "701|MO": {
   "lat": 36.7582,
@@ -293,7 +507,13 @@
   "address": "854 State Hwy 80",
   "zip": "63867",
   "phone": "573-471-8644",
-  "name": "TA Matthews"
+  "name": "TA Matthews",
+  "interstate": "I-55 & Hwy 80, Exit 58",
+  "parking": 114,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell Express"
  },
  "317|MO": {
   "lat": 39.0176,
@@ -301,7 +521,13 @@
   "address": "100 North Broadway",
   "zip": "64075",
   "phone": "816-690-4115",
-  "name": "TA Oak Grove"
+  "name": "TA Oak Grove",
+  "interstate": "I-70 & Route H, Exit 28",
+  "parking": 118,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "IHOP, Popeyes"
  },
  "656|FL": {
   "lat": 28.875,
@@ -309,7 +535,13 @@
   "address": "556 St. Rt. 44",
   "zip": "34785",
   "phone": "352-748-2501",
-  "name": "TA Wildwood"
+  "name": "TA Wildwood",
+  "interstate": "I-75, Exit 329 and FL Turnpike (FL-91), Exit 307",
+  "parking": 170,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Popeyes"
  },
  "778|AL": {
   "lat": 30.4985,
@@ -317,7 +549,13 @@
   "address": "9201 Grand Bay",
   "zip": "36541",
   "phone": "251-865-6175",
-  "name": "TA Mobile"
+  "name": "TA Mobile",
+  "interstate": "I-10, Exit 4",
+  "parking": 89,
+  "dieselLanes": 6,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Dunkin', Popeyes"
  },
  "5073|TX": {
   "lat": 35.1915,
@@ -325,7 +563,13 @@
   "address": "7000 E. Interstate 40",
   "zip": "79118",
   "phone": "806-342-3080",
-  "name": "TA Amarillo"
+  "name": "TA Amarillo",
+  "interstate": "I-40 & Whitaker, Exit 74",
+  "parking": 185,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Burger King, Pizza Hut Express, Popeyes"
  },
  "435|OR": {
   "lat": 45.2361,
@@ -333,7 +577,13 @@
   "address": "21856 Bents Road NE",
   "zip": "97002",
   "phone": "503-678-2111",
-  "name": "TA Aurora"
+  "name": "TA Aurora",
+  "interstate": "I-5, Exit 278",
+  "parking": 275,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "433|CA": {
   "lat": 40.5048,
@@ -341,7 +591,13 @@
   "address": "19483 Knighton Road",
   "zip": "96002",
   "phone": "530-221-4760",
-  "name": "TA Redding"
+  "name": "TA Redding",
+  "interstate": "I-5, Knighton Road",
+  "parking": 196,
+  "dieselLanes": 10,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Popeyes"
  },
  "120|OH": {
   "lat": 41.1225,
@@ -349,7 +605,12 @@
   "address": "5400 Seventy Six Drive",
   "zip": "44515",
   "phone": "330-793-4426",
-  "name": "TA Youngstown"
+  "name": "TA Youngstown",
+  "interstate": "I-80, Route 46, Exit 223A",
+  "parking": 145,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true
  },
  "709|OK": {
   "lat": 35.4617,
@@ -357,7 +618,13 @@
   "address": "501 South Morgan Road",
   "zip": "73128",
   "phone": "405-324-5376",
-  "name": "TA Oklahoma City West"
+  "name": "TA Oklahoma City West",
+  "interstate": "I-40, Exit 140",
+  "parking": 101,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Fazoli's, Popeyes"
  },
  "425|UT": {
   "lat": 40.6899,
@@ -365,7 +632,13 @@
   "address": "8836 North Highway 40",
   "zip": "84074",
   "phone": "801-250-8585",
-  "name": "TA Tooele"
+  "name": "TA Tooele",
+  "interstate": "I-80, Exit 99",
+  "parking": 191,
+  "dieselLanes": 7,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Burger King, Taco Bell"
  },
  "5014|IN": {
   "lat": 38.9576,
@@ -373,7 +646,13 @@
   "address": "2636 E. Tipton St.",
   "zip": "47274",
   "phone": "812-522-6622",
-  "name": "TA Seymour"
+  "name": "TA Seymour",
+  "interstate": "I-65 & S.R. 50, Exit 50",
+  "parking": 184,
+  "dieselLanes": 9,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Charleys Philly Steaks, Highway Kitchen"
  },
  "528|IA": {
   "lat": 41.2287,
@@ -381,7 +660,12 @@
   "address": "3210 South Seven Street",
   "zip": "51501",
   "phone": "712-366-2217",
-  "name": "TA Council Bluffs"
+  "name": "TA Council Bluffs",
+  "interstate": "I-29(NB)/I-80(EB), Exit 48 I-29(SB)/I-80(WB), Exit 3 S. Expwy, Exit 49",
+  "parking": 78,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true
  },
  "5034|PA": {
   "lat": 41.1992,
@@ -389,7 +673,13 @@
   "address": "5644 St. Rt. 8",
   "zip": "16038",
   "phone": "814-786-7988",
-  "name": "TA Barkeyville"
+  "name": "TA Barkeyville",
+  "interstate": "I-80 & S.R. 8, Exit 29",
+  "parking": 112,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5038|PA": {
   "lat": 41.0275,
@@ -397,7 +687,13 @@
   "address": "5600 Nittany Valley Drive",
   "zip": "16848",
   "phone": "570-726-4996",
-  "name": "TA Lamar"
+  "name": "TA Lamar",
+  "interstate": "I-80 & S.R. 64, Exit 173",
+  "parking": 168,
+  "dieselLanes": 9,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5019|MI": {
   "lat": 41.9267,
@@ -405,7 +701,13 @@
   "address": "1255 N Dixie Hwy",
   "zip": "48162",
   "phone": "734-384-7952",
-  "name": "TA Monroe"
+  "name": "TA Monroe",
+  "interstate": "I-75, Exit 15",
+  "parking": 156,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Fazoli's, Popeyes, Tim Horton's"
  },
  "5048|WI": {
   "lat": 42.7143,
@@ -413,7 +715,13 @@
   "address": "3222 Hwy. 14 East",
   "zip": "53546",
   "phone": "608-752-8700",
-  "name": "TA Janesville"
+  "name": "TA Janesville",
+  "interstate": "I-90 & Hwy 14, Exit 171-B",
+  "parking": 96,
+  "dieselLanes": 8,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Chester Fried Chicken, Cinnabon, Hunt Brothers Pizza, Wendy's"
  },
  "5015|IA": {
   "lat": 41.6179,
@@ -421,7 +729,13 @@
   "address": "755 W. Iowa 80 Road",
   "zip": "52773",
   "phone": "563-284-6961",
-  "name": "TA Walcott"
+  "name": "TA Walcott",
+  "interstate": "I-80, Exit 284",
+  "parking": 900,
+  "dieselLanes": 15,
+  "showers": 24,
+  "catScale": true,
+  "facilities": "Iowa 80 Kitchen, Blimpie, Dairy Queen, Orange Julius, Pizza Hut Express, Starbucks, Taco Bell, Wendy's, Truckomat Truck Wash"
  },
  "424|NM": {
   "lat": 35.1111,
@@ -429,7 +743,13 @@
   "address": "2501 University Blvd., NE",
   "zip": "87107",
   "phone": "505-884-1066",
-  "name": "TA Albuquerque"
+  "name": "TA Albuquerque",
+  "interstate": "I-40, Exit 159A,D/I-25,Exit 225(Nthbnd):Exit 227(Sthbnd)",
+  "parking": 150,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5082|OH": {
   "lat": 40.5582,
@@ -437,7 +757,13 @@
   "address": "1775 Bellefontaine St.",
   "zip": "45895",
   "phone": "567-712-5101",
-  "name": "TA Wapakoneta"
+  "name": "TA Wapakoneta",
+  "interstate": "I-75 & U.S. 33, Exit 111",
+  "parking": 145,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Miss J's Diner, Miss J’s Café"
  },
  "178|OH": {
   "lat": 41.5215,
@@ -445,7 +771,13 @@
   "address": "3483 Libbey Road",
   "zip": "43551",
   "phone": "567-970-3800",
-  "name": "TA Toledo"
+  "name": "TA Toledo",
+  "interstate": "I-80 & I-280, Exit 71, Ohio Turnpike",
+  "parking": 177,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Taco Bell"
  },
  "312|MI": {
   "lat": 42.2963,
@@ -453,7 +785,13 @@
   "address": "200 Baker Road",
   "zip": "48130",
   "phone": "734-426-3951",
-  "name": "TA Ann Arbor"
+  "name": "TA Ann Arbor",
+  "interstate": "I-94, Exit 167",
+  "parking": 203,
+  "dieselLanes": 9,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "502|NE": {
   "lat": 41.1138,
@@ -461,7 +799,13 @@
   "address": "103 Prospector Drive",
   "zip": "69153",
   "phone": "308-284-3667",
-  "name": "TA Ogallala"
+  "name": "TA Ogallala",
+  "interstate": "I-80, Exit 126",
+  "parking": 94,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5091|KS": {
   "lat": 39.1188,
@@ -469,7 +813,13 @@
   "address": "1001 Hwy 40",
   "zip": "67748",
   "phone": "785-672-4111",
-  "name": "TA Oakley"
+  "name": "TA Oakley",
+  "interstate": "I-70 and U.S. 40, Exit 76",
+  "parking": 84,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "IHOP, Sonic, Subway"
  },
  "322|IL": {
   "lat": 40.488,
@@ -477,7 +827,12 @@
   "address": "505 Truckers Lane",
   "zip": "61701",
   "phone": "309-827-4676",
-  "name": "TA Bloomington"
+  "name": "TA Bloomington",
+  "interstate": "I-55, I-74, I-39 at Route 9, Exit 160",
+  "parking": 160,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true
  },
  "5072|KY": {
   "lat": 39.0001,
@@ -485,7 +840,13 @@
   "address": "7777 Burlington Pike",
   "zip": "41042",
   "phone": "859-371-7166",
-  "name": "TA Florence"
+  "name": "TA Florence",
+  "interstate": "I-75, Exit 181",
+  "parking": 123,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Popeyes, Subway"
  },
  "439|AZ": {
   "lat": 35.1901,
@@ -493,7 +854,13 @@
   "address": "946 West Beale Street",
   "zip": "86401",
   "phone": "928-753-7600",
-  "name": "TA Kingman"
+  "name": "TA Kingman",
+  "interstate": "I-40, Exit 48",
+  "parking": 115,
+  "dieselLanes": 10,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Popeyes"
  },
  "104|OH": {
   "lat": 40.8788,
@@ -501,7 +868,12 @@
   "address": "4450 Portage St. NW",
   "zip": "44720",
   "phone": "330-494-7507",
-  "name": "TA North Canton"
+  "name": "TA North Canton",
+  "interstate": "I-77, Exit 111",
+  "parking": 85,
+  "dieselLanes": 6,
+  "showers": 4,
+  "catScale": true
  },
  "421|NV": {
   "lat": 36.0433,
@@ -509,7 +881,13 @@
   "address": "8050 Dean Martin Drive",
   "zip": "89139",
   "phone": "702-361-1176",
-  "name": "TA Las Vegas"
+  "name": "TA Las Vegas",
+  "interstate": "I-15, Blue Diamond Exit 33",
+  "parking": 144,
+  "dieselLanes": 10,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Burger King, Taco Time"
  },
  "384|MI": {
   "lat": 41.8845,
@@ -517,7 +895,13 @@
   "address": "6100 Sawyer Road",
   "zip": "49125",
   "phone": "269-426-4884",
-  "name": "TA Sawyer"
+  "name": "TA Sawyer",
+  "interstate": "I-94, Exit 12",
+  "parking": 155,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut, Popeyes, Taco Bell Express"
  },
  "768|TN": {
   "lat": 36.015,
@@ -525,7 +909,13 @@
   "address": "13011 Old Hickory Blvd.",
   "zip": "37013",
   "phone": "615-641-6731",
-  "name": "TA Antioch"
+  "name": "TA Antioch",
+  "interstate": "I-24, Exit 62",
+  "parking": 122,
+  "dieselLanes": 7,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Burger King, Popeyes"
  },
  "310|MO": {
   "lat": 37.2745,
@@ -533,7 +923,13 @@
   "address": "225 E. Evergreen",
   "zip": "65757",
   "phone": "417-736-2161",
-  "name": "TA Strafford"
+  "name": "TA Strafford",
+  "interstate": "I-44 , Exit 88",
+  "parking": 140,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Denny's, Miss J's, Subway, Taco Bell"
  },
  "187|OH": {
   "lat": 39.6166,
@@ -541,7 +937,13 @@
   "address": "12403 US Rt 35 NW",
   "zip": "43128",
   "phone": "740-948-2365",
-  "name": "TA Jeffersonville"
+  "name": "TA Jeffersonville",
+  "interstate": "I-71 & U.S. 35, Exit 65",
+  "parking": 144,
+  "dieselLanes": 10,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "IHOP, Pizza Hut Express, Popeyes"
  },
  "210|VA": {
   "lat": 37.7237,
@@ -549,7 +951,13 @@
   "address": "10134 Lewistown Road",
   "zip": "23005",
   "phone": "804-798-6021",
-  "name": "TA Richmond"
+  "name": "TA Richmond",
+  "interstate": "I-95, Exit 89",
+  "parking": 317,
+  "dieselLanes": 7,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Popeyes"
  },
  "217|VA": {
   "lat": 36.9651,
@@ -557,7 +965,13 @@
   "address": "1025 Peppers Ferry Road",
   "zip": "24382",
   "phone": "276-228-8676",
-  "name": "TA Wytheville"
+  "name": "TA Wytheville",
+  "interstate": "I-77, Exit 41, I-81, Exit 72",
+  "parking": 114,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "IHOP, Popeyes, Subway, Taco Bell"
  },
  "5071|GA": {
   "lat": 34.2739,
@@ -565,7 +979,13 @@
   "address": "981 Cassville-White Road",
   "zip": "30121",
   "phone": "770-607-8885",
-  "name": "TA Cartersville"
+  "name": "TA Cartersville",
+  "interstate": "I-75, Exit 296",
+  "parking": 212,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP, Burger King, Popeyes, Taco Bell & Pizza Hut Express"
  },
  "5076|TX": {
   "lat": 29.4433,
@@ -573,7 +993,13 @@
   "address": "6170 I-10 East",
   "zip": "78219",
   "phone": "210-310-0145",
-  "name": "TA San Antonio"
+  "name": "TA San Antonio",
+  "interstate": "I-10, Exit 583, Foster Rd.",
+  "parking": 238,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Burger King, Fazoli's, Popeyes"
  },
  "5070|CO": {
   "lat": 39.7901,
@@ -581,7 +1007,13 @@
   "address": "5101 Quebec Street",
   "zip": "80022",
   "phone": "303-286-0123",
-  "name": "TA Commerce City"
+  "name": "TA Commerce City",
+  "interstate": "I-70/I-270, Exit 278 (Quebec St. Exit)",
+  "parking": 224,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut Express, Popeyes"
  },
  "198|WV": {
   "lat": 38.4543,
@@ -589,7 +1021,12 @@
   "address": "4195 State Route 34",
   "zip": "25526",
   "phone": "304-757-7600",
-  "name": "TA Hurricane"
+  "name": "TA Hurricane",
+  "interstate": "I-64 , Exit 39",
+  "parking": 76,
+  "dieselLanes": 9,
+  "showers": 7,
+  "catScale": true
  },
  "5078|TX": {
   "lat": 32.6534,
@@ -597,7 +1034,13 @@
   "address": "7751 Bonnie View Rd",
   "zip": "75241",
   "phone": "469-941-3150",
-  "name": "TA Dallas South"
+  "name": "TA Dallas South",
+  "interstate": "I-20 & I-635, Exit 472",
+  "parking": 136,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Taco Bell & Pizza Hut Express"
  },
  "5018|MD": {
   "lat": 39.1667,
@@ -605,7 +1048,13 @@
   "address": "7401 Assateague Drive",
   "zip": "20794",
   "phone": "410-799-3835",
-  "name": "TA Baltimore South"
+  "name": "TA Baltimore South",
+  "interstate": "I-95 & Rt. 175, Jessup Exit 41A",
+  "parking": 436,
+  "dieselLanes": 9,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5074|OK": {
   "lat": 35.3355,
@@ -613,7 +1062,13 @@
   "address": "11603 N. 1900 Rd.",
   "zip": "73662",
   "phone": "580-928-5571",
-  "name": "TA Sayre"
+  "name": "TA Sayre",
+  "interstate": "I-40, Exit 26",
+  "parking": 101,
+  "dieselLanes": 10,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Subway, Taco Bell"
  },
  "6153|TX": {
   "lat": 27.6875,
@@ -621,7 +1076,13 @@
   "address": "1010 Beltway Parkway",
   "zip": "78045",
   "phone": "956-724-2016",
-  "name": "TA Laredo"
+  "name": "TA Laredo",
+  "interstate": "I-35 and Beltway Parkway",
+  "parking": 336,
+  "dieselLanes": 8,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "IHOP, Burger King, Taco Bell"
  },
  "5079|CT": {
   "lat": 41.5647,
@@ -629,7 +1090,13 @@
   "address": "1875 Meriden-Waterbury Turnpike",
   "zip": "06467",
   "phone": "860-621-0106",
-  "name": "TA Southington"
+  "name": "TA Southington",
+  "interstate": "I-84, Exit 28, Highway 322",
+  "parking": 145,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell"
  },
  "677|GA": {
   "lat": 34.2528,
@@ -637,7 +1104,13 @@
   "address": "30732 Hwy 441 South",
   "zip": "30529",
   "phone": "706-335-5198",
-  "name": "TA Commerce"
+  "name": "TA Commerce",
+  "interstate": "I-85 at U.S. 441, Exit 149",
+  "parking": 89,
+  "dieselLanes": 8,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Fuddruckers"
  },
  "5084|FL": {
   "lat": 28.0099,
@@ -645,7 +1118,13 @@
   "address": "11706 Tampa Gateway Blvd.",
   "zip": "33584",
   "phone": "813-262-1560",
-  "name": "TA Express Tampa"
+  "name": "TA Express Tampa",
+  "interstate": "I-4, Exit 10",
+  "parking": 81,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Arby's, Popeyes"
  },
  "429|CA": {
   "lat": 35.401,
@@ -653,7 +1132,13 @@
   "address": "27769 Lagoon Drive",
   "zip": "93206",
   "phone": "661-764-5266",
-  "name": "TA Buttonwillow"
+  "name": "TA Buttonwillow",
+  "interstate": "I-5, Exit 257, Highway 58",
+  "parking": 170,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell"
  },
  "770|LA": {
   "lat": 30.2521,
@@ -661,7 +1146,13 @@
   "address": "1701 North University Ave.",
   "zip": "70507",
   "phone": "337-237-0176",
-  "name": "TA Lafayette"
+  "name": "TA Lafayette",
+  "interstate": "I-10 & State Road 182, MM 101",
+  "parking": 128,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Sbarro"
  },
  "417|CA": {
   "lat": 34.0649,
@@ -669,7 +1160,13 @@
   "address": "4265 East Guasti Road",
   "zip": "91761",
   "phone": "909-390-2525",
-  "name": "TA Ontario"
+  "name": "TA Ontario",
+  "interstate": "I-10 at Milliken Avenue",
+  "parking": 549,
+  "dieselLanes": 8,
+  "showers": 17,
+  "catScale": true,
+  "facilities": "Country Pride, Pizza Hut Express, Taco Bell"
  },
  "431|CA": {
   "lat": 37.1101,
@@ -677,7 +1174,13 @@
   "address": "12310 State Highway 33",
   "zip": "95322",
   "phone": "209-826-0741",
-  "name": "TA Santa Nella"
+  "name": "TA Santa Nella",
+  "interstate": "I-5 & Hwy 33, Santa Nella Exit",
+  "parking": 216,
+  "dieselLanes": 8,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "IHOP, Popeyes"
  },
  "5053|ID": {
   "lat": 43.5656,
@@ -685,7 +1188,13 @@
   "address": "4115 Broadway Ave",
   "zip": "83705",
   "phone": "208-344-1091",
-  "name": "TA Boise"
+  "name": "TA Boise",
+  "interstate": "I-84, Exit 54",
+  "parking": 171,
+  "dieselLanes": 7,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Country Pride, Subway, Taco Bell"
  },
  "6170|CA": {
   "lat": 37.3876,
@@ -693,7 +1202,13 @@
   "address": "435 Winton Parkway",
   "zip": "95334",
   "phone": "209-799-3500",
-  "name": "TA Livingston"
+  "name": "TA Livingston",
+  "interstate": "SR 99 at Exit 203 Winton Parkway",
+  "parking": 102,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Burger King, Popeyes"
  },
  "115|CT": {
   "lat": 41.2968,
@@ -701,7 +1216,13 @@
   "address": "3 East Industrial Road",
   "zip": "06405",
   "phone": "203-481-0301",
-  "name": "TA Express New Haven"
+  "name": "TA Express New Haven",
+  "interstate": "I-95, Exit 56",
+  "parking": 75,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Popeyes, Starbucks"
  },
  "428|NV": {
   "lat": 39.5351,
@@ -709,7 +1230,13 @@
   "address": "200 North McCarren",
   "zip": "89431",
   "phone": "775-359-0550",
-  "name": "TA Sparks"
+  "name": "TA Sparks",
+  "interstate": "I-80, Exit 19",
+  "parking": 200,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Fuddruckers"
  },
  "306|IN": {
   "lat": 39.9478,
@@ -717,7 +1244,13 @@
   "address": "5930 Whitestown Pkwy",
   "zip": "46075",
   "phone": "317-769-3291",
-  "name": "TA Whitestown"
+  "name": "TA Whitestown",
+  "interstate": "I-65, State Road 334, Exit 130",
+  "parking": 169,
+  "dieselLanes": 7,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "432|CO": {
   "lat": 39.7793,
@@ -725,7 +1258,13 @@
   "address": "12151 West 44th Avenue",
   "zip": "80033",
   "phone": "303-423-8250",
-  "name": "TA Wheat Ridge"
+  "name": "TA Wheat Ridge",
+  "interstate": "I-70, Exit 266",
+  "parking": 116,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Highway Kitchen"
  },
  "315|MO": {
   "lat": 38.8171,
@@ -733,7 +1272,13 @@
   "address": "3265 N. Service Road East",
   "zip": "63348",
   "phone": "636-673-2295",
-  "name": "TA Foristell"
+  "name": "TA Foristell",
+  "interstate": "I-70 & Route W, Exit 203",
+  "parking": 95,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell & Pizza Hut Express"
  },
  "5087|WA": {
   "lat": 47.4683,
@@ -741,7 +1286,13 @@
   "address": "46630 North Bend Way",
   "zip": "98045",
   "phone": "425-888-1119",
-  "name": "TA Seattle East"
+  "name": "TA Seattle East",
+  "interstate": "I-90, Exit 34",
+  "parking": 140,
+  "dieselLanes": 6,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes, Starbucks"
  },
  "604|GA": {
   "lat": 31.9252,
@@ -749,7 +1300,13 @@
   "address": "4401 Hwy. 17",
   "zip": "31324",
   "phone": "912-756-3381",
-  "name": "TA Savannah"
+  "name": "TA Savannah",
+  "interstate": "I-95 & U.S. 17 South, Exit 87",
+  "parking": 222,
+  "dieselLanes": 9,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Fuddruckers, Popeyes"
  },
  "605|FL": {
   "lat": 30.7187,
@@ -757,7 +1314,13 @@
   "address": "2112 Highway 71 South",
   "zip": "32448",
   "phone": "850-526-3303",
-  "name": "TA Marianna"
+  "name": "TA Marianna",
+  "interstate": "I-10, Exit 142",
+  "parking": 123,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell & Pizza Hut Express"
  },
  "213|SC": {
   "lat": 33.7046,
@@ -765,7 +1328,13 @@
   "address": "3014 Paxville Highway",
   "zip": "29102",
   "phone": "803-791-9095",
-  "name": "TA Manning"
+  "name": "TA Manning",
+  "interstate": "I-95 & S.R. 261, Exit 119",
+  "parking": 84,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "725|LA": {
   "lat": 30.2864,
@@ -773,7 +1342,13 @@
   "address": "1682 Gause Blvd",
   "zip": "70458",
   "phone": "985-643-9974",
-  "name": "TA Slidell"
+  "name": "TA Slidell",
+  "interstate": "I-10, Exit 266",
+  "parking": 111,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "5058|NV": {
   "lat": 40.6932,
@@ -781,7 +1356,13 @@
   "address": "6000 E. Frontage Road",
   "zip": "89418",
   "phone": "775-538-7311",
-  "name": "TA Mill City"
+  "name": "TA Mill City",
+  "interstate": "I-80, Exit 151 (West) Exit 149 (East)",
+  "parking": 152,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Taco Bell Express"
  },
  "5060|OR": {
   "lat": 45.5438,
@@ -789,7 +1370,13 @@
   "address": "790 N W Frontage Road",
   "zip": "97060",
   "phone": "503-666-1588",
-  "name": "TA Troutdale"
+  "name": "TA Troutdale",
+  "interstate": "I-84, Exit 17",
+  "parking": 240,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Country Pride, Popeyes, Subway"
  },
  "5064|UT": {
   "lat": 37.8607,
@@ -797,7 +1384,13 @@
   "address": "1130 N. 100 W.",
   "zip": "84761",
   "phone": "435-477-3311",
-  "name": "TA Express Parowan"
+  "name": "TA Express Parowan",
+  "interstate": "I-15, Exit 78",
+  "parking": 90,
+  "dieselLanes": 5,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Subway, Taco Bell"
  },
  "5065|WY": {
   "lat": 41.1602,
@@ -805,7 +1398,13 @@
   "address": "4000 I-80 Service Road",
   "zip": "82053",
   "phone": "307-365-6670",
-  "name": "TA Cheyenne"
+  "name": "TA Cheyenne",
+  "interstate": "I-80, Exit 377",
+  "parking": 140,
+  "dieselLanes": 9,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Country Pride, Burger King, Taco Bell"
  },
  "5067|WY": {
   "lat": 41.3144,
@@ -813,7 +1412,13 @@
   "address": "I-80 at Bigelow Road, Exit 30",
   "zip": "82933",
   "phone": "307-209-2115",
-  "name": "TA Ft. Bridger"
+  "name": "TA Ft. Bridger",
+  "interstate": "I-80, Exit 30",
+  "parking": 165,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Taco Bell Express"
  },
  "512|NE": {
   "lat": 40.7998,
@@ -821,7 +1426,13 @@
   "address": "8033 West Holling Rd.",
   "zip": "68810",
   "phone": "308-382-5902",
-  "name": "TA Grand Island"
+  "name": "TA Grand Island",
+  "interstate": "I-80, Exit 305",
+  "parking": 82,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "102|NY": {
   "lat": 43.0059,
@@ -829,7 +1440,13 @@
   "address": "8420 Alleghany",
   "zip": "14036",
   "phone": "585-599-4577",
-  "name": "TA Pembroke"
+  "name": "TA Pembroke",
+  "interstate": "I-90 & SR 77, Exit 48A",
+  "parking": 132,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "672|FL": {
   "lat": 27.6381,
@@ -837,7 +1454,13 @@
   "address": "8909 20th Street",
   "zip": "32966",
   "phone": "772-562-1791",
-  "name": "TA Vero Beach"
+  "name": "TA Vero Beach",
+  "interstate": "I-95 & State Route 60, Exit 147",
+  "parking": 162,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes, Subway"
  },
  "5199|IL": {
   "lat": 38.7338,
@@ -845,7 +1468,13 @@
   "address": "819 Edwardsville Rd.",
   "zip": "62294",
   "phone": "618-667-9931",
-  "name": "TA Troy"
+  "name": "TA Troy",
+  "interstate": "I-55/I-70 at State Route 162, Exit 18",
+  "parking": 92,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Baskin Robbins, Dunkin'"
  },
  "6201|TN": {
   "lat": 36.3254,
@@ -853,7 +1482,13 @@
   "address": "195 Van Hill Road",
   "zip": "37745",
   "phone": "423-234-4451",
-  "name": "TA Davy Crockett Travel Center"
+  "name": "TA Davy Crockett Travel Center",
+  "interstate": "I-81, Exit 36",
+  "parking": 245,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP, Dunkin', Papa John's Pizza"
  },
  "6207|NY": {
   "lat": 42.1013,
@@ -861,7 +1496,13 @@
   "address": "753 Upper Court Street",
   "zip": "13904",
   "phone": "607-775-3500",
-  "name": "TA Binghamton"
+  "name": "TA Binghamton",
+  "interstate": "I-81 N. Exit 2W, NY Route 17 or I-81 S., Exit 3",
+  "parking": 125,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6208|NY": {
   "lat": 42.5662,
@@ -869,7 +1510,13 @@
   "address": "9616 Commerce Drive",
   "zip": "14437",
   "phone": "585-335-6023",
-  "name": "TA Dansville"
+  "name": "TA Dansville",
+  "interstate": "I-390, Exit 5",
+  "parking": 102,
+  "dieselLanes": 8,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6210|NY": {
   "lat": 41.5042,
@@ -877,7 +1524,13 @@
   "address": "125 Neelytown Road",
   "zip": "12549",
   "phone": "845-457-3163",
-  "name": "TA Maybrook"
+  "name": "TA Maybrook",
+  "interstate": "I-84, Exit 28",
+  "parking": 160,
+  "dieselLanes": 10,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Country Pride, Pizza Hut Express"
  },
  "6211|NH": {
   "lat": 43.0431,
@@ -885,7 +1538,13 @@
   "address": "108 Ocean Road",
   "zip": "03840",
   "phone": "603-436-3636",
-  "name": "TA Greenland"
+  "name": "TA Greenland",
+  "interstate": "I-95, Exit 3 Northbound; Exit 3B Southbound",
+  "parking": 72,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6212|PA": {
   "lat": 41.0143,
@@ -893,7 +1552,13 @@
   "address": "6 Buckhorn Road",
   "zip": "17815",
   "phone": "570-784-9400",
-  "name": "TA Bloomsburg"
+  "name": "TA Bloomsburg",
+  "interstate": "I-80, Exit 232",
+  "parking": 190,
+  "dieselLanes": 11,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Country Pride, Subway"
  },
  "6213|PA": {
   "lat": 39.7846,
@@ -901,7 +1566,13 @@
   "address": "10835 John Wayne Drive",
   "zip": "17225",
   "phone": "717-597-7762",
-  "name": "TA Greencastle"
+  "name": "TA Greencastle",
+  "interstate": "I-81, Exit 5",
+  "parking": 190,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6214|PA": {
   "lat": 40.9589,
@@ -909,7 +1580,13 @@
   "address": "875 N. Eagle Valley Rd.",
   "zip": "16853",
   "phone": "814-355-7561",
-  "name": "TA Milesburg"
+  "name": "TA Milesburg",
+  "interstate": "I-80, Exit 158",
+  "parking": 122,
+  "dieselLanes": 8,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Country Pride, Subway"
  },
  "6215|PA": {
   "lat": 42.1409,
@@ -917,7 +1594,13 @@
   "address": "4050 Depot Road",
   "zip": "16510",
   "phone": "814-899-1919",
-  "name": "TA Harborcreek"
+  "name": "TA Harborcreek",
+  "interstate": "I-90, Exit 35",
+  "parking": 266,
+  "dieselLanes": 10,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "IHOP, Pizza Hut Express, Subway, Blue Beacon Truck Wash"
  },
  "6216|MD": {
   "lat": 39.2775,
@@ -925,7 +1608,12 @@
   "address": "5501 O'Donnell Street",
   "zip": "21224",
   "phone": "410-633-4611",
-  "name": "TA Baltimore"
+  "name": "TA Baltimore",
+  "interstate": "I-95, Exit 57",
+  "parking": 181,
+  "dieselLanes": 8,
+  "showers": 11,
+  "catScale": true
  },
  "6220|IN": {
   "lat": 41.6125,
@@ -933,7 +1621,13 @@
   "address": "1600 West US Hwy 20",
   "zip": "46304",
   "phone": "219-926-8566",
-  "name": "TA Porter"
+  "name": "TA Porter",
+  "interstate": "I-94, Exit 22B",
+  "parking": 212,
+  "dieselLanes": 12,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes, Taco Bell & Pizza Hut Express"
  },
  "6221|NC": {
   "lat": 35.5432,
@@ -941,7 +1635,13 @@
   "address": "153 Wiggins Road",
   "zip": "28715",
   "phone": "828-665-1156",
-  "name": "TA Candler"
+  "name": "TA Candler",
+  "interstate": "I-40, Exit 37",
+  "parking": 106,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6224|AR": {
   "lat": 33.8112,
@@ -949,7 +1649,13 @@
   "address": "1806 Hwy 371 West",
   "zip": "71857",
   "phone": "870-887-8900",
-  "name": "TA Prescott"
+  "name": "TA Prescott",
+  "interstate": "I-30, Exit 44",
+  "parking": 292,
+  "dieselLanes": 10,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Subway, Taco Bell"
  },
  "6225|AZ": {
   "lat": 33.4587,
@@ -957,7 +1663,13 @@
   "address": "1010 N. 339th Avenue",
   "zip": "85354",
   "phone": "623-386-6443",
-  "name": "TA Tonopah"
+  "name": "TA Tonopah",
+  "interstate": "I-10 & 339th Ave., Exit 103",
+  "parking": 407,
+  "dieselLanes": 12,
+  "showers": 18,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Subway, Taco Bell & Pizza Hut Express"
  },
  "6226|AZ": {
   "lat": 32.2688,
@@ -965,7 +1677,13 @@
   "address": "1501 North Fort Grant Road",
   "zip": "85643",
   "phone": "520-384-5311",
-  "name": "TA Willcox"
+  "name": "TA Willcox",
+  "interstate": "I-10, 1501 Fort Grant Rd., Exit 340",
+  "parking": 229,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Country Pride, Popeyes, Subway"
  },
  "6227|CA": {
   "lat": 34.8537,
@@ -973,7 +1691,13 @@
   "address": "2930 Lenwood Road",
   "zip": "92311",
   "phone": "760-253-2922",
-  "name": "TA Barstow"
+  "name": "TA Barstow",
+  "interstate": "I-15 Exit 178/Lenwood Rd.",
+  "parking": 303,
+  "dieselLanes": 16,
+  "showers": 17,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Subway"
  },
  "6228|CO": {
   "lat": 39.271,
@@ -981,7 +1705,13 @@
   "address": "2200 Ninth Street",
   "zip": "80828",
   "phone": "719-775-2811",
-  "name": "TA Limon"
+  "name": "TA Limon",
+  "interstate": "I-70 & Hwy 24, Exit 359",
+  "parking": 104,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Country Pride, Subway"
  },
  "6229|NM": {
   "lat": 35.0095,
@@ -989,7 +1719,13 @@
   "address": "1700 U.S. Route 66 West",
   "zip": "87035",
   "phone": "505-832-4421",
-  "name": "TA Moriarty"
+  "name": "TA Moriarty",
+  "interstate": "I-40 & Central Avenue., Exit 194",
+  "parking": 245,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Country Pride, Burger King, Pizza Hut Express"
  },
  "6230|TX": {
   "lat": 32.2648,
@@ -997,7 +1733,13 @@
   "address": "704 West Interstate 20",
   "zip": "79720",
   "phone": "432-264-4444",
-  "name": "TA Big Spring"
+  "name": "TA Big Spring",
+  "interstate": "I-20 & Hwy 87, Exit 177",
+  "parking": 108,
+  "dieselLanes": 6,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "IHOP, Popeyes, Subway"
  },
  "6231|TX": {
   "lat": 29.0496,
@@ -1005,7 +1747,13 @@
   "address": "802 E. York, Hwy 59",
   "zip": "77962",
   "phone": "361-541-5575",
-  "name": "TA Ganado"
+  "name": "TA Ganado",
+  "interstate": "Hwy 59, Exit 522E",
+  "parking": 104,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Subway"
  },
  "6232|TX": {
   "lat": 29.7489,
@@ -1013,7 +1761,13 @@
   "address": "4817 I-35 North",
   "zip": "78130",
   "phone": "830-608-9395",
-  "name": "TA New Braunfels"
+  "name": "TA New Braunfels",
+  "interstate": "I-35, Exit 193",
+  "parking": 220,
+  "dieselLanes": 10,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Popeyes, Subway"
  },
  "6233|TX": {
   "lat": 32.6908,
@@ -1021,7 +1775,13 @@
   "address": "1700 Wilson Road",
   "zip": "75161",
   "phone": "972-563-6939",
-  "name": "TA Terrell"
+  "name": "TA Terrell",
+  "interstate": "I-20 & Wilson Rd., Exit 503",
+  "parking": 300,
+  "dieselLanes": 12,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Pizza Hut Express, Subway"
  },
  "6234|WY": {
   "lat": 41.7762,
@@ -1029,7 +1789,13 @@
   "address": "1400 Higley Blvd., Exit 214",
   "zip": "82301",
   "phone": "307-324-8722",
-  "name": "TA Rawlins"
+  "name": "TA Rawlins",
+  "interstate": "I-80 & Higley Blvd., Exit 214",
+  "parking": 188,
+  "dieselLanes": 12,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Country Pride, Subway"
  },
  "5085|TX": {
   "lat": 26.3845,
@@ -1037,7 +1803,13 @@
   "address": "8301 N.Hwy. 281",
   "zip": "78541",
   "phone": "956-383-0788",
-  "name": "TA Edinburg"
+  "name": "TA Edinburg",
+  "interstate": "Hwy. 281, Exit FM 2812",
+  "parking": 105,
+  "dieselLanes": 5,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Tule Tree Legendary Burritos"
  },
  "6236|IL": {
   "lat": 41.3917,
@@ -1045,7 +1817,13 @@
   "address": "21 Romines Drive",
   "zip": "60450",
   "phone": "815-942-5690",
-  "name": "TA Morris"
+  "name": "TA Morris",
+  "interstate": "I-80 & Route 47, Exit 112B",
+  "parking": 292,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Charleys Philly Steaks"
  },
  "6237|LA": {
   "lat": 32.4461,
@@ -1053,7 +1831,13 @@
   "address": "8560 Greenwood Rd",
   "zip": "71033",
   "phone": "318-938-5411",
-  "name": "TA Greenwood"
+  "name": "TA Greenwood",
+  "interstate": "I-20, Exit 5",
+  "parking": 177,
+  "dieselLanes": 9,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "KFC, Subway"
  },
  "6238|SC": {
   "lat": 33.9533,
@@ -1061,7 +1845,13 @@
   "address": "2154 S. Beltline Blvd.",
   "zip": "29201",
   "phone": "803-908-4889",
-  "name": "Petro Columbia"
+  "name": "Petro Columbia",
+  "interstate": "I-77, Exit 5",
+  "parking": 134,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Quaker Steak & Lube, Starbucks"
  },
  "6239|CA": {
   "lat": 34.992,
@@ -1069,7 +1859,13 @@
   "address": "5552 South Wheeler Ridge Road",
   "zip": "93203",
   "phone": "661-858-2804",
-  "name": "TA Wheeler Ridge"
+  "name": "TA Wheeler Ridge",
+  "interstate": "I-5 @ Lake Isabella or Laval Road",
+  "parking": 306,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Burger King, Pizza Hut Express, Popeyes, Subway, Taco Bell, Blue Beacon Truck Wash"
  },
  "6241|IN": {
   "lat": 41.1456,
@@ -1077,7 +1873,13 @@
   "address": "11166 West State Road 10",
   "zip": "46310",
   "phone": "219-507-7013",
-  "name": "TA DeMotte"
+  "name": "TA DeMotte",
+  "interstate": "I-65, Exit 230",
+  "parking": 133,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Burger King"
  },
  "6242|MI": {
   "lat": 42.3029,
@@ -1085,7 +1887,13 @@
   "address": "15874 Eleven Mile Rd.",
   "zip": "49014",
   "phone": "269-965-7721",
-  "name": "TA Battle Creek"
+  "name": "TA Battle Creek",
+  "interstate": "I-94, Exit 104",
+  "parking": 157,
+  "dieselLanes": 9,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6245|TN": {
   "lat": 35.5955,
@@ -1093,7 +1901,13 @@
   "address": "155 Hwy. 138, Providence Rd.",
   "zip": "38391",
   "phone": "731-424-5591",
-  "name": "TA Denmark"
+  "name": "TA Denmark",
+  "interstate": "I-40, Exit 68",
+  "parking": 92,
+  "dieselLanes": 7,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Country Pride, Subway"
  },
  "6246|AZ": {
   "lat": 34.9054,
@@ -1101,7 +1915,13 @@
   "address": "3747 Express Drive",
   "zip": "86025",
   "phone": "928-524-3006",
-  "name": "TA Holbrook"
+  "name": "TA Holbrook",
+  "interstate": "I-40, Exit 283",
+  "parking": 75,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6247|FL": {
   "lat": 30.2855,
@@ -1109,7 +1929,13 @@
   "address": "1024 US 301 South",
   "zip": "32234",
   "phone": "904-266-4281",
-  "name": "TA Baldwin"
+  "name": "TA Baldwin",
+  "interstate": "I-10, Exit 343",
+  "parking": 90,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Arby's"
  },
  "6248|FL": {
   "lat": 30.0661,
@@ -1117,7 +1943,13 @@
   "address": "1650 C.R. 210 West",
   "zip": "32259",
   "phone": "904-829-3946",
-  "name": "TA Jacksonville South"
+  "name": "TA Jacksonville South",
+  "interstate": "I-95, Exit 329",
+  "parking": 87,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Popeyes, Subway"
  },
  "6249|GA": {
   "lat": 30.644,
@@ -1125,7 +1957,13 @@
   "address": "6901 Bellville Road",
   "zip": "31636",
   "phone": "229-559-5113",
-  "name": "TA Lake Park"
+  "name": "TA Lake Park",
+  "interstate": "I-75, Exit 2",
+  "parking": 75,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Arby's, Popeyes"
  },
  "6251|NC": {
   "lat": 35.925,
@@ -1133,7 +1971,13 @@
   "address": "1670 US Hwy 601 N",
   "zip": "27028",
   "phone": "336-751-3815",
-  "name": "TA Mocksville"
+  "name": "TA Mocksville",
+  "interstate": "I-40, Exit 170",
+  "parking": 130,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6252|KS": {
   "lat": 38.4276,
@@ -1141,7 +1985,13 @@
   "address": "2775 Highway 75",
   "zip": "66856",
   "phone": "620-256-6311",
-  "name": "TA Beto Junction"
+  "name": "TA Beto Junction",
+  "interstate": "U.S. 75 & I-35, Exit 155",
+  "parking": 226,
+  "dieselLanes": 7,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Country Pride, Wendy's"
  },
  "6253|RI": {
   "lat": 41.6081,
@@ -1149,7 +1999,13 @@
   "address": "849 Victory Hwy West",
   "zip": "02817",
   "phone": "401-397-7774",
-  "name": "TA West Greenwich"
+  "name": "TA West Greenwich",
+  "interstate": "I-95, Exit 5B",
+  "parking": 180,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6254|IA": {
   "lat": 41.6978,
@@ -1157,7 +2013,13 @@
   "address": "4124 V18 Rd.",
   "zip": "52211",
   "phone": "641-631-0047",
-  "name": "TA Brooklyn"
+  "name": "TA Brooklyn",
+  "interstate": "I-80, Exit 197",
+  "parking": 70,
+  "dieselLanes": 7,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Country Pride, Hunt Brothers Pizza"
  },
  "6255|TN": {
   "lat": 36.3771,
@@ -1165,7 +2027,13 @@
   "address": "305 Howard Baker Hwy",
   "zip": "37847",
   "phone": "423-562-3490",
-  "name": "TA Caryville"
+  "name": "TA Caryville",
+  "interstate": "I-75, Exit 141",
+  "parking": 80,
+  "dieselLanes": 6,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6257|IN": {
   "lat": 39.6113,
@@ -1173,7 +2041,13 @@
   "address": "10346 S. State Road 39",
   "zip": "46118",
   "phone": "317-539-6515",
-  "name": "TA Clayton"
+  "name": "TA Clayton",
+  "interstate": "I-70 & State Road 39, Exit 59",
+  "parking": 100,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Country Pride"
  },
  "6258|GA": {
   "lat": 31.1381,
@@ -1181,7 +2055,13 @@
   "address": "185 S. Port Parkway",
   "zip": "31523",
   "phone": "912-279-3386",
-  "name": "TA Brunswick"
+  "name": "TA Brunswick",
+  "interstate": "I-95, Exit 29 (US 17)",
+  "parking": 107,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Burger King, Starbucks, Subway"
  },
  "6259|ND": {
   "lat": 47.8053,
@@ -1189,7 +2069,13 @@
   "address": "14256 US-85",
   "zip": "58831",
   "phone": "701-707-1770",
-  "name": "TA Express Alexander"
+  "name": "TA Express Alexander",
+  "interstate": "US Hwy 85 & SR 68",
+  "parking": 55,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Champs Chicken"
  },
  "6261|MT": {
   "lat": 45.6823,
@@ -1197,7 +2083,13 @@
   "address": "11360 South Frontage Road",
   "zip": "59044",
   "phone": "406-628-4324",
-  "name": "TA Laurel"
+  "name": "TA Laurel",
+  "interstate": "I-90, Exit 437",
+  "parking": 80,
+  "dieselLanes": 5,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "TA Cafe"
  },
  "6266|TX": {
   "lat": 33.2622,
@@ -1205,7 +2097,13 @@
   "address": "6420 North I-35",
   "zip": "76207",
   "phone": "940-383-1458",
-  "name": "TA Denton"
+  "name": "TA Denton",
+  "interstate": "I-35 & U.S. 77, Exit 471, MM 471",
+  "parking": 138,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut"
  },
  "6268|GA": {
   "lat": 33.2065,
@@ -1213,7 +2111,13 @@
   "address": "122 Truckstop Way",
   "zip": "30233",
   "phone": "770-775-2076",
-  "name": "TA Atlanta South"
+  "name": "TA Atlanta South",
+  "interstate": "I-75 & Georgia Hwy 36, Exit 201",
+  "parking": 108,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "IHOP, Subway"
  },
  "6269|TN": {
   "lat": 35.8731,
@@ -1221,7 +2125,13 @@
   "address": "615 Watt Road",
   "zip": "37922",
   "phone": "865-531-7676",
-  "name": "TA Knoxville West"
+  "name": "TA Knoxville West",
+  "interstate": "I-40 & I-75, Exit 369",
+  "parking": 176,
+  "dieselLanes": 8,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Burger King, Pizza Hut Express, Popeyes, Subway"
  },
  "6270|TX": {
   "lat": 29.7427,
@@ -1229,7 +2139,13 @@
   "address": "6701 US Hwy 90",
   "zip": "77474",
   "phone": "979-732-2986",
-  "name": "TA Bernardo"
+  "name": "TA Bernardo",
+  "interstate": "I-10, Exit 709",
+  "parking": 43,
+  "dieselLanes": 8,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Carl's Jr., Dunkin'"
  },
  "1750|ND": {
   "lat": 46.8618,
@@ -1237,7 +2153,12 @@
   "address": "620 Mitchell Avenue North",
   "zip": "58482",
   "phone": "701-475-2274",
-  "name": "TA Express Steele"
+  "name": "TA Express Steele",
+  "interstate": "I-94, Exit 200",
+  "parking": 70,
+  "dieselLanes": 7,
+  "showers": 6,
+  "facilities": "Caribou Coffee, Cinnabon, Pizza Hut Express, Subway"
  },
  "6273|SD": {
   "lat": 43.3986,
@@ -1245,7 +2166,13 @@
   "address": "27638 US 385",
   "zip": "57747",
   "phone": "605-745-4215",
-  "name": "TA Express Hot Springs"
+  "name": "TA Express Hot Springs",
+  "interstate": "US Hwy 385 / 18 and 79",
+  "parking": 75,
+  "dieselLanes": 4,
+  "showers": 2,
+  "catScale": true,
+  "facilities": "Cinnabon, Pizza Hut, Subway"
  },
  "6274|SD": {
   "lat": 45.3112,
@@ -1253,7 +2180,13 @@
   "address": "45789 US Hwy 12",
   "zip": "57266",
   "phone": "605-398-6493",
-  "name": "TA Express Summit"
+  "name": "TA Express Summit",
+  "interstate": "I-29, Exit 207",
+  "parking": 70,
+  "dieselLanes": 8,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Caribou Coffee, Cinnabon, Pizza Hut Express, Subway"
  },
  "6275|SD": {
   "lat": 42.785,
@@ -1261,7 +2194,13 @@
   "address": "47051 SD Hwy 50",
   "zip": "57010",
   "phone": "605-624-2062",
-  "name": "TA Express Vermillion"
+  "name": "TA Express Vermillion",
+  "interstate": "I-29, Exit 26",
+  "parking": 105,
+  "dieselLanes": 8,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Caribou Coffee, Cinnabon, Pizza Hut Express, Subway"
  },
  "6276|OR": {
   "lat": 44.2934,
@@ -1269,7 +2208,12 @@
   "address": "5945 US Hwy 30",
   "zip": "97907",
   "phone": "541-869-2301",
-  "name": "TA Huntington"
+  "name": "TA Huntington",
+  "interstate": "I-84, Exit 353",
+  "parking": 140,
+  "dieselLanes": 8,
+  "showers": 6,
+  "facilities": "Miss J's"
  },
  "6277|TX": {
   "lat": 29.7774,
@@ -1277,7 +2221,13 @@
   "address": "5490 N Hwy 146",
   "zip": "77523",
   "phone": "409-277-3841",
-  "name": "TA Express Baytown South"
+  "name": "TA Express Baytown South",
+  "interstate": "Null",
+  "parking": 29,
+  "dieselLanes": 4,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Miss J's, Schlotzsky’s"
  },
  "6279|OR": {
   "lat": 45.6688,
@@ -1285,7 +2235,12 @@
   "address": "91464 Biggs-Rufus Hwy",
   "zip": "97065",
   "phone": "541-739-2106",
-  "name": "TA Express Biggs Junction"
+  "name": "TA Express Biggs Junction",
+  "interstate": "I-84 Exit 104",
+  "parking": 35,
+  "dieselLanes": 8,
+  "showers": 7,
+  "facilities": "Krispy Krunchy Chicken, Pizza Hut, Taco Bell"
  },
  "6281|TX": {
   "lat": 32.4288,
@@ -1293,7 +2248,12 @@
   "address": "4403 TX - 42",
   "zip": "75662",
   "phone": "430-253-2656",
-  "name": "TA Express Kilgore"
+  "name": "TA Express Kilgore",
+  "interstate": "I-20 Exit 587",
+  "parking": 63,
+  "dieselLanes": 6,
+  "showers": 7,
+  "facilities": "Baskin Robbins, Dunkin', Miss J’s Café, Wendy's"
  },
  "6282|TX": {
   "lat": 29.6141,
@@ -1301,7 +2261,13 @@
   "address": "12602 South Freeway",
   "zip": "77047",
   "phone": "713-788-8639",
-  "name": "TA Express Almeda"
+  "name": "TA Express Almeda",
+  "interstate": "State Hwy 288, Almeda Genoa Rd exit",
+  "parking": 50,
+  "dieselLanes": 4,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Miss J’s Café, Subway"
  },
  "6283|GA": {
   "lat": 32.9304,
@@ -1309,7 +2275,13 @@
   "address": "3000 Kia Blvd",
   "zip": "31833",
   "phone": "706-984-9499",
-  "name": "TA Express West Point"
+  "name": "TA Express West Point",
+  "interstate": "I-85, Exit 6",
+  "parking": 26,
+  "dieselLanes": 6,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Miss J’s Café, Starbucks"
  },
  "6284|KS": {
   "lat": 38.7628,
@@ -1317,7 +2289,12 @@
   "address": "32501 W 200th Street",
   "zip": "66021",
   "phone": "913-882-3362",
-  "name": "TA Express Edgerton"
+  "name": "TA Express Edgerton",
+  "interstate": "I-35, Exit 205",
+  "parking": 90,
+  "dieselLanes": 6,
+  "showers": 4,
+  "facilities": "IHOP, Goodcents, Miss J’s Café"
  },
  "6286|TX": {
   "lat": 33.1491,
@@ -1325,7 +2302,12 @@
   "address": "300 SE Access Rd",
   "zip": "75457",
   "phone": "903-537-9200",
-  "name": "TA Express Mount Vernon"
+  "name": "TA Express Mount Vernon",
+  "interstate": "I-30, exit 147",
+  "parking": 110,
+  "dieselLanes": 9,
+  "showers": 6,
+  "facilities": "Taco Casa, Cotton Belt Bbq, Duke's Bakery, Pickadilly Circus Pizza, The Original Fried Pie Shop"
  },
  "6287|TN": {
   "lat": 36.1305,
@@ -1333,7 +2315,13 @@
   "address": "1750 Salem Road",
   "zip": "38506",
   "phone": "931-510-3326",
-  "name": "TA Express Cookeville"
+  "name": "TA Express Cookeville",
+  "interstate": "I-40, exit 288",
+  "parking": 59,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "El Tapatio Fresh Mex, Hardee's, Sbarro"
  },
  "6288|FL": {
   "lat": 29.9956,
@@ -1341,7 +2329,13 @@
   "address": "14197 South US HWY 441",
   "zip": "32024",
   "phone": "386-202-6500",
-  "name": "TA Lake City"
+  "name": "TA Lake City",
+  "interstate": "I-75, Exit 414",
+  "parking": 250,
+  "dieselLanes": 9,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Roadhouse Chicken Co., Sbarro"
  },
  "6289|TX": {
   "lat": 31.6521,
@@ -1349,7 +2343,12 @@
   "address": "2615 NW Stallings Drive",
   "zip": "75964",
   "phone": "936-234-7998",
-  "name": "TA Express Nacogdoches"
+  "name": "TA Express Nacogdoches",
+  "interstate": "Tx-224 Loop E, Stalling Dr, Westward Dr, Hospital",
+  "parking": 95,
+  "dieselLanes": 5,
+  "showers": 5,
+  "facilities": "Denny's, Miss J’s Café"
  },
  "6290|TX": {
   "lat": 31.7256,
@@ -1357,7 +2356,13 @@
   "address": "1015 West Commerce St",
   "zip": "75840",
   "phone": "903-915-8296",
-  "name": "TA Express Fairfield"
+  "name": "TA Express Fairfield",
+  "interstate": "I-45, Exit 198",
+  "parking": 102,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Miss J's, The Original Fried Pie Shop, Whataburger"
  },
  "6292|AZ": {
   "lat": 35.684,
@@ -1365,7 +2370,13 @@
   "address": "19210 US Hwy 93",
   "zip": "86445",
   "phone": "928-285-2431",
-  "name": "TA Express White Hills"
+  "name": "TA Express White Hills",
+  "interstate": "US Hwy 93, MM 29",
+  "parking": 67,
+  "dieselLanes": 7,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Carl's Jr., Del Taco, Einstein Bagels, Sbarro"
  },
  "6293|TX": {
   "lat": 32.1298,
@@ -1373,7 +2384,12 @@
   "address": "1086 US 59 South",
   "zip": "75633",
   "phone": "903-690-0272",
-  "name": "TA Express Carthage"
+  "name": "TA Express Carthage",
+  "interstate": "US Hwy 59",
+  "parking": 76,
+  "dieselLanes": 5,
+  "showers": 4,
+  "facilities": "Denny's"
  },
  "6301|TX": {
   "lat": 31.6609,
@@ -1381,7 +2397,13 @@
   "address": "1295 Horizon Blvd.",
   "zip": "79927",
   "phone": "915-790-4529",
-  "name": "Petro El Paso"
+  "name": "Petro El Paso",
+  "interstate": "I-10, Exit 37 at Horizon Blvd.",
+  "parking": 290,
+  "dieselLanes": 12,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Blue Beacon Truck Wash"
  },
  "6302|TX": {
   "lat": 32.7389,
@@ -1389,7 +2411,13 @@
   "address": "2001 Santa Fe Dr",
   "zip": "76086",
   "phone": "817-599-9411",
-  "name": "Petro Weatherford"
+  "name": "Petro Weatherford",
+  "interstate": "I-20, Exit 409 at Clear Lake Road",
+  "parking": 275,
+  "dieselLanes": 12,
+  "showers": 16,
+  "catScale": true,
+  "facilities": "Iron Skillet, Popeyes"
  },
  "6303|WY": {
   "lat": 41.3287,
@@ -1397,7 +2425,13 @@
   "address": "1855 West Curtis",
   "zip": "82070",
   "phone": "307-745-6480",
-  "name": "Petro Laramie"
+  "name": "Petro Laramie",
+  "interstate": "I-80 at Curtis, Exit 310",
+  "parking": 236,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "6304|TX": {
   "lat": 30.037,
@@ -1405,7 +2439,13 @@
   "address": "5405 Walden Rd",
   "zip": "77705",
   "phone": "409-842-9600",
-  "name": "Petro Beaumont"
+  "name": "Petro Beaumont",
+  "interstate": "I-10, Exit 848 at Walden Road",
+  "parking": 275,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Blue Beacon Truck Wash"
  },
  "6305|TX": {
   "lat": 29.4376,
@@ -1413,7 +2453,13 @@
   "address": "1112 Ackerman Road",
   "zip": "78219",
   "phone": "210-661-9416",
-  "name": "Petro San Antonio"
+  "name": "Petro San Antonio",
+  "interstate": "I-10, Exit 581 at Ackerman Road",
+  "parking": 250,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Blue Beacon Truck Wash"
  },
  "6306|AZ": {
   "lat": 32.8124,
@@ -1421,7 +2467,13 @@
   "address": "5235 N. Sunland Gin Rd.",
   "zip": "85131",
   "phone": "520-836-3983",
-  "name": "Petro Eloy"
+  "name": "Petro Eloy",
+  "interstate": "I-10, Exit 200 at Sunland Gin Rd.",
+  "parking": 175,
+  "dieselLanes": 11,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Blue Beacon Truck Wash"
  },
  "6307|TX": {
   "lat": 35.1917,
@@ -1429,7 +2481,13 @@
   "address": "8500 E I-40 @ Lakeside Drive",
   "zip": "79118",
   "phone": "806-372-4899",
-  "name": "Petro Amarillo"
+  "name": "Petro Amarillo",
+  "interstate": "I-40, Exit 75 at Lakeside Drive",
+  "parking": 280,
+  "dieselLanes": 12,
+  "showers": 22,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6308|LA": {
   "lat": 32.4446,
@@ -1437,7 +2495,13 @@
   "address": "6910 W Bert Kouns Industrial Loop",
   "zip": "71129",
   "phone": "318-686-6111",
-  "name": "Petro Shreveport"
+  "name": "Petro Shreveport",
+  "interstate": "I-20, Exit 8 at Industrial Loop",
+  "parking": 218,
+  "dieselLanes": 12,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6309|CA": {
   "lat": 39.9059,
@@ -1445,7 +2509,13 @@
   "address": "2151 South Avenue",
   "zip": "96021",
   "phone": "530-824-4685",
-  "name": "Petro Corning"
+  "name": "Petro Corning",
+  "interstate": "I-5 at South Avenue, Exit 630",
+  "parking": 120,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6310|LA": {
   "lat": 30.477,
@@ -1453,7 +2523,13 @@
   "address": "2100 S.W. Railroad Ave.",
   "zip": "70403",
   "phone": "985-542-4981",
-  "name": "Petro Hammond"
+  "name": "Petro Hammond",
+  "interstate": "I-12, Exit 40 at Hwy 51",
+  "parking": 200,
+  "dieselLanes": 12,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "6311|AR": {
   "lat": 35.1544,
@@ -1461,7 +2537,13 @@
   "address": "3900 Petro Road",
   "zip": "72301",
   "phone": "870-702-5540",
-  "name": "Petro W. Memphis"
+  "name": "Petro W. Memphis",
+  "interstate": "I-40, Exit 280; I-55, Exit 4",
+  "parking": 280,
+  "dieselLanes": 12,
+  "showers": 17,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "6312|TN": {
   "lat": 35.875,
@@ -1469,7 +2551,13 @@
   "address": "722 Watt Road",
   "zip": "37934",
   "phone": "865-693-6542",
-  "name": "Petro Knoxville"
+  "name": "Petro Knoxville",
+  "interstate": "I-40 & I-75, Exit 369 at Watt Road",
+  "parking": 250,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6313|NM": {
   "lat": 35.181,
@@ -1477,7 +2565,13 @@
   "address": "1430 Motel Drive",
   "zip": "87021",
   "phone": "505-285-6648",
-  "name": "Petro Milan"
+  "name": "Petro Milan",
+  "interstate": "I-40, Exit 79 at Horizon Road",
+  "parking": 200,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6314|NJ": {
   "lat": 40.1234,
@@ -1485,7 +2579,13 @@
   "address": "402 Rising Sun Square Road",
   "zip": "08505",
   "phone": "609-298-6070",
-  "name": "Petro Bordentown"
+  "name": "Petro Bordentown",
+  "interstate": "I-295, Exit 57; NJ Turnpike, Exit 7",
+  "parking": 490,
+  "dieselLanes": 12,
+  "showers": 20,
+  "catScale": true,
+  "facilities": "Iron Skillet, Arby's, Blue Beacon Truck Wash"
  },
  "6315|AZ": {
   "lat": 35.1779,
@@ -1493,7 +2593,13 @@
   "address": "970 South Blake Ranch Road",
   "zip": "86401",
   "phone": "928-681-5246",
-  "name": "Petro Kingman"
+  "name": "Petro Kingman",
+  "interstate": "I-40 at Blake Ranch Rd., Exit 66",
+  "parking": 280,
+  "dieselLanes": 12,
+  "showers": 17,
+  "catScale": true,
+  "facilities": "Iron Skillet, Dunkin'"
  },
  "6316|OK": {
   "lat": 35.4662,
@@ -1501,7 +2607,13 @@
   "address": "20 Martin Luther King Blvd",
   "zip": "73117",
   "phone": "405-228-7040",
-  "name": "Petro Oklahoma City"
+  "name": "Petro Oklahoma City",
+  "interstate": "I-40E / I-35, Exit 127/I-40W, Exit 154",
+  "parking": 280,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6317|OH": {
   "lat": 41.5355,
@@ -1509,7 +2621,13 @@
   "address": "26416 Baker Rd.",
   "zip": "43551",
   "phone": "419-443-1800",
-  "name": "Petro Perrysburg"
+  "name": "Petro Perrysburg",
+  "interstate": "Ohio Turnpike, Exit 71, I-280 Exit 1B",
+  "parking": 375,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Fork and Compass, Blue Beacon Truck Wash"
  },
  "6318|MO": {
   "lat": 38.9405,
@@ -1517,7 +2635,13 @@
   "address": "3304 Gold Road",
   "zip": "65262",
   "phone": "573-642-0676",
-  "name": "Petro Kingdom City"
+  "name": "Petro Kingdom City",
+  "interstate": "I-70 & Hwy 54, Exit 148",
+  "parking": 235,
+  "dieselLanes": 12,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6319|AL": {
   "lat": 33.2796,
@@ -1525,7 +2649,13 @@
   "address": "22526 Highway 216",
   "zip": "35111",
   "phone": "205-477-9178",
-  "name": "Petro Bucksville"
+  "name": "Petro Bucksville",
+  "interstate": "I-20 & 1-59, Exit 100",
+  "parking": 255,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Popeyes"
  },
  "6320|OH": {
   "lat": 41.1408,
@@ -1533,7 +2663,13 @@
   "address": "1 Petro Place",
   "zip": "44420",
   "phone": "330-505-3700",
-  "name": "Petro Girard"
+  "name": "Petro Girard",
+  "interstate": "I-80, Exit 226 & Salt Spring Road",
+  "parking": 323,
+  "dieselLanes": 14,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6321|IL": {
   "lat": 39.1197,
@@ -1541,7 +2677,13 @@
   "address": "1805 West Fayette Ave",
   "zip": "62401",
   "phone": "217-347-0480",
-  "name": "Petro Effingham"
+  "name": "Petro Effingham",
+  "interstate": "I-70/I-57, Exit 159 at West Fayette Ave.",
+  "parking": 212,
+  "dieselLanes": 14,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "6322|GA": {
   "lat": 33.7865,
@@ -1549,7 +2691,13 @@
   "address": "3181 Donald Lee Hollowell Pkwy.",
   "zip": "30318",
   "phone": "404-794-7772",
-  "name": "Petro Atlanta"
+  "name": "Petro Atlanta",
+  "interstate": "I-285, Exit 12 at Donald Lee Hollowell Hwy",
+  "parking": 411,
+  "dieselLanes": 16,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Burger King"
  },
  "6323|FL": {
   "lat": 29.409,
@@ -1557,7 +2705,13 @@
   "address": "7401 West Hwy 318",
   "zip": "32686",
   "phone": "352-591-1881",
-  "name": "Petro Ocala"
+  "name": "Petro Ocala",
+  "interstate": "I-75, Exit 368 at Hwy 318",
+  "parking": 270,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Wendy's"
  },
  "6324|OR": {
   "lat": 42.2795,
@@ -1565,7 +2719,13 @@
   "address": "3730 Fern Valley Rd.",
   "zip": "97535",
   "phone": "541-535-3372",
-  "name": "Petro Phoenix"
+  "name": "Petro Phoenix",
+  "interstate": "I-5, Exit 24",
+  "parking": 87,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6325|OH": {
   "lat": 41.1738,
@@ -1573,7 +2733,13 @@
   "address": "12906 Deshler Rd.",
   "zip": "45872",
   "phone": "419-257-3744",
-  "name": "Petro North Baltimore"
+  "name": "Petro North Baltimore",
+  "interstate": "I-75, Exit 167",
+  "parking": 250,
+  "dieselLanes": 14,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP, Taco Bell & Pizza Hut Express"
  },
  "6326|AR": {
   "lat": 34.781,
@@ -1581,7 +2747,13 @@
   "address": "3205 Valentine Road",
   "zip": "72117",
   "phone": "501-945-3206",
-  "name": "Petro N. Little Rock"
+  "name": "Petro N. Little Rock",
+  "interstate": "I-40, Exit 161",
+  "parking": 250,
+  "dieselLanes": 10,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6327|CA": {
   "lat": 34.9861,
@@ -1589,7 +2761,13 @@
   "address": "5821 Dennis McCarthy Dr.",
   "zip": "93243",
   "phone": "661-663-4341",
-  "name": "Petro Wheeler Ridge"
+  "name": "Petro Wheeler Ridge",
+  "interstate": "I-5 at Laval Road West",
+  "parking": 415,
+  "dieselLanes": 12,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "IHOP, Arby's, Baskin Robbins, Subway, Wendy's"
  },
  "6329|NC": {
   "lat": 36.0772,
@@ -1597,7 +2775,13 @@
   "address": "500 Buckhorn Road",
   "zip": "27302",
   "phone": "919-304-7476",
-  "name": "Petro Mebane"
+  "name": "Petro Mebane",
+  "interstate": "I-40/85, Exit 157",
+  "parking": 285,
+  "dieselLanes": 12,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "IHOP, Dunkin'"
  },
  "6330|KY": {
   "lat": 37.5984,
@@ -1605,7 +2789,13 @@
   "address": "554 W. Glendale Hodgenville Road",
   "zip": "42740",
   "phone": "270-369-6840",
-  "name": "Petro Glendale"
+  "name": "Petro Glendale",
+  "interstate": "I-65, Exit 86",
+  "parking": 263,
+  "dieselLanes": 12,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "6331|NV": {
   "lat": 36.2797,
@@ -1613,7 +2803,13 @@
   "address": "6595 North Hollywood Blvd",
   "zip": "89115",
   "phone": "702-632-2640",
-  "name": "Petro North Las Vegas"
+  "name": "Petro North Las Vegas",
+  "interstate": "I-15 at Speedway Blvd., Exit 54",
+  "parking": 207,
+  "dieselLanes": 12,
+  "showers": 16,
+  "catScale": true,
+  "facilities": "Iron Skillet, Dunkin'"
  },
  "6333|TX": {
   "lat": 32.0455,
@@ -1621,7 +2817,13 @@
   "address": "160 State Hwy 77",
   "zip": "76645",
   "phone": "254-283-6556",
-  "name": "TA Hillsboro"
+  "name": "TA Hillsboro",
+  "interstate": "I-35, Exit 370",
+  "parking": 201,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "IHOP, Burger King"
  },
  "6336|PA": {
   "lat": 40.2319,
@@ -1629,7 +2831,13 @@
   "address": "1201 Harrisburg Ave, Route 11",
   "zip": "17013",
   "phone": "717-249-1919",
-  "name": "Petro Carlisle"
+  "name": "Petro Carlisle",
+  "interstate": "I-81, Exit 52; I-76, Exit 226",
+  "parking": 380,
+  "dieselLanes": 12,
+  "showers": 20,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6338|NV": {
   "lat": 39.5233,
@@ -1637,7 +2845,13 @@
   "address": "1950 East Greg St.",
   "zip": "89431",
   "phone": "775-355-8888",
-  "name": "Petro Sparks"
+  "name": "Petro Sparks",
+  "interstate": "I-80, Exit 21",
+  "parking": 400,
+  "dieselLanes": 10,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6339|WA": {
   "lat": 47.5906,
@@ -1645,7 +2859,13 @@
   "address": "10506 West Aero Road",
   "zip": "99224",
   "phone": "509-842-1100",
-  "name": "Petro Spokane"
+  "name": "Petro Spokane",
+  "interstate": "I-90 at Medical Lake Road, Exit 272",
+  "parking": 200,
+  "dieselLanes": 10,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Iron Skillet, Starbucks"
  },
  "6344|GA": {
   "lat": 30.7942,
@@ -1653,7 +2873,13 @@
   "address": "1105 East King Avenue",
   "zip": "31548",
   "phone": "912-882-3111",
-  "name": "Petro Kingsland"
+  "name": "Petro Kingsland",
+  "interstate": "I-95, Exit 3",
+  "parking": 136,
+  "dieselLanes": 9,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6346|CA": {
   "lat": 37.0547,
@@ -1661,7 +2887,13 @@
   "address": "28991 West Gonzaga",
   "zip": "95322",
   "phone": "209-827-8025",
-  "name": "Petro Santa Nella"
+  "name": "Petro Santa Nella",
+  "interstate": "State Hwy 152 & State Hwy 33",
+  "parking": 124,
+  "dieselLanes": 12,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Burger King"
  },
  "6347|KY": {
   "lat": 36.7163,
@@ -1669,7 +2901,8 @@
   "address": "101 Trotter Lane",
   "zip": "42134",
   "phone": "270-586-0877",
-  "name": "TA Truck Service Franklin"
+  "name": "TA Truck Service Franklin",
+  "interstate": "I-65, Exit 6"
  },
  "6349|TN": {
   "lat": 36.0824,
@@ -1677,7 +2910,13 @@
   "address": "162 Luyben Hills Road",
   "zip": "37082",
   "phone": "615-952-3208",
-  "name": "Petro Kingston Springs"
+  "name": "Petro Kingston Springs",
+  "interstate": "I-40, Exit 188 at Luyben Hills Road",
+  "parking": 68,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6350|TX": {
   "lat": 31.9581,
@@ -1685,7 +2924,13 @@
   "address": "601 Westway Blvd.",
   "zip": "79835",
   "phone": "915-886-5761",
-  "name": "TA Express Vinton"
+  "name": "TA Express Vinton",
+  "interstate": "I-10, Exit 2 at Vinton",
+  "parking": 65,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Subway"
  },
  "6352|AL": {
   "lat": 33.9956,
@@ -1693,7 +2938,13 @@
   "address": "1724 West Grand Avenue",
   "zip": "35904",
   "phone": "256-413-7135",
-  "name": "Petro Gadsden"
+  "name": "Petro Gadsden",
+  "interstate": "I-59, Exit 181",
+  "parking": 162,
+  "dieselLanes": 11,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Hunt Brothers Pizza, Popeyes, Starbucks"
  },
  "6354|MO": {
   "lat": 37.0072,
@@ -1701,7 +2952,13 @@
   "address": "4240 Highway 43",
   "zip": "64804",
   "phone": "417-624-3400",
-  "name": "Petro Joplin"
+  "name": "Petro Joplin",
+  "interstate": "I-44 & Hwy 43, Exit 4",
+  "parking": 465,
+  "dieselLanes": 12,
+  "showers": 18,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Blimpie, Dairy Queen, Mcdonald's, Starbucks, Taco Bell & Pizza Hut Express"
  },
  "6357|OH": {
   "lat": 39.8346,
@@ -1709,7 +2966,13 @@
   "address": "9787 US Route 40 West",
   "zip": "45347",
   "phone": "937-637-7800",
-  "name": "Petro New Paris"
+  "name": "Petro New Paris",
+  "interstate": "I-70 at Indiana Exit 156B & US 40",
+  "parking": 197,
+  "dieselLanes": 12,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "6359|IL": {
   "lat": 41.9356,
@@ -1717,7 +2980,12 @@
   "address": "900 Petro Rd",
   "zip": "61068",
   "phone": "815-562-3716",
-  "name": "Petro Rochelle"
+  "name": "Petro Rochelle",
+  "interstate": "I-39 at Route 38, Exit 99",
+  "parking": 350,
+  "dieselLanes": 10,
+  "showers": 16,
+  "facilities": "Iron Skillet, Hub City Express"
  },
  "6361|ND": {
   "lat": 46.8503,
@@ -1725,7 +2993,12 @@
   "address": "4510 19th Ave S.W.",
   "zip": "58103",
   "phone": "701-282-8105",
-  "name": "Petro Fargo"
+  "name": "Petro Fargo",
+  "interstate": "I-94, Exit 348",
+  "parking": 209,
+  "dieselLanes": 16,
+  "showers": 10,
+  "facilities": "Dolly Down, Charleys Philly Steaks, Cinnabon, Papa John's Pizza, Popeyes"
  },
  "6362|NE": {
   "lat": 40.8182,
@@ -1733,7 +3006,13 @@
   "address": "4700 S. Lincoln Ave.",
   "zip": "68467",
   "phone": "402-362-1776",
-  "name": "Petro York"
+  "name": "Petro York",
+  "interstate": "I-80 and US HWY 81, Exit 353",
+  "parking": 250,
+  "dieselLanes": 10,
+  "showers": 16,
+  "catScale": true,
+  "facilities": "Iron Skillet, Pizza Hut Express, Blue Beacon Truck Wash"
  },
  "6367|IL": {
   "lat": 41.4258,
@@ -1741,7 +3020,12 @@
   "address": "5915 Monee Road",
   "zip": "60449",
   "phone": "708-534-0400",
-  "name": "Petro Monee"
+  "name": "Petro Monee",
+  "interstate": "I-57, Exit 335",
+  "parking": 90,
+  "dieselLanes": 7,
+  "showers": 8,
+  "catScale": true
  },
  "6369|IN": {
   "lat": 41.5638,
@@ -1749,7 +3033,13 @@
   "address": "3001 Grant Street",
   "zip": "46408",
   "phone": "219-884-1133",
-  "name": "Petro Gary"
+  "name": "Petro Gary",
+  "interstate": "I-80/I-94, Exit 9",
+  "parking": 405,
+  "dieselLanes": 15,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Iron Skillet, Taco Bell & Pizza Hut Express"
  },
  "6371|NY": {
   "lat": 42.9653,
@@ -1757,7 +3047,13 @@
   "address": "1255 Route 414",
   "zip": "13165",
   "phone": "315-220-6550",
-  "name": "Petro Waterloo"
+  "name": "Petro Waterloo",
+  "interstate": "I-90, Exit 41",
+  "parking": 221,
+  "dieselLanes": 12,
+  "showers": 18,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6372|VA": {
   "lat": 36.7708,
@@ -1765,7 +3061,13 @@
   "address": "12433 Maple St.",
   "zip": "24340",
   "phone": "276-429-6000",
-  "name": "Petro Glade Spring"
+  "name": "Petro Glade Spring",
+  "interstate": "I-81, Exit 29",
+  "parking": 280,
+  "dieselLanes": 9,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Arby's, Sbarro, Starbucks"
  },
  "6376|IN": {
   "lat": 39.4455,
@@ -1773,7 +3075,13 @@
   "address": "1035 W. State Road 42",
   "zip": "47834",
   "phone": "812-446-2296",
-  "name": "Petro Brazil"
+  "name": "Petro Brazil",
+  "interstate": "I-70, Exit 23",
+  "parking": 102,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6377|GA": {
   "lat": 34.3481,
@@ -1781,7 +3089,13 @@
   "address": "10200 Old Federal Rd.",
   "zip": "30521",
   "phone": "706-335-1984",
-  "name": "Petro Carnesville"
+  "name": "Petro Carnesville",
+  "interstate": "I-85, Exit 160",
+  "parking": 221,
+  "dieselLanes": 12,
+  "showers": 18,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "6378|PA": {
   "lat": 41.3302,
@@ -1789,7 +3103,13 @@
   "address": "98 Grove St.",
   "zip": "18641",
   "phone": "570-654-5111",
-  "name": "Petro Scranton"
+  "name": "Petro Scranton",
+  "interstate": "I-81, Exit 178B",
+  "parking": 428,
+  "dieselLanes": 10,
+  "showers": 22,
+  "catScale": true,
+  "facilities": "Iron Skillet/Metro Deli, Metro Deli"
  },
  "6379|IN": {
   "lat": 39.3188,
@@ -1797,7 +3117,13 @@
   "address": "1409 South County Rd. 850 East",
   "zip": "47240",
   "phone": "812-663-2333",
-  "name": "Petro Greensburg"
+  "name": "Petro Greensburg",
+  "interstate": "I-74, Exit 143",
+  "parking": 90,
+  "dieselLanes": 7,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6382|IN": {
   "lat": 40.767,
@@ -1805,7 +3131,13 @@
   "address": "4230 West Highway 24",
   "zip": "47977",
   "phone": "219-261-2172",
-  "name": "Petro Remington"
+  "name": "Petro Remington",
+  "interstate": "I-65, Exit 201",
+  "parking": 150,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Iron Skillet"
  },
  "6385|NM": {
   "lat": 32.2386,
@@ -1813,7 +3145,13 @@
   "address": "14150 STE C Hwy 418 SW",
   "zip": "88030",
   "phone": "575-546-7070",
-  "name": "Petro Deming"
+  "name": "Petro Deming",
+  "interstate": "I-10, Exit 68",
+  "parking": 150,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Iron Skillet, Starbucks"
  },
  "6386|KS": {
   "lat": 39.3617,
@@ -1821,7 +3159,13 @@
   "address": "700 West Horton",
   "zip": "67701",
   "phone": "785-460-0044",
-  "name": "Petro Colby"
+  "name": "Petro Colby",
+  "interstate": "I-70, Exit 53",
+  "parking": 90,
+  "dieselLanes": 7,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "City Wok Fresh Chinese, Qdoba Mexican Grill, Starbucks"
  },
  "6388|OH": {
   "lat": 41.4178,
@@ -1829,7 +3173,13 @@
   "address": "900 American Road",
   "zip": "43545",
   "phone": "567-694-9977",
-  "name": "Petro Napoleon"
+  "name": "Petro Napoleon",
+  "interstate": "US Hwy 6 & 24, Industrial Dr. Exit 41",
+  "parking": 107,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Miss J's Diner, Miss J’s Café"
  },
  "6389|MN": {
   "lat": 45.4126,
@@ -1837,7 +3187,13 @@
   "address": "950 State Highway 24",
   "zip": "55320",
   "phone": "320-558-2261",
-  "name": "Petro Clearwater"
+  "name": "Petro Clearwater",
+  "interstate": "I-94 & Hwy 24",
+  "parking": 200,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Nelson Brothers"
  },
  "6392|NV": {
   "lat": 41.101,
@@ -1845,7 +3201,13 @@
   "address": "1440 6th Street",
   "zip": "89835",
   "phone": "775-455-4305",
-  "name": "Petro Wells"
+  "name": "Petro Wells",
+  "interstate": "I-80, Exit 352A",
+  "parking": 250,
+  "dieselLanes": 6,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Iron Skillet, Dunkin'"
  },
  "6393|SC": {
   "lat": 34.2665,
@@ -1853,7 +3215,13 @@
   "address": "3001 TV Rd.",
   "zip": "29501",
   "phone": "843-669-5736",
-  "name": "Petro Florence"
+  "name": "Petro Florence",
+  "interstate": "I-95, Exit 169",
+  "parking": 210,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Blue Beacon Truck Wash"
  },
  "5026|NC": {
   "lat": 35.582,
@@ -1861,7 +3229,13 @@
   "address": "923 Johnston Pkwy.",
   "zip": "27542",
   "phone": "919-284-5121",
-  "name": "Petro Kenly"
+  "name": "Petro Kenly",
+  "interstate": "I-95, Exit 106",
+  "parking": 350,
+  "dieselLanes": 12,
+  "showers": 11,
+  "catScale": true,
+  "facilities": "Iron Skillet, Caribou Coffee, Dairy Queen, Pizza Hut Express, Subway, Taco Bell, Wendy's"
  },
  "6398|MN": {
   "lat": 43.6571,
@@ -1869,7 +3243,13 @@
   "address": "820 Happy Trails Lane",
   "zip": "56007",
   "phone": "507-481-9434",
-  "name": "Petro Albert Lea"
+  "name": "Petro Albert Lea",
+  "interstate": "I-90 & I-35, Exit 11",
+  "parking": 300,
+  "dieselLanes": 10,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Skol Tavern, Caribou Coffee, Mcdonald's, Sbarro, Taco Bell, Truck Wash"
  },
  "6399|CO": {
   "lat": 40.363,
@@ -1877,7 +3257,13 @@
   "address": "2842 SE Frontage Road",
   "zip": "80534",
   "phone": "970-667-2069",
-  "name": "Petro Johnson's Corner"
+  "name": "Petro Johnson's Corner",
+  "interstate": "I-25, Exit 254",
+  "parking": 110,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Black Bear Diner"
  },
  "6402|IL": {
   "lat": 41.3454,
@@ -1885,7 +3271,13 @@
   "address": "24225 W. Lorenzo Road",
   "zip": "60481",
   "phone": "779-232-7975",
-  "name": "Petro Wilmington"
+  "name": "Petro Wilmington",
+  "interstate": "I-55, Exit 240",
+  "parking": 229,
+  "dieselLanes": 8,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Charleys Philly Steaks, Highway Kitchen"
  },
  "6403|WI": {
   "lat": 43.4864,
@@ -1893,7 +3285,13 @@
   "address": "North 5800 Kinney Rd.",
   "zip": "53901",
   "phone": "608-742-6551",
-  "name": "Petro Portage"
+  "name": "Petro Portage",
+  "interstate": "I-90 & I-94 Hwy 78 South, Exit 108A",
+  "parking": 300,
+  "dieselLanes": 12,
+  "showers": 14,
+  "catScale": true,
+  "facilities": "Iron Skillet, Subway"
  },
  "6418|GA": {
   "lat": 32.3031,
@@ -1901,7 +3299,13 @@
   "address": "2930 Highway 301 South",
   "zip": "30452",
   "phone": "912-480-0102",
-  "name": "TA Express Statesboro"
+  "name": "TA Express Statesboro",
+  "interstate": "I-16, US-301, Exit 116",
+  "parking": 125,
+  "dieselLanes": 8,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Burger King"
  },
  "6422|AZ": {
   "lat": 35.2216,
@@ -1909,7 +3313,12 @@
   "address": "950 W Old Highway 66",
   "zip": "86320",
   "phone": "928-405-7788",
-  "name": "TA Ash Fork"
+  "name": "TA Ash Fork",
+  "interstate": "I-40, Exit 144, Northwest Corner",
+  "parking": 200,
+  "dieselLanes": 14,
+  "showers": 12,
+  "facilities": "Del Taco, KFC, Sbarro"
  },
  "6426|TX": {
   "lat": 32.4486,
@@ -1917,7 +3326,13 @@
   "address": "100 South Hopkins Rd",
   "zip": "79556",
   "phone": "325-235-8488",
-  "name": "TA Sweetwater"
+  "name": "TA Sweetwater",
+  "interstate": "I-20, Exit 242",
+  "parking": 110,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Family Restaurant, Pizza Hut Express, Popeyes"
  },
  "6427|VA": {
   "lat": 37.929,
@@ -1925,7 +3340,13 @@
   "address": "2440 Raphine Road",
   "zip": "24472",
   "phone": "540-377-2111",
-  "name": "Petro Raphine"
+  "name": "Petro Raphine",
+  "interstate": "I-81 & I-64; Exit 205",
+  "parking": 725,
+  "dieselLanes": 16,
+  "showers": 19,
+  "catScale": true,
+  "facilities": "Quaker Steak & Lube, Burger King, Nathan's Famous Express, Papa John's Pizza, Popeyes, Subway"
  },
  "6428|VA": {
   "lat": 37.8318,
@@ -1933,7 +3354,13 @@
   "address": "2516 N. Lee Highway",
   "zip": "24450",
   "phone": "540-463-3478",
-  "name": "TA Lexington"
+  "name": "TA Lexington",
+  "interstate": "I-81 & I-64; Exit 195",
+  "parking": 250,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "6430|CA": {
   "lat": 36.0477,
@@ -1941,7 +3368,13 @@
   "address": "20 Gills Station Road",
   "zip": "93549",
   "phone": "760-961-4377",
-  "name": "TA Express Olancha"
+  "name": "TA Express Olancha",
+  "interstate": "US Hwy 395",
+  "parking": 70,
+  "dieselLanes": 5,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Chester Fried Chicken, Subway"
  },
  "6431|WI": {
   "lat": 44.5783,
@@ -1949,7 +3382,13 @@
   "address": "12613 Gunderson Road",
   "zip": "54758",
   "phone": "715-533-6884",
-  "name": "TA Express Osseo"
+  "name": "TA Express Osseo",
+  "interstate": "I-94, Exit 88",
+  "parking": 60,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Family Restaurant, Hunt Brothers Pizza, Miss J’s Café"
  },
  "6433|IL": {
   "lat": 39.8424,
@@ -1957,7 +3396,13 @@
   "address": "2855 Overpass Road",
   "zip": "62561",
   "phone": "217-606-7666",
-  "name": "TA Express Riverton"
+  "name": "TA Express Riverton",
+  "interstate": "I-72, Exit 108",
+  "parking": 44,
+  "dieselLanes": 5,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Little Caesar's, Taco John's"
  },
  "6435|GA": {
   "lat": 33.5099,
@@ -1965,7 +3410,13 @@
   "address": "2657 Cobbham Road",
   "zip": "30824",
   "phone": "706-962-1708",
-  "name": "TA Express Thomson"
+  "name": "TA Express Thomson",
+  "interstate": "I-20; Exit 175",
+  "parking": 100,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Foster Freeze, Miss J’s Café"
  },
  "6437|PA": {
   "lat": 40.0197,
@@ -1973,7 +3424,13 @@
   "address": "2622 Lincoln Hwy East",
   "zip": "17527",
   "phone": "717-687-6112",
-  "name": "TA Express Ronks"
+  "name": "TA Express Ronks",
+  "interstate": "NULL",
+  "parking": 41,
+  "dieselLanes": 5,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Chester Fried Chicken, Subway"
  },
  "6442|TX": {
   "lat": 30.7391,
@@ -1981,7 +3438,12 @@
   "address": "500 I-45",
   "zip": "77320",
   "phone": "936-295-2488",
-  "name": "TA Express Huntsville"
+  "name": "TA Express Huntsville",
+  "interstate": "I-45 , Exit 118",
+  "parking": 50,
+  "dieselLanes": 6,
+  "showers": 3,
+  "facilities": "Primo Taqueria, Chester Fried Chicken, Cinnabon, Sbarro, Truck Wash"
  },
  "6443|MO": {
   "lat": 40.4656,
@@ -1989,7 +3451,12 @@
   "address": "24063 E 240th Ave",
   "zip": "64442",
   "phone": "660-415-5903",
-  "name": "TA Express Eagleville"
+  "name": "TA Express Eagleville",
+  "interstate": "1-35; Exit 106",
+  "parking": 40,
+  "dieselLanes": 5,
+  "showers": 5,
+  "facilities": "Miss J's"
  },
  "6444|IN": {
   "lat": 38.1822,
@@ -1997,7 +3464,13 @@
   "address": "102 Rocket Way",
   "zip": "47523",
   "phone": "812-937-6918",
-  "name": "TA Express Dale"
+  "name": "TA Express Dale",
+  "interstate": "I-64, Exit 57A",
+  "parking": 130,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Arby's, Dunkin'"
  },
  "6445|TX": {
   "lat": 28.9952,
@@ -2005,7 +3478,13 @@
   "address": "109963 Interstate 37",
   "zip": "78064",
   "phone": "726-224-0813",
-  "name": "TA Express Pleasanton"
+  "name": "TA Express Pleasanton",
+  "interstate": "I-37/Hwy 97",
+  "parking": 75,
+  "dieselLanes": 5,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Big Madre"
  },
  "6448|AR": {
   "lat": 35.8081,
@@ -2013,7 +3492,13 @@
   "address": "3021 DR MLK JR DR",
   "zip": "72401",
   "phone": "870-919-7760",
-  "name": "TA Express Jonesboro"
+  "name": "TA Express Jonesboro",
+  "interstate": "I-555, Exit 39",
+  "parking": 90,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "KFC, Miss J's"
  },
  "6449|TX": {
   "lat": 30.9854,
@@ -2021,7 +3506,12 @@
   "address": "8101 South Interstate Hwy 35 Service Rd.",
   "zip": "76513",
   "phone": "737-333-5305",
-  "name": "TA Express Belton"
+  "name": "TA Express Belton",
+  "interstate": "I-35; Exit 289",
+  "parking": 64,
+  "dieselLanes": 6,
+  "showers": 7,
+  "facilities": "Champs Chicken, Pizza Hut Express, Ranch Eats"
  },
  "6450|MO": {
   "lat": 37.1169,
@@ -2029,7 +3519,13 @@
   "address": "741 State Hwy E",
   "zip": "65717",
   "phone": "417-746-4777",
-  "name": "TA Express Norwood"
+  "name": "TA Express Norwood",
+  "interstate": "US Hwy 60 & North Hwy E",
+  "parking": 40,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Ozark Café, Miss J's, Sbarro"
  },
  "6451|OK": {
   "lat": 36.696,
@@ -2037,7 +3533,13 @@
   "address": "16700 W South Ave",
   "zip": "74653",
   "phone": "580-670-1199",
-  "name": "TA Express Tonkawa"
+  "name": "TA Express Tonkawa",
+  "interstate": "I-35; exit 214",
+  "parking": 32,
+  "dieselLanes": 5,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Dunkin', Miss J's"
  },
  "6456|TX": {
   "lat": 33.2027,
@@ -2045,7 +3547,13 @@
   "address": "3400 S US Highway 287",
   "zip": "76234",
   "phone": "940-245-8146",
-  "name": "TA Express Decatur"
+  "name": "TA Express Decatur",
+  "interstate": "US Hwy 287 & 81",
+  "parking": 77,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Golden Chick, Miss J's Smokehouse"
  },
  "6458|NV": {
   "lat": 40.7421,
@@ -2053,7 +3561,12 @@
   "address": "800 Leppy Hills Blvd",
   "zip": "89883",
   "phone": "775-546-1649",
-  "name": "TA Express Wendover"
+  "name": "TA Express Wendover",
+  "interstate": "I-80, Exit 410",
+  "parking": 153,
+  "dieselLanes": 8,
+  "showers": 9,
+  "facilities": "Black Bear Diner, Bojangles, Del Taco, Sbarro"
  },
  "6459|AZ": {
   "lat": 36.8933,
@@ -2061,7 +3574,13 @@
   "address": "3225 E Rincon Road",
   "zip": "86432",
   "phone": "928-727-3707",
-  "name": "TA Express Littlefield"
+  "name": "TA Express Littlefield",
+  "interstate": "I-15, Exit 8",
+  "parking": 200,
+  "dieselLanes": 9,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Del Taco, KFC, Sbarro"
  },
  "6460|MO": {
   "lat": 39.015,
@@ -2069,7 +3588,13 @@
   "address": "301 SW First Street",
   "zip": "64075",
   "phone": "816-690-4455",
-  "name": "Petro Oak Grove"
+  "name": "Petro Oak Grove",
+  "interstate": "I-70, Exit 28",
+  "parking": 305,
+  "dieselLanes": 8,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Wendy's"
  },
  "6461|MO": {
   "lat": 38.0739,
@@ -2077,7 +3602,13 @@
   "address": "5922 MO - 19",
   "zip": "65453",
   "phone": "573-885-3992",
-  "name": "TA Cuba"
+  "name": "TA Cuba",
+  "interstate": "I-44, Exit 208",
+  "parking": 412,
+  "dieselLanes": 20,
+  "showers": 16,
+  "catScale": true,
+  "facilities": "IHOP"
  },
  "6465|SC": {
   "lat": 34.5046,
@@ -2085,7 +3616,13 @@
   "address": "272 Herring Rd",
   "zip": "29643",
   "phone": "864-280-7320",
-  "name": "TA Express Fair Play"
+  "name": "TA Express Fair Play",
+  "interstate": "I-85, Exit 4",
+  "parking": 52,
+  "dieselLanes": 5,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Cheryl’s Potato Boat, KFC"
  },
  "6468|KY": {
   "lat": 37.045,
@@ -2093,7 +3630,13 @@
   "address": "605 S Main St",
   "zip": "42171",
   "phone": "270-563-4713",
-  "name": "TA Smiths Grove"
+  "name": "TA Smiths Grove",
+  "interstate": "I-65, Exit 38",
+  "parking": 120,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Highway Kitchen, Taco Bell"
  },
  "6469|NM": {
   "lat": 36.45,
@@ -2101,7 +3644,13 @@
   "address": "18 Old French Rd.",
   "zip": "87747",
   "phone": "575-483-5004",
-  "name": "TA Springer"
+  "name": "TA Springer",
+  "interstate": "I-25 Exit 419",
+  "parking": 100,
+  "dieselLanes": 6,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Russell's Restaurant, Subway"
  },
  "6471|NM": {
   "lat": 35.1752,
@@ -2109,7 +3658,13 @@
   "address": "1583 Frontage Rd 4132",
   "zip": "88434",
   "phone": "575-288-9968",
-  "name": "TA Glenrio"
+  "name": "TA Glenrio",
+  "interstate": "I-40, 369",
+  "parking": 175,
+  "dieselLanes": 10,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Russell's Route 66 Café, Subway"
  },
  "6476|PA": {
   "lat": 40.0004,
@@ -2117,7 +3672,13 @@
   "address": "16563 Lincoln Hwy",
   "zip": "15533",
   "phone": "814-707-9284",
-  "name": "TA Breezewood"
+  "name": "TA Breezewood",
+  "interstate": "I-76, Exit 161/I-70, Exit US 30",
+  "parking": 200,
+  "dieselLanes": 9,
+  "showers": 13,
+  "catScale": true,
+  "facilities": "Arby's, Baskin Robbins, Dunkin', Gateway Homestyle Express, Papi's Pizza, Wings And Subs"
  },
  "6477|SC": {
   "lat": 35.0469,
@@ -2125,7 +3686,13 @@
   "address": "175 Truck Stop Rd",
   "zip": "29330",
   "phone": "864-755-4335",
-  "name": "TA Cowpens"
+  "name": "TA Cowpens",
+  "interstate": "I-85, Exit 83",
+  "parking": 80,
+  "dieselLanes": 6,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Sbarro"
  },
  "6478|KS": {
   "lat": 39.0906,
@@ -2133,7 +3700,13 @@
   "address": "4610 Kansas Ave",
   "zip": "66106",
   "phone": "913-359-6767",
-  "name": "TA Express Kansas City"
+  "name": "TA Express Kansas City",
+  "interstate": "HWY 635, Exit 3",
+  "parking": 28,
+  "dieselLanes": 8,
+  "showers": 2,
+  "catScale": true,
+  "facilities": "Highway Kitchen"
  },
  "6479|LA": {
   "lat": 30.0862,
@@ -2141,7 +3714,12 @@
   "address": "4301 Main St.",
   "zip": "70068",
   "phone": "985-315-8194",
-  "name": "TA Express Laplace"
+  "name": "TA Express Laplace",
+  "parking": 117,
+  "dieselLanes": 10,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Subway"
  },
  "6480|LA": {
   "lat": 29.9735,
@@ -2149,7 +3727,13 @@
   "address": "10405 E. Airline Hwy",
   "zip": "70087",
   "phone": "985-262-7189",
-  "name": "TA Express St. Rose"
+  "name": "TA Express St. Rose",
+  "interstate": "I-310 Exit 2",
+  "parking": 55,
+  "dieselLanes": 10,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "KFC"
  },
  "6481|PA": {
   "lat": 39.9988,
@@ -2157,7 +3741,10 @@
   "address": "16520 Lincoln HWY",
   "zip": "15533",
   "phone": "814-517-5377",
-  "name": "Goasis Breezewood"
+  "name": "Goasis Breezewood",
+  "interstate": "I-176, Exit 161",
+  "dieselLanes": 8,
+  "facilities": "Dunkin', Papi's Pizza, Wings And Subs"
  },
  "6482|OR": {
   "lat": 44.1364,
@@ -2165,7 +3752,13 @@
   "address": "32910 E. Pearl St.",
   "zip": "97408",
   "phone": "541-868-2880",
-  "name": "TA Coburg"
+  "name": "TA Coburg",
+  "interstate": "I-5, Exit 199",
+  "parking": 100,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Coburg Crossing Cafe, Truck Wash"
  },
  "6483|OR": {
   "lat": 44.1351,
@@ -2173,7 +3766,10 @@
   "address": "91039 Coburg Industrial Way",
   "zip": "97408",
   "phone": "541-868-2880",
-  "name": "Goasis Coburg Crossing"
+  "name": "Goasis Coburg Crossing",
+  "interstate": "I-5, Exit 199",
+  "dieselLanes": 2,
+  "facilities": "Mcdonald's"
  },
  "6485|AL": {
   "lat": 34.0508,
@@ -2181,7 +3777,13 @@
   "address": "426 Alabama Highway 69 S",
   "zip": "35077",
   "phone": "256-287-1299",
-  "name": "Petro Dodge City"
+  "name": "Petro Dodge City",
+  "interstate": "I-65, Exit 299",
+  "parking": 322,
+  "dieselLanes": 10,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Baskin Robbins, Burger King, Dunkin', Papa John's Pizza, Popeyes"
  },
  "6486|VA": {
   "lat": 36.9777,
@@ -2189,7 +3791,13 @@
   "address": "13306 St. John Church Road",
   "zip": "23882",
   "phone": "434-246-2881",
-  "name": "TA Express Stony Creek"
+  "name": "TA Express Stony Creek",
+  "interstate": "I-95, Exit 33",
+  "parking": 80,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Popeyes, Starbucks, Subway"
  },
  "6488|VA": {
   "lat": 36.9406,
@@ -2197,7 +3805,13 @@
   "address": "12461 Old Stage Rd.",
   "zip": "23889",
   "phone": "804-478-4403",
-  "name": "TA Express Warfield"
+  "name": "TA Express Warfield",
+  "interstate": "I-85, Exit 39",
+  "parking": 80,
+  "dieselLanes": 6,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Little Caesar's, Subway"
  },
  "6489|IL": {
   "lat": 41.6683,
@@ -2205,7 +3819,9 @@
   "address": "1321 N Joliet Rd",
   "zip": "60446",
   "phone": "630-743-3605",
-  "name": "Thorntons Romeoville"
+  "name": "Thorntons Romeoville",
+  "interstate": "I-55, Exit 267",
+  "dieselLanes": 8
  },
  "6490|IL": {
   "lat": 41.8274,
@@ -2213,7 +3829,9 @@
   "address": "3503 South Cicero Ave",
   "zip": "60804",
   "phone": "708-652-6539",
-  "name": "Thorntons Cicero"
+  "name": "Thorntons Cicero",
+  "interstate": "I-55, Exit 286",
+  "dieselLanes": 6
  },
  "6491|WI": {
   "lat": 42.7251,
@@ -2221,7 +3839,12 @@
   "address": "717 S. Sylvania Avenue",
   "zip": "53177",
   "phone": "262-884-7500",
-  "name": "Petro Racine"
+  "name": "Petro Racine",
+  "interstate": "I-94 & Hwy 20 Exit 333",
+  "parking": 158,
+  "dieselLanes": 7,
+  "catScale": true,
+  "facilities": "Blue Badger Bar and Grill, Dunkin', Krispy Krunchy Chicken, O&H Danish Bakery, Taco Bell"
  },
  "6502|IA": {
   "lat": 42.4666,
@@ -2229,7 +3852,12 @@
   "address": "16250 N Ave",
   "zip": "50642",
   "phone": "319-823-1477",
-  "name": "TA Express Holland"
+  "name": "TA Express Holland",
+  "interstate": "US Hwy 20, Exit 208",
+  "parking": 92,
+  "dieselLanes": 5,
+  "showers": 2,
+  "facilities": "Arby's, Godfather Pizza"
  },
  "6505|AL": {
   "lat": 32.4056,
@@ -2237,7 +3865,13 @@
   "address": "428 Main St",
   "zip": "36075",
   "phone": "334-727-3354",
-  "name": "Petro Shorter"
+  "name": "Petro Shorter",
+  "interstate": "I-85, Exit 22",
+  "parking": 53,
+  "dieselLanes": 4,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Charleys Philly Steaks, Miss J’s Café"
  },
  "6506|MS": {
   "lat": 32.2787,
@@ -2245,7 +3879,13 @@
   "address": "970 W Frontage Road",
   "zip": "39201",
   "phone": "601-292-0950",
-  "name": "Petro Jackson"
+  "name": "Petro Jackson",
+  "interstate": "I-20",
+  "parking": 194,
+  "dieselLanes": 10,
+  "showers": 15,
+  "catScale": true,
+  "facilities": "Miss J's"
  },
  "6507|SC": {
   "lat": 34.0747,
@@ -2253,7 +3893,13 @@
   "address": "99 Plumbers Road",
   "zip": "29203",
   "phone": "839-228-0693",
-  "name": "TA Columbia North"
+  "name": "TA Columbia North",
+  "interstate": "I-20, Exit 71",
+  "parking": 78,
+  "dieselLanes": 4,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Dunkin', Miss J’s Café, Taco Bell"
  },
  "6508|NY": {
   "lat": 42.9485,
@@ -2261,7 +3907,13 @@
   "address": "40 Riverside Drive",
   "zip": "12072",
   "phone": "838-292-9580",
-  "name": "TA Fultonville"
+  "name": "TA Fultonville",
+  "interstate": "I-90, exit 28",
+  "parking": 121,
+  "dieselLanes": 10,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Miss J's Diner, Miss J's, Sbarro"
  },
  "6510|TX": {
   "lat": 29.938,
@@ -2269,7 +3921,12 @@
   "address": "1104 N Sam Houston Pkwy E",
   "zip": "77032",
   "phone": "346-740-1066",
-  "name": "TA Express North Houston"
+  "name": "TA Express North Houston",
+  "interstate": "I-8,",
+  "parking": 80,
+  "dieselLanes": 7,
+  "showers": 5,
+  "facilities": "Denny's, Cinnabon, Miss J's, Schlotzsky’s"
  },
  "6512|IN": {
   "lat": 41.1186,
@@ -2277,7 +3934,13 @@
   "address": "3037 Goshen Road",
   "zip": "46808",
   "phone": "260-402-4570",
-  "name": "TA Express Fort Wayne"
+  "name": "TA Express Fort Wayne",
+  "interstate": "I-69, exit 309",
+  "parking": 215,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's Diner, Miss J’s Café, Sbarro"
  },
  "6513|OH": {
   "lat": 38.9965,
@@ -2285,7 +3948,13 @@
   "address": "80 Dixon Run Road",
   "zip": "45640",
   "phone": "740-988-7793",
-  "name": "TA Jackson"
+  "name": "TA Jackson",
+  "interstate": "US Hwy 35",
+  "parking": 110,
+  "dieselLanes": 6,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Miss J's Diner, Miss J's Pizzeria"
  },
  "6515|TX": {
   "lat": 30.4176,
@@ -2293,7 +3962,11 @@
   "address": "115 S Segovia Access Rd",
   "zip": "76849",
   "phone": "325-338-0993",
-  "name": "TA Express Junction"
+  "name": "TA Express Junction",
+  "parking": 70,
+  "dieselLanes": 5,
+  "showers": 4,
+  "facilities": "Miss J’s Café, Sonic"
  },
  "6518|TX": {
   "lat": 27.5318,
@@ -2301,7 +3974,13 @@
   "address": "2104 E. Corral Ave",
   "zip": "78363",
   "phone": "361-424-1518",
-  "name": "TA Express Kingsville"
+  "name": "TA Express Kingsville",
+  "interstate": "US Hwy 77",
+  "parking": 40,
+  "dieselLanes": 7,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Charleys Philly Steaks, Miss J’s Café"
  },
  "6519|UT": {
   "lat": 38.9504,
@@ -2309,7 +3988,12 @@
   "address": "885 S Park Ave",
   "zip": "84631",
   "phone": "435-222-4431",
-  "name": "TA Fillmore"
+  "name": "TA Fillmore",
+  "interstate": "I-15, Exit 163",
+  "parking": 40,
+  "dieselLanes": 6,
+  "showers": 3,
+  "facilities": "Miss J's"
  },
  "6520|WY": {
   "lat": 41.6122,
@@ -2317,7 +4001,12 @@
   "address": "1620 Elk Street",
   "zip": "82901",
   "phone": "307-522-8996",
-  "name": "TA Express Rock Springs"
+  "name": "TA Express Rock Springs",
+  "interstate": "I-80, Exit 104",
+  "parking": 65,
+  "dieselLanes": 7,
+  "showers": 3,
+  "facilities": "Miss J's"
  },
  "6524|MO": {
   "lat": 38.9941,
@@ -2325,7 +4014,13 @@
   "address": "102 N W 4th Street",
   "zip": "64020",
   "phone": "660-460-7412",
-  "name": "TA Concordia"
+  "name": "TA Concordia",
+  "interstate": "I-70 & Rt. 23, Exit 58",
+  "parking": 146,
+  "dieselLanes": 10,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Subway"
  },
  "6525|MN": {
   "lat": 45.1969,
@@ -2333,7 +4028,12 @@
   "address": "13400 Rogers Drive",
   "zip": "55374",
   "phone": "763-428-2277",
-  "name": "TA Rogers"
+  "name": "TA Rogers",
+  "interstate": "I-94 & Hwy 101, Exit 207",
+  "parking": 80,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true
  },
  "6526|WI": {
   "lat": 44.9655,
@@ -2341,7 +4041,13 @@
   "address": "713 Hwy 12",
   "zip": "54016",
   "phone": "715-386-5835",
-  "name": "TA Hudson"
+  "name": "TA Hudson",
+  "interstate": "I-94, Exit 4",
+  "parking": 86,
+  "dieselLanes": 6,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6527|SC": {
   "lat": 34.2364,
@@ -2349,7 +4055,13 @@
   "address": "2301 W. Lucas Street",
   "zip": "29501",
   "phone": "843-292-0386",
-  "name": "TA Florence"
+  "name": "TA Florence",
+  "interstate": "I-95 and Hwy 52, Exit 164",
+  "parking": 77,
+  "dieselLanes": 9,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Miss J’s Café, Popeyes"
  },
  "6528|MI": {
   "lat": 43.3517,
@@ -2357,7 +4069,13 @@
   "address": "6364 Dixie Hwy",
   "zip": "48722",
   "phone": "989-777-7650",
-  "name": "TA Bridgeport"
+  "name": "TA Bridgeport",
+  "interstate": "I-75, Exit 144",
+  "parking": 70,
+  "dieselLanes": 7,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Miss J's Diner"
  },
  "6529|NJ": {
   "lat": 39.819,
@@ -2365,7 +4083,13 @@
   "address": "171 Berkley Road",
   "zip": "08066",
   "phone": "856-423-5500",
-  "name": "TA Paulsboro"
+  "name": "TA Paulsboro",
+  "interstate": "I-295, 18A, Mt. Royal Exit",
+  "parking": 175,
+  "dieselLanes": 12,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6530|MI": {
   "lat": 42.1065,
@@ -2373,7 +4097,12 @@
   "address": "15587 M-60",
   "zip": "49092",
   "phone": "517-767-4135",
-  "name": "TA Tekonsha"
+  "name": "TA Tekonsha",
+  "interstate": "I-69, Exit 25",
+  "parking": 85,
+  "dieselLanes": 5,
+  "showers": 6,
+  "catScale": true
  },
  "6531|MT": {
   "lat": 46.9485,
@@ -2381,7 +4110,13 @@
   "address": "8018 Hwy 93 N",
   "zip": "59808",
   "phone": "406-549-2327",
-  "name": "TA Missoula"
+  "name": "TA Missoula",
+  "interstate": "I-90, Exit 96 (Hwy 93)",
+  "parking": 130,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6532|AL": {
   "lat": 33.5865,
@@ -2389,7 +4124,13 @@
   "address": "75246 Alabama 77",
   "zip": "35096",
   "phone": "205-763-2771",
-  "name": "TA Lincoln"
+  "name": "TA Lincoln",
+  "interstate": "I-20, Exit 168",
+  "parking": 45,
+  "dieselLanes": 7,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6533|TX": {
   "lat": 32.0794,
@@ -2397,7 +4138,13 @@
   "address": "101 Cornelius Road",
   "zip": "76645",
   "phone": "254-714-3000",
-  "name": "Petro North Hillsboro"
+  "name": "Petro North Hillsboro",
+  "interstate": "I-35E, Exit 374",
+  "parking": 91,
+  "dieselLanes": 11,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Miss J's"
  },
  "6534|LA": {
   "lat": 30.2314,
@@ -2405,7 +4152,13 @@
   "address": "114 Jasmin",
   "zip": "70531",
   "phone": "337-783-0424",
-  "name": "Petro Egan"
+  "name": "Petro Egan",
+  "interstate": "I-10, Exit 76",
+  "parking": 127,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J’s Café, Subway"
  },
  "6535|IN": {
   "lat": 41.7483,
@@ -2413,7 +4166,13 @@
   "address": "7265 North Baker Road",
   "zip": "46737",
   "phone": "260-322-2582",
-  "name": "Petro Angola"
+  "name": "Petro Angola",
+  "interstate": "I-69, Exit 157/357(new)",
+  "parking": 200,
+  "dieselLanes": 10,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's Diner"
  },
  "6536|KS": {
   "lat": 38.8789,
@@ -2421,7 +4180,13 @@
   "address": "2125 N. 9th St.",
   "zip": "67401",
   "phone": "785-825-7723",
-  "name": "Petro Salina"
+  "name": "Petro Salina",
+  "interstate": "I-70, Exit 252",
+  "parking": 75,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's, Popeyes"
  },
  "6537|IN": {
   "lat": 40.2772,
@@ -2429,7 +4194,13 @@
   "address": "14000 West State Road 28",
   "zip": "47342",
   "phone": "765-358-3326",
-  "name": "Petro Gaston"
+  "name": "Petro Gaston",
+  "interstate": "I-69, Exit 245",
+  "parking": 150,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's Diner"
  },
  "6538|TX": {
   "lat": 28.8996,
@@ -2437,7 +4208,13 @@
   "address": "110 S. I-35 Frontage Rd.",
   "zip": "78061",
   "phone": "830-334-8222",
-  "name": "Petro Pearsall"
+  "name": "Petro Pearsall",
+  "interstate": "I-35, Exit 101(Southbound) I-35, Exit 100(Northbound)",
+  "parking": 175,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Miss J's Burger, Miss J’s Café"
  },
  "6539|AL": {
   "lat": 32.3275,
@@ -2445,7 +4222,13 @@
   "address": "980 West South Blvd",
   "zip": "36105",
   "phone": "334-288-3700",
-  "name": "TA Montgomery"
+  "name": "TA Montgomery",
+  "interstate": "I-65, Exit 168",
+  "parking": 125,
+  "dieselLanes": 8,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6543|IN": {
   "lat": 41.5906,
@@ -2453,7 +4236,13 @@
   "address": "1201 Ripley Street",
   "zip": "46405",
   "phone": "219-962-6552",
-  "name": "TA Lake Station"
+  "name": "TA Lake Station",
+  "interstate": "I-80/I-94, Exit 15B",
+  "parking": 252,
+  "dieselLanes": 15,
+  "showers": 12,
+  "catScale": true,
+  "facilities": "Popeyes"
  },
  "6544|TN": {
   "lat": 35.8603,
@@ -2461,7 +4250,13 @@
   "address": "4400 Peytonsville Road",
   "zip": "37064",
   "phone": "615-794-8406",
-  "name": "TA Franklin"
+  "name": "TA Franklin",
+  "interstate": "I-65, Exit 61",
+  "parking": 74,
+  "dieselLanes": 7,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6554|WV": {
   "lat": 39.1031,
@@ -2469,7 +4264,12 @@
   "address": "102 Jesse Run Rd",
   "zip": "26378",
   "phone": "304-543-9604",
-  "name": "TA Jane Lew"
+  "name": "TA Jane Lew",
+  "interstate": "I-79, Exit 105",
+  "parking": 75,
+  "dieselLanes": 6,
+  "showers": 6,
+  "facilities": "IHOP, Arby's, Miss J’s Café"
  },
  "6555|NY": {
   "lat": 43.107,
@@ -2477,7 +4277,12 @@
   "address": "6021 Porter Rd",
   "zip": "14304",
   "phone": "716-461-4759",
-  "name": "TA Express Niagara Falls"
+  "name": "TA Express Niagara Falls",
+  "interstate": "I-190; Exit 23",
+  "parking": 60,
+  "dieselLanes": 5,
+  "showers": 4,
+  "facilities": "Miss J’s Café, Tim Horton's, Truck Wash"
  },
  "6556|FL": {
   "lat": 25.8847,
@@ -2485,7 +4290,11 @@
   "address": "12200 NW South River Drive",
   "zip": "33178",
   "phone": "786-697-6329",
-  "name": "TA Express Medley"
+  "name": "TA Express Medley",
+  "parking": 58,
+  "dieselLanes": 6,
+  "showers": 3,
+  "facilities": "Miss J’s Café"
  },
  "6567|LA": {
   "lat": 32.5431,
@@ -2493,7 +4302,12 @@
   "address": "1130 RWE Jones RD",
   "zip": "71245",
   "phone": "318-265-7559",
-  "name": "TA Express Grambling"
+  "name": "TA Express Grambling",
+  "interstate": "I-20, Exit 81",
+  "parking": 31,
+  "dieselLanes": 6,
+  "showers": 2,
+  "facilities": "Jimmy Johns, Miss J’s Café"
  },
  "13648|CO": {
   "lat": 40.2665,
@@ -2501,7 +4315,10 @@
   "address": "1041 N. Colorado Avenue",
   "zip": "80723",
   "phone": "970-842-3122",
-  "name": "TA Express Brush"
+  "name": "TA Express Brush",
+  "interstate": "I-76, Exit 90",
+  "parking": 15,
+  "dieselLanes": 4
  },
  "13649|CO": {
   "lat": 37.6537,
@@ -2509,7 +4326,12 @@
   "address": "455 US-85",
   "zip": "81089",
   "phone": "719-738-5733",
-  "name": "TA Express Walsenburg"
+  "name": "TA Express Walsenburg",
+  "interstate": "I-25, Exit 52",
+  "parking": 35,
+  "dieselLanes": 4,
+  "showers": 3,
+  "facilities": "A&W All American Food"
  },
  "6701|OH": {
   "lat": 40.8566,
@@ -2517,7 +4339,9 @@
   "address": "715 US 250 East",
   "zip": "44805",
   "phone": "567-215-9000",
-  "name": "Goasis Ashland"
+  "name": "Goasis Ashland",
+  "interstate": "I-71, Exit 186 (US 250 E.)",
+  "facilities": "Pizza Hut Express, Popeyes, Starbucks"
  },
  "6917|WA": {
   "lat": 48.9913,
@@ -2525,7 +4349,13 @@
   "address": "1300 Boblett St",
   "zip": "98230",
   "phone": "360-312-7779",
-  "name": "TA Express Blaine"
+  "name": "TA Express Blaine",
+  "interstate": "I-5 Exit 275",
+  "parking": 34,
+  "dieselLanes": 5,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Cinnabon, Jamba Juice, Pizza Hut Express"
  },
  "6919|CA": {
   "lat": 36.8524,
@@ -2533,7 +4363,13 @@
   "address": "32603 Avenue 7",
   "zip": "93637",
   "phone": "559-214-2444",
-  "name": "TA Madera"
+  "name": "TA Madera",
+  "interstate": "State Hwy 99, Exit 144",
+  "parking": 78,
+  "dieselLanes": 6,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Baja Fresh, Cinnabon, Fatburger, Indian Currey NAAN Stop, Jamba Juice, KFC, Pizza Hut Express"
  },
  "6924|MO": {
   "lat": 37.0906,
@@ -2541,7 +4377,13 @@
   "address": "1501 East Mt. Vernon Blvd",
   "zip": "65712",
   "phone": "417-701-3938",
-  "name": "TA Mt. Vernon"
+  "name": "TA Mt. Vernon",
+  "interstate": "I-44 , exit 46",
+  "parking": 250,
+  "dieselLanes": 9,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's, Subway, Wendy's"
  },
  "6925|MS": {
   "lat": 31.1895,
@@ -2549,7 +4391,13 @@
   "address": "1120 Airport Fernwood Road",
   "zip": "39648",
   "phone": "601-996-0614",
-  "name": "TA McComb"
+  "name": "TA McComb",
+  "interstate": "I-55, exit 13",
+  "parking": 115,
+  "dieselLanes": 6,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Denny's, Subway"
  },
  "6926|MS": {
   "lat": 34.2791,
@@ -2557,7 +4405,13 @@
   "address": "590 MS 371",
   "zip": "38857",
   "phone": "662-205-6298",
-  "name": "TA Express Mooreville"
+  "name": "TA Express Mooreville",
+  "interstate": "I-22, Exit 94",
+  "parking": 40,
+  "dieselLanes": 7,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Chester Fried Chicken, Sbarro"
  },
  "6929|CO": {
   "lat": 38.097,
@@ -2565,7 +4419,13 @@
   "address": "708 N. Main Street",
   "zip": "81052",
   "phone": "719-688-4024",
-  "name": "TA Express Lamar"
+  "name": "TA Express Lamar",
+  "interstate": "US HWY 50",
+  "parking": 40,
+  "dieselLanes": 5,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Arby's, Charleys Philly Steaks, Dunkin', KFC"
  },
  "6930|OK": {
   "lat": 36.9854,
@@ -2573,7 +4433,12 @@
   "address": "111 E. County Road 2",
   "zip": "74072",
   "phone": "918-842-4000",
-  "name": "TA Express South Coffeyville"
+  "name": "TA Express South Coffeyville",
+  "interstate": "US HWY 169",
+  "parking": 40,
+  "dieselLanes": 5,
+  "showers": 4,
+  "facilities": "Golden Chick, The Stuffed Burrito Company"
  },
  "6932|KS": {
   "lat": 38.0053,
@@ -2581,7 +4446,13 @@
   "address": "1265 Solar Avenue",
   "zip": "67846",
   "phone": "620-644-3844",
-  "name": "TA Garden City"
+  "name": "TA Garden City",
+  "interstate": "US Hwy 400",
+  "parking": 150,
+  "dieselLanes": 6,
+  "showers": 10,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Dunkin', Sbarro"
  },
  "6933|CO": {
   "lat": 38.3444,
@@ -2589,7 +4460,13 @@
   "address": "1275 Drew Dix Parkway",
   "zip": "81008",
   "phone": "719-877-2453",
-  "name": "TA Pueblo"
+  "name": "TA Pueblo",
+  "interstate": "I-25 Exit 104",
+  "parking": 210,
+  "dieselLanes": 9,
+  "showers": 9,
+  "catScale": true,
+  "facilities": "Black Bear Diner, Bojangles, Del Taco, Sbarro"
  },
  "6939|LA": {
   "lat": 32.8979,
@@ -2597,7 +4474,13 @@
   "address": "6411 Hwy 2",
   "zip": "71043",
   "phone": "318-716-7057",
-  "name": "TA Express Hosston"
+  "name": "TA Express Hosston",
+  "interstate": "I-49, exit 237",
+  "parking": 50,
+  "dieselLanes": 7,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Crispy Cajun, Howdy Crawfish, Hunt Brothers Pizza, Subway"
  },
  "6940|ID": {
   "lat": 44.1766,
@@ -2605,7 +4488,12 @@
   "address": "424 W. Main Street",
   "zip": "83423",
   "phone": "208-374-5381",
-  "name": "TA Express Dubois"
+  "name": "TA Express Dubois",
+  "interstate": "I-15, exit 137",
+  "parking": 30,
+  "dieselLanes": 2,
+  "showers": 2,
+  "facilities": "Blu Taco, Champs Chicken, Hangar 54 Pizza"
  },
  "6941|IA": {
   "lat": 42.4741,
@@ -2613,7 +4501,13 @@
   "address": "2010 Indorf Avenue",
   "zip": "51025",
   "phone": "712-371-9965",
-  "name": "TA Express Holstein"
+  "name": "TA Express Holstein",
+  "interstate": "US Hwy 20",
+  "parking": 39,
+  "dieselLanes": 6,
+  "showers": 2,
+  "catScale": true,
+  "facilities": "Dunkin', Hardee's"
  },
  "6943|KS": {
   "lat": 39.8412,
@@ -2621,7 +4515,12 @@
   "address": "801 W. 1st Street",
   "zip": "66425",
   "phone": "785-288-8089",
-  "name": "TA Express Fairview"
+  "name": "TA Express Fairview",
+  "interstate": "US Hwy 75",
+  "parking": 67,
+  "dieselLanes": 6,
+  "showers": 3,
+  "facilities": "A&W All American Food, Dunkin', Hunt Brothers Pizza, Miss J’s Café, Truck Wash"
  },
  "6945|TX": {
   "lat": 34.1599,
@@ -2629,7 +4528,13 @@
   "address": "2817 Frontage Rd South",
   "zip": "76384",
   "phone": "940-553-7121",
-  "name": "TA Vernon, TX"
+  "name": "TA Vernon, TX",
+  "interstate": "US 287",
+  "parking": 76,
+  "dieselLanes": 7,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Popeyes, Starbucks, Vernon BBQ"
  },
  "6946|LA": {
   "lat": 32.572,
@@ -2637,7 +4542,12 @@
   "address": "2198 Highway 532",
   "zip": "71055",
   "phone": "318-588-0192",
-  "name": "TA Express Minden"
+  "name": "TA Express Minden",
+  "interstate": "I-20, Exit 52",
+  "parking": 51,
+  "dieselLanes": 5,
+  "showers": 3,
+  "facilities": "Charleys Philly Steaks, Sbarro"
  },
  "6947|AL": {
   "lat": 33.5294,
@@ -2645,7 +4555,13 @@
   "address": "901 Bankhead Hwy",
   "zip": "35204",
   "phone": "205-777-9910",
-  "name": "TA Express Birmingham"
+  "name": "TA Express Birmingham",
+  "interstate": "I-20, Exit 123",
+  "parking": 85,
+  "dieselLanes": 8,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Arby's, Miss J’s Café"
  },
  "6948|ND": {
   "lat": 47.9322,
@@ -2653,7 +4569,13 @@
   "address": "1212 North 47th Street",
   "zip": "58203",
   "phone": "701-317-3785",
-  "name": "TA Express Grand Forks"
+  "name": "TA Express Grand Forks",
+  "interstate": "I-29, exit 141",
+  "parking": 65,
+  "dieselLanes": 8,
+  "showers": 8,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6949|ND": {
   "lat": 48.3433,
@@ -2661,7 +4583,13 @@
   "address": "13553 64th Street",
   "zip": "58801",
   "phone": "701-641-1393",
-  "name": "TA Express Williston"
+  "name": "TA Express Williston",
+  "interstate": "US Hwy 2",
+  "parking": 40,
+  "dieselLanes": 8,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Cinnabon, Miss J’s Café, Subway"
  },
  "6951|WA": {
   "lat": 46.2759,
@@ -2669,7 +4597,12 @@
   "address": "100 Higgins Way",
   "zip": "98930",
   "phone": "509-405-0911",
-  "name": "TA Grandview"
+  "name": "TA Grandview",
+  "interstate": "I-82, exit 73",
+  "parking": 100,
+  "dieselLanes": 5,
+  "showers": 6,
+  "facilities": "Applebee's/IHOP, Miss J's Indian Cuisine, Miss J's Tacos, Miss J’s Café"
  },
  "6954|AR": {
   "lat": 35.2216,
@@ -2677,7 +4610,13 @@
   "address": "100 Fish Lake Road",
   "zip": "72823",
   "phone": "479-886-6925",
-  "name": "TA Atkins"
+  "name": "TA Atkins",
+  "interstate": "I-40, exit 101",
+  "parking": 150,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's, Sbarro"
  },
  "6958|IA": {
   "lat": 42.4718,
@@ -2685,7 +4624,13 @@
   "address": "3065 220th Street",
   "zip": "50271",
   "phone": "515-851-1339",
-  "name": "TA Williams"
+  "name": "TA Williams",
+  "interstate": "I-35, Exit 144",
+  "parking": 125,
+  "dieselLanes": 6,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Miss J's, Sbarro"
  },
  "6962|PA": {
   "lat": 40.9388,
@@ -2693,7 +4638,13 @@
   "address": "492 Can Do Expressway",
   "zip": "18202",
   "phone": "570-599-5063",
-  "name": "TA Express Hazleton"
+  "name": "TA Express Hazleton",
+  "interstate": "I-81, exit 143",
+  "parking": 50,
+  "dieselLanes": 5,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Miss J’s Café"
  },
  "6963|PA": {
   "lat": 40.5339,
@@ -2701,7 +4652,13 @@
   "address": "482 Suedberg Road",
   "zip": "17963",
   "phone": "717-454-6803",
-  "name": "TA Express Pine Grove"
+  "name": "TA Express Pine Grove",
+  "interstate": "I-81, Exit 100",
+  "parking": 80,
+  "dieselLanes": 6,
+  "showers": 3,
+  "catScale": true,
+  "facilities": "Cinnabon, Miss J’s Café, Truck Wash"
  },
  "6966|OK": {
   "lat": 34.8334,
@@ -2709,7 +4666,12 @@
   "address": "9062 US Hwy 69",
   "zip": "74565",
   "phone": "405-446-4501",
-  "name": "TA Express Savanna"
+  "name": "TA Express Savanna",
+  "interstate": "US HWY 69",
+  "parking": 60,
+  "dieselLanes": 5,
+  "showers": 3,
+  "facilities": "Dunkin', Miss J's, Sbarro"
  },
  "6968|NV": {
   "lat": 35.9671,
@@ -2717,7 +4679,12 @@
   "address": "1700 Railroad Pass Casino Road",
   "zip": "89002",
   "phone": "725-305-0745",
-  "name": "Petro Henderson"
+  "name": "Petro Henderson",
+  "interstate": "I-11, exit 15A",
+  "parking": 100,
+  "dieselLanes": 8,
+  "showers": 5,
+  "facilities": "Dunkin', Sonic, Truck Wash"
  },
  "6969|NV": {
   "lat": 35.9715,
@@ -2725,7 +4692,13 @@
   "address": "1550 Railroad Pass Casino Road",
   "zip": "89002",
   "phone": "725-277-0932",
-  "name": "TA Express Henderson"
+  "name": "TA Express Henderson",
+  "interstate": "I-11, exit 15A",
+  "parking": 200,
+  "dieselLanes": 7,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "Starbucks"
  },
  "6974|WV": {
   "lat": 39.1948,
@@ -2733,7 +4706,13 @@
   "address": "470 Frontage Road",
   "zip": "26150",
   "phone": "304-761-3854",
-  "name": "TA Mineral Wells"
+  "name": "TA Mineral Wells",
+  "interstate": "I-77, Exit 170",
+  "parking": 104,
+  "dieselLanes": 5,
+  "showers": 5,
+  "catScale": true,
+  "facilities": "IHOP, Miss J’s Café"
  },
  "6975|NV": {
   "lat": 40.7207,
@@ -2741,7 +4720,12 @@
   "address": "932 Fir Street",
   "zip": "89822",
   "phone": "702-421-3701",
-  "name": "TA Express Carlin"
+  "name": "TA Express Carlin",
+  "interstate": "I-80; Exit 280",
+  "parking": 50,
+  "dieselLanes": 5,
+  "showers": 4,
+  "facilities": "Bojangles"
  },
  "6976|KS": {
   "lat": 38.0086,
@@ -2749,7 +4733,13 @@
   "address": "1515 South Main Street",
   "zip": "67505",
   "phone": "620-669-9900",
-  "name": "TA Express Hutchinson"
+  "name": "TA Express Hutchinson",
+  "interstate": "US Hwy 50",
+  "parking": 80,
+  "dieselLanes": 5,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Applewood Restaurant, Sbarro"
  },
  "6977|MN": {
   "lat": 44.1697,
@@ -2757,7 +4747,13 @@
   "address": "3010 Adams St.",
   "zip": "56001",
   "phone": "320-470-9288",
-  "name": "TA Express Mankato"
+  "name": "TA Express Mankato",
+  "interstate": "US Hwy 14",
+  "parking": 75,
+  "dieselLanes": 8,
+  "showers": 4,
+  "catScale": true,
+  "facilities": "Ten20 Tavern, Miss J's"
  },
  "6978|TX": {
   "lat": 29.8038,
@@ -2765,7 +4761,12 @@
   "address": "4808 N McCarty Street",
   "zip": "77013",
   "phone": "832-993-7704",
-  "name": "TA Express Houston"
+  "name": "TA Express Houston",
+  "interstate": "I-610; Exit24",
+  "parking": 70,
+  "dieselLanes": 8,
+  "showers": 6,
+  "facilities": "Miss J’s Café"
  },
  "6979|CO": {
   "lat": 39.109,
@@ -2773,7 +4774,12 @@
   "address": "2222 Highway 6",
   "zip": "81505",
   "phone": "970-901-1445",
-  "name": "TA Express Grand Junction"
+  "name": "TA Express Grand Junction",
+  "interstate": "US 6, 50",
+  "parking": 65,
+  "dieselLanes": 5,
+  "showers": 8,
+  "facilities": "Miss J’s Café"
  },
  "6982|WI": {
   "lat": 43.8858,
@@ -2781,7 +4787,12 @@
   "address": "1700 E Bridge Street",
   "zip": "53950",
   "phone": "608-350-9882",
-  "name": "TA Express New Lisbon"
+  "name": "TA Express New Lisbon",
+  "interstate": "I-90, Exit 61",
+  "parking": 50,
+  "dieselLanes": 6,
+  "showers": 4,
+  "facilities": "Miss J’s Café"
  },
  "6983|TX": {
   "lat": 30.4462,
@@ -2789,7 +4800,12 @@
   "address": "10100 US Highway 59",
   "zip": "77371",
   "phone": "936-933-9574",
-  "name": "TA Shepherd"
+  "name": "TA Shepherd",
+  "interstate": "US 59",
+  "parking": 120,
+  "dieselLanes": 8,
+  "showers": 5,
+  "facilities": "IHOP, Miss J’s Café"
  },
  "6986|AR": {
   "lat": 35.2684,
@@ -2797,7 +4813,13 @@
   "address": "9674 State Highway 13",
   "zip": "72081",
   "phone": "501-530-1455",
-  "name": "TA Express Judsonia"
+  "name": "TA Express Judsonia",
+  "interstate": "I-57, Exit 48",
+  "parking": 92,
+  "dieselLanes": 8,
+  "showers": 6,
+  "catScale": true,
+  "facilities": "Bojangles, Sbarro, Truck Wash"
  },
  "6987|KS": {
   "lat": 38.7076,
@@ -2805,7 +4827,12 @@
   "address": "1021 Poplar Street",
   "zip": "66092",
   "phone": "785-800-5229",
-  "name": "TA Wellsville"
+  "name": "TA Wellsville",
+  "interstate": "US 33,",
+  "parking": 76,
+  "dieselLanes": 6,
+  "showers": 4,
+  "facilities": "A&W All American Food, Blu Taco, Hunt Brothers Pizza, Miss J's"
  },
  "6989|AL": {
   "lat": 30.6304,
@@ -2813,6 +4840,12 @@
   "address": "27801 County Road 64",
   "zip": "36567",
   "phone": "251-960-1150",
-  "name": "TA Robertsdale"
+  "name": "TA Robertsdale",
+  "interstate": "I-10, Exit  53",
+  "parking": 178,
+  "dieselLanes": 11,
+  "showers": 7,
+  "catScale": true,
+  "facilities": "Derail Diner, Miss J's, Sbarro, Subway"
  }
 }
