@@ -49,6 +49,13 @@ export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<stri
     throw new Error(`Failed to get Graph token (${mode}): ${res.status} ${text}`)
   }
   const json = (await res.json()) as { access_token: string; expires_in: number }
+  // TEMP DIAG (fuel-graph-diag): decode the token's real exp so we can see if
+  // OIDC-exchanged tokens come back with a truncated lifetime.
+  try {
+    const p = JSON.parse(Buffer.from(json.access_token.split('.')[1], 'base64').toString())
+    const now = Math.floor(Date.now() / 1000)
+    console.log(`[graph-diag] token minted via ${oidcToken ? 'OIDC' : 'client_secret'}: expires_in=${json.expires_in}s jwt_exp-now=${p.exp - now}s appid=${p.appid} aud=${p.aud} roles=${JSON.stringify(p.roles)}`)
+  } catch (e: any) { console.log(`[graph-diag] token decode failed: ${e?.message}`) }
   cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000, viaOidc: !!oidcToken }
   return cachedToken.value
 }
@@ -59,9 +66,11 @@ async function graph<T>(path: string, init?: RequestInit): Promise<T> {
   if (res.status === 401 && process.env.AZURE_CLIENT_SECRET) {
     // Graph rejected the token (seen with OIDC-minted tokens: "Lifetime
     // validation failed"). Re-mint via client secret and retry once.
+    console.log(`[graph-diag] 401 on ${init?.method || 'GET'} ${path.split('?')[0]} — re-minting via client_secret and retrying`)
     cachedToken = null
     const retryToken = await getGraphToken({ skipOidc: true })
     res = await fetch(`${GRAPH_BASE}${path}`, { ...init, headers: { ...(init?.headers || {}), Authorization: `Bearer ${retryToken}`, 'Content-Type': 'application/json' } })
+    console.log(`[graph-diag] retry status: ${res.status}`)
   }
   if (!res.ok) { const text = await res.text(); throw new Error(`Graph ${init?.method || 'GET'} ${path} failed: ${res.status} ${text}`) }
   if (res.status === 204) return null as unknown as T
