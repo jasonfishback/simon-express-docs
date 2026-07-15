@@ -26,7 +26,18 @@ export async function GET(req: NextRequest) {
     const res = await fetch(url, { cache: 'no-store', signal: AbortSignal.timeout(8000) })
     if (!res.ok) return NextResponse.json({ ok: true, none: true })
     const j = await res.json()
-    if (j?.ok && j.load?.order_num) return NextResponse.json({ ok: true, load: j.load })
+    if (j?.ok && j.load?.order_num) {
+      // Relay the truck position + next load too — the fuel page needs them for
+      // the map blip and CA-escape planning. (This proxy used to drop them,
+      // which silently disabled the truck blip entirely.)
+      return NextResponse.json({
+        ok: true,
+        load: j.load,
+        next_load: j.next_load ?? null,
+        truck_position: j.truck_position ?? null,
+        truck_position_last: j.truck_position_last ?? null,
+      })
+    }
   } catch {
     // fall through — manual entry still works
   }
