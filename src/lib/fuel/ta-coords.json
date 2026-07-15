@@ -1,0 +1,2818 @@
+{
+ "5045|VA": {
+  "lat": 37.7598,
+  "lng": -77.4631,
+  "address": "100 North Carter Rd",
+  "zip": "23005",
+  "phone": "804-798-6011",
+  "name": "TA Ashland"
+ },
+ "5025|NC": {
+  "lat": 36.0635,
+  "lng": -79.5636,
+  "address": "1101 NC Highway 61",
+  "zip": "27377",
+  "phone": "336-449-6060",
+  "name": "TA Greensboro"
+ },
+ "5036|PA": {
+  "lat": 41.1729,
+  "lng": -79.0992,
+  "address": "245 Allegheny Blvd.",
+  "zip": "15825",
+  "phone": "814-849-3051",
+  "name": "TA Brookville"
+ },
+ "5022|NJ": {
+  "lat": 40.9317,
+  "lng": -75.0969,
+  "address": "2 Simpson Road",
+  "zip": "07832",
+  "phone": "908-496-4124",
+  "name": "TA Columbia"
+ },
+ "5002|AZ": {
+  "lat": 32.7737,
+  "lng": -111.6175,
+  "address": "2949 North Toltec Road",
+  "zip": "85131",
+  "phone": "520-466-7363",
+  "name": "TA Eloy"
+ },
+ "5024|NM": {
+  "lat": 35.5059,
+  "lng": -108.8359,
+  "address": "3404 W Historical Highway 66",
+  "zip": "87301",
+  "phone": "505-863-6801",
+  "name": "TA Gallup"
+ },
+ "5013|IN": {
+  "lat": 41.573,
+  "lng": -87.4045,
+  "address": "2510 Burr St.",
+  "zip": "46406",
+  "phone": "219-845-3721",
+  "name": "TA Gary"
+ },
+ "5028|OH": {
+  "lat": 39.84,
+  "lng": -84.6282,
+  "address": "6762 US Rte 127",
+  "zip": "45320",
+  "phone": "937-456-5522",
+  "name": "TA Dayton"
+ },
+ "5037|PA": {
+  "lat": 40.355,
+  "lng": -76.7241,
+  "address": "7848 Linglestown Road",
+  "zip": "17112",
+  "phone": "717-652-4556",
+  "name": "TA Harrisburg"
+ },
+ "5003|NM": {
+  "lat": 32.2977,
+  "lng": -106.8115,
+  "address": "202 N. Motel Blvd",
+  "zip": "88007",
+  "phone": "575-527-7400",
+  "name": "TA Las Cruces"
+ },
+ "5030|OH": {
+  "lat": 41.0322,
+  "lng": -81.9078,
+  "address": "8834 Lake Road",
+  "zip": "44273",
+  "phone": "330-769-2053",
+  "name": "TA Lodi"
+ },
+ "5005|AL": {
+  "lat": 33.1759,
+  "lng": -87.4462,
+  "address": "3501 Buttermilk Road",
+  "zip": "35453",
+  "phone": "205-554-0215",
+  "name": "TA Tuscaloosa"
+ },
+ "5044|TX": {
+  "lat": 29.7967,
+  "lng": -95.0311,
+  "address": "6800 Thompson Road",
+  "zip": "77521",
+  "phone": "281-424-7772",
+  "name": "TA Baytown"
+ },
+ "214|MD": {
+  "lat": 39.6436,
+  "lng": -75.7974,
+  "address": "1400 Elkton Road",
+  "zip": "21921",
+  "phone": "410-398-7000",
+  "name": "TA Elkton"
+ },
+ "5009|CT": {
+  "lat": 41.9177,
+  "lng": -72.2615,
+  "address": "327 Ruby Road",
+  "zip": "06279",
+  "phone": "860-684-0499",
+  "name": "TA Willington"
+ },
+ "5004|NM": {
+  "lat": 34.9443,
+  "lng": -104.6407,
+  "address": "2634 Historic Route 66",
+  "zip": "88435",
+  "phone": "575-935-9939",
+  "name": "TA Santa Rosa"
+ },
+ "118|OH": {
+  "lat": 39.9538,
+  "lng": -83.3796,
+  "address": "940 US RT 42 NE",
+  "zip": "43140",
+  "phone": "740-852-3810",
+  "name": "TA London"
+ },
+ "5039|SC": {
+  "lat": 34.914,
+  "lng": -82.11,
+  "address": "1402 East Main St.",
+  "zip": "29334",
+  "phone": "864-433-0711",
+  "name": "TA Spartanburg"
+ },
+ "5007|CA": {
+  "lat": 34.0647,
+  "lng": -117.5566,
+  "address": "4325 E. Guasti Rd.",
+  "zip": "91761",
+  "phone": "909-390-7800",
+  "name": "Petro Ontario"
+ },
+ "5017|KY": {
+  "lat": 38.9172,
+  "lng": -84.6266,
+  "address": "145 Richwood Road",
+  "zip": "41094",
+  "phone": "859-485-4111",
+  "name": "TA Walton"
+ },
+ "189|OH": {
+  "lat": 41.8765,
+  "lng": -80.6671,
+  "address": "5551 St Rt 193",
+  "zip": "44048",
+  "phone": "440-224-2035",
+  "name": "TA Kingsville"
+ },
+ "5012|IL": {
+  "lat": 42.4857,
+  "lng": -87.951,
+  "address": "16650 W. Russell Road",
+  "zip": "60099",
+  "phone": "847-395-5580",
+  "name": "TA Chicago North"
+ },
+ "5047|WV": {
+  "lat": 40.0694,
+  "lng": -80.5677,
+  "address": "270 W. Alexander Road",
+  "zip": "26060",
+  "phone": "304-547-1521",
+  "name": "TA Wheeling"
+ },
+ "5006|AR": {
+  "lat": 35.1364,
+  "lng": -90.488,
+  "address": "408 Highway 149 North",
+  "zip": "72331",
+  "phone": "870-657-2105",
+  "name": "TA Earle"
+ },
+ "5001|IL": {
+  "lat": 39.1364,
+  "lng": -88.5662,
+  "address": "1702 West Evergreen Ave",
+  "zip": "62401",
+  "phone": "217-347-7183",
+  "name": "TA Effingham"
+ },
+ "5032|OK": {
+  "lat": 35.458,
+  "lng": -97.6556,
+  "address": "801 South Council Road",
+  "zip": "73128",
+  "phone": "405-787-7411",
+  "name": "TA Oklahoma City East"
+ },
+ "186|OH": {
+  "lat": 39.9389,
+  "lng": -82.5349,
+  "address": "10679 Lancaster Road, SE",
+  "zip": "43025",
+  "phone": "740-467-2900",
+  "name": "TA Hebron"
+ },
+ "5050|CA": {
+  "lat": 33.7139,
+  "lng": -116.1756,
+  "address": "46155 Dillon Road",
+  "zip": "92236",
+  "phone": "760-342-6200",
+  "name": "TA Coachella"
+ },
+ "319|IL": {
+  "lat": 38.3134,
+  "lng": -88.9594,
+  "address": "4510 Broadway St",
+  "zip": "62864",
+  "phone": "618-244-4242",
+  "name": "TA Mt Vernon"
+ },
+ "342|IL": {
+  "lat": 42.1451,
+  "lng": -88.5095,
+  "address": "19 N. 430 US Hwy 20",
+  "zip": "60140",
+  "phone": "847-683-4550",
+  "name": "TA Elgin"
+ },
+ "676|GA": {
+  "lat": 33.5524,
+  "lng": -83.4748,
+  "address": "2021 Eatonton Road",
+  "zip": "30650",
+  "phone": "706-342-4176",
+  "name": "TA Madison"
+ },
+ "785|LA": {
+  "lat": 32.3886,
+  "lng": -91.2006,
+  "address": "224 Highway 65 South",
+  "zip": "71282",
+  "phone": "318-574-5900",
+  "name": "TA Tallulah"
+ },
+ "756|MS": {
+  "lat": 32.3962,
+  "lng": -88.5826,
+  "address": "2150 Russell Mt. Gilead Road",
+  "zip": "39301",
+  "phone": "601-483-7611",
+  "name": "TA Meridian"
+ },
+ "212|NJ": {
+  "lat": 40.6594,
+  "lng": -75.075,
+  "address": "975 State Route 173",
+  "zip": "08804",
+  "phone": "908-479-4136",
+  "name": "TA Bloomsbury"
+ },
+ "729|TX": {
+  "lat": 32.9074,
+  "lng": -96.45,
+  "address": "2105 South Goliad St.",
+  "zip": "75032",
+  "phone": "972-722-7450",
+  "name": "TA Rockwall"
+ },
+ "307|WI": {
+  "lat": 43.1745,
+  "lng": -89.3255,
+  "address": "5901 Highway 51",
+  "zip": "53532",
+  "phone": "608-249-9000",
+  "name": "TA Madison"
+ },
+ "701|MO": {
+  "lat": 36.7582,
+  "lng": -89.5346,
+  "address": "854 State Hwy 80",
+  "zip": "63867",
+  "phone": "573-471-8644",
+  "name": "TA Matthews"
+ },
+ "317|MO": {
+  "lat": 39.0176,
+  "lng": -94.1302,
+  "address": "100 North Broadway",
+  "zip": "64075",
+  "phone": "816-690-4115",
+  "name": "TA Oak Grove"
+ },
+ "656|FL": {
+  "lat": 28.875,
+  "lng": -82.0939,
+  "address": "556 St. Rt. 44",
+  "zip": "34785",
+  "phone": "352-748-2501",
+  "name": "TA Wildwood"
+ },
+ "778|AL": {
+  "lat": 30.4985,
+  "lng": -88.3336,
+  "address": "9201 Grand Bay",
+  "zip": "36541",
+  "phone": "251-865-6175",
+  "name": "TA Mobile"
+ },
+ "5073|TX": {
+  "lat": 35.1915,
+  "lng": -101.7589,
+  "address": "7000 E. Interstate 40",
+  "zip": "79118",
+  "phone": "806-342-3080",
+  "name": "TA Amarillo"
+ },
+ "435|OR": {
+  "lat": 45.2361,
+  "lng": -122.8072,
+  "address": "21856 Bents Road NE",
+  "zip": "97002",
+  "phone": "503-678-2111",
+  "name": "TA Aurora"
+ },
+ "433|CA": {
+  "lat": 40.5048,
+  "lng": -122.3349,
+  "address": "19483 Knighton Road",
+  "zip": "96002",
+  "phone": "530-221-4760",
+  "name": "TA Redding"
+ },
+ "120|OH": {
+  "lat": 41.1225,
+  "lng": -80.7653,
+  "address": "5400 Seventy Six Drive",
+  "zip": "44515",
+  "phone": "330-793-4426",
+  "name": "TA Youngstown"
+ },
+ "709|OK": {
+  "lat": 35.4617,
+  "lng": -97.6906,
+  "address": "501 South Morgan Road",
+  "zip": "73128",
+  "phone": "405-324-5376",
+  "name": "TA Oklahoma City West"
+ },
+ "425|UT": {
+  "lat": 40.6899,
+  "lng": -112.2629,
+  "address": "8836 North Highway 40",
+  "zip": "84074",
+  "phone": "801-250-8585",
+  "name": "TA Tooele"
+ },
+ "5014|IN": {
+  "lat": 38.9576,
+  "lng": -85.8366,
+  "address": "2636 E. Tipton St.",
+  "zip": "47274",
+  "phone": "812-522-6622",
+  "name": "TA Seymour"
+ },
+ "528|IA": {
+  "lat": 41.2287,
+  "lng": -95.8536,
+  "address": "3210 South Seven Street",
+  "zip": "51501",
+  "phone": "712-366-2217",
+  "name": "TA Council Bluffs"
+ },
+ "5034|PA": {
+  "lat": 41.1992,
+  "lng": -79.9758,
+  "address": "5644 St. Rt. 8",
+  "zip": "16038",
+  "phone": "814-786-7988",
+  "name": "TA Barkeyville"
+ },
+ "5038|PA": {
+  "lat": 41.0275,
+  "lng": -77.521,
+  "address": "5600 Nittany Valley Drive",
+  "zip": "16848",
+  "phone": "570-726-4996",
+  "name": "TA Lamar"
+ },
+ "5019|MI": {
+  "lat": 41.9267,
+  "lng": -83.3632,
+  "address": "1255 N Dixie Hwy",
+  "zip": "48162",
+  "phone": "734-384-7952",
+  "name": "TA Monroe"
+ },
+ "5048|WI": {
+  "lat": 42.7143,
+  "lng": -88.9793,
+  "address": "3222 Hwy. 14 East",
+  "zip": "53546",
+  "phone": "608-752-8700",
+  "name": "TA Janesville"
+ },
+ "5015|IA": {
+  "lat": 41.6179,
+  "lng": -90.7815,
+  "address": "755 W. Iowa 80 Road",
+  "zip": "52773",
+  "phone": "563-284-6961",
+  "name": "TA Walcott"
+ },
+ "424|NM": {
+  "lat": 35.1111,
+  "lng": -106.6247,
+  "address": "2501 University Blvd., NE",
+  "zip": "87107",
+  "phone": "505-884-1066",
+  "name": "TA Albuquerque"
+ },
+ "5082|OH": {
+  "lat": 40.5582,
+  "lng": -84.1656,
+  "address": "1775 Bellefontaine St.",
+  "zip": "45895",
+  "phone": "567-712-5101",
+  "name": "TA Wapakoneta"
+ },
+ "178|OH": {
+  "lat": 41.5215,
+  "lng": -83.4624,
+  "address": "3483 Libbey Road",
+  "zip": "43551",
+  "phone": "567-970-3800",
+  "name": "TA Toledo"
+ },
+ "312|MI": {
+  "lat": 42.2963,
+  "lng": -83.8764,
+  "address": "200 Baker Road",
+  "zip": "48130",
+  "phone": "734-426-3951",
+  "name": "TA Ann Arbor"
+ },
+ "502|NE": {
+  "lat": 41.1138,
+  "lng": -101.7116,
+  "address": "103 Prospector Drive",
+  "zip": "69153",
+  "phone": "308-284-3667",
+  "name": "TA Ogallala"
+ },
+ "5091|KS": {
+  "lat": 39.1188,
+  "lng": -100.811,
+  "address": "1001 Hwy 40",
+  "zip": "67748",
+  "phone": "785-672-4111",
+  "name": "TA Oakley"
+ },
+ "322|IL": {
+  "lat": 40.488,
+  "lng": -89.0262,
+  "address": "505 Truckers Lane",
+  "zip": "61701",
+  "phone": "309-827-4676",
+  "name": "TA Bloomington"
+ },
+ "5072|KY": {
+  "lat": 39.0001,
+  "lng": -84.6447,
+  "address": "7777 Burlington Pike",
+  "zip": "41042",
+  "phone": "859-371-7166",
+  "name": "TA Florence"
+ },
+ "439|AZ": {
+  "lat": 35.1901,
+  "lng": -114.0702,
+  "address": "946 West Beale Street",
+  "zip": "86401",
+  "phone": "928-753-7600",
+  "name": "TA Kingman"
+ },
+ "104|OH": {
+  "lat": 40.8788,
+  "lng": -81.4295,
+  "address": "4450 Portage St. NW",
+  "zip": "44720",
+  "phone": "330-494-7507",
+  "name": "TA North Canton"
+ },
+ "421|NV": {
+  "lat": 36.0433,
+  "lng": -115.1873,
+  "address": "8050 Dean Martin Drive",
+  "zip": "89139",
+  "phone": "702-361-1176",
+  "name": "TA Las Vegas"
+ },
+ "384|MI": {
+  "lat": 41.8845,
+  "lng": -86.6001,
+  "address": "6100 Sawyer Road",
+  "zip": "49125",
+  "phone": "269-426-4884",
+  "name": "TA Sawyer"
+ },
+ "768|TN": {
+  "lat": 36.015,
+  "lng": -86.6184,
+  "address": "13011 Old Hickory Blvd.",
+  "zip": "37013",
+  "phone": "615-641-6731",
+  "name": "TA Antioch"
+ },
+ "310|MO": {
+  "lat": 37.2745,
+  "lng": -93.1152,
+  "address": "225 E. Evergreen",
+  "zip": "65757",
+  "phone": "417-736-2161",
+  "name": "TA Strafford"
+ },
+ "187|OH": {
+  "lat": 39.6166,
+  "lng": -83.6038,
+  "address": "12403 US Rt 35 NW",
+  "zip": "43128",
+  "phone": "740-948-2365",
+  "name": "TA Jeffersonville"
+ },
+ "210|VA": {
+  "lat": 37.7237,
+  "lng": -77.4479,
+  "address": "10134 Lewistown Road",
+  "zip": "23005",
+  "phone": "804-798-6021",
+  "name": "TA Richmond"
+ },
+ "217|VA": {
+  "lat": 36.9651,
+  "lng": -81.0676,
+  "address": "1025 Peppers Ferry Road",
+  "zip": "24382",
+  "phone": "276-228-8676",
+  "name": "TA Wytheville"
+ },
+ "5071|GA": {
+  "lat": 34.2739,
+  "lng": -84.8075,
+  "address": "981 Cassville-White Road",
+  "zip": "30121",
+  "phone": "770-607-8885",
+  "name": "TA Cartersville"
+ },
+ "5076|TX": {
+  "lat": 29.4433,
+  "lng": -98.3618,
+  "address": "6170 I-10 East",
+  "zip": "78219",
+  "phone": "210-310-0145",
+  "name": "TA San Antonio"
+ },
+ "5070|CO": {
+  "lat": 39.7901,
+  "lng": -104.9043,
+  "address": "5101 Quebec Street",
+  "zip": "80022",
+  "phone": "303-286-0123",
+  "name": "TA Commerce City"
+ },
+ "198|WV": {
+  "lat": 38.4543,
+  "lng": -81.935,
+  "address": "4195 State Route 34",
+  "zip": "25526",
+  "phone": "304-757-7600",
+  "name": "TA Hurricane"
+ },
+ "5078|TX": {
+  "lat": 32.6534,
+  "lng": -96.7517,
+  "address": "7751 Bonnie View Rd",
+  "zip": "75241",
+  "phone": "469-941-3150",
+  "name": "TA Dallas South"
+ },
+ "5018|MD": {
+  "lat": 39.1667,
+  "lng": -76.7828,
+  "address": "7401 Assateague Drive",
+  "zip": "20794",
+  "phone": "410-799-3835",
+  "name": "TA Baltimore South"
+ },
+ "5074|OK": {
+  "lat": 35.3355,
+  "lng": -99.5946,
+  "address": "11603 N. 1900 Rd.",
+  "zip": "73662",
+  "phone": "580-928-5571",
+  "name": "TA Sayre"
+ },
+ "6153|TX": {
+  "lat": 27.6875,
+  "lng": -99.4634,
+  "address": "1010 Beltway Parkway",
+  "zip": "78045",
+  "phone": "956-724-2016",
+  "name": "TA Laredo"
+ },
+ "5079|CT": {
+  "lat": 41.5647,
+  "lng": -72.9102,
+  "address": "1875 Meriden-Waterbury Turnpike",
+  "zip": "06467",
+  "phone": "860-621-0106",
+  "name": "TA Southington"
+ },
+ "677|GA": {
+  "lat": 34.2528,
+  "lng": -83.4632,
+  "address": "30732 Hwy 441 South",
+  "zip": "30529",
+  "phone": "706-335-5198",
+  "name": "TA Commerce"
+ },
+ "5084|FL": {
+  "lat": 28.0099,
+  "lng": -82.301,
+  "address": "11706 Tampa Gateway Blvd.",
+  "zip": "33584",
+  "phone": "813-262-1560",
+  "name": "TA Express Tampa"
+ },
+ "429|CA": {
+  "lat": 35.401,
+  "lng": -119.3961,
+  "address": "27769 Lagoon Drive",
+  "zip": "93206",
+  "phone": "661-764-5266",
+  "name": "TA Buttonwillow"
+ },
+ "770|LA": {
+  "lat": 30.2521,
+  "lng": -92.0381,
+  "address": "1701 North University Ave.",
+  "zip": "70507",
+  "phone": "337-237-0176",
+  "name": "TA Lafayette"
+ },
+ "417|CA": {
+  "lat": 34.0649,
+  "lng": -117.5599,
+  "address": "4265 East Guasti Road",
+  "zip": "91761",
+  "phone": "909-390-2525",
+  "name": "TA Ontario"
+ },
+ "431|CA": {
+  "lat": 37.1101,
+  "lng": -121.0147,
+  "address": "12310 State Highway 33",
+  "zip": "95322",
+  "phone": "209-826-0741",
+  "name": "TA Santa Nella"
+ },
+ "5053|ID": {
+  "lat": 43.5656,
+  "lng": -116.1994,
+  "address": "4115 Broadway Ave",
+  "zip": "83705",
+  "phone": "208-344-1091",
+  "name": "TA Boise"
+ },
+ "6170|CA": {
+  "lat": 37.3876,
+  "lng": -120.7382,
+  "address": "435 Winton Parkway",
+  "zip": "95334",
+  "phone": "209-799-3500",
+  "name": "TA Livingston"
+ },
+ "115|CT": {
+  "lat": 41.2968,
+  "lng": -72.7595,
+  "address": "3 East Industrial Road",
+  "zip": "06405",
+  "phone": "203-481-0301",
+  "name": "TA Express New Haven"
+ },
+ "428|NV": {
+  "lat": 39.5351,
+  "lng": -119.7361,
+  "address": "200 North McCarren",
+  "zip": "89431",
+  "phone": "775-359-0550",
+  "name": "TA Sparks"
+ },
+ "306|IN": {
+  "lat": 39.9478,
+  "lng": -86.357,
+  "address": "5930 Whitestown Pkwy",
+  "zip": "46075",
+  "phone": "317-769-3291",
+  "name": "TA Whitestown"
+ },
+ "432|CO": {
+  "lat": 39.7793,
+  "lng": -105.1349,
+  "address": "12151 West 44th Avenue",
+  "zip": "80033",
+  "phone": "303-423-8250",
+  "name": "TA Wheat Ridge"
+ },
+ "315|MO": {
+  "lat": 38.8171,
+  "lng": -90.9495,
+  "address": "3265 N. Service Road East",
+  "zip": "63348",
+  "phone": "636-673-2295",
+  "name": "TA Foristell"
+ },
+ "5087|WA": {
+  "lat": 47.4683,
+  "lng": -121.7181,
+  "address": "46630 North Bend Way",
+  "zip": "98045",
+  "phone": "425-888-1119",
+  "name": "TA Seattle East"
+ },
+ "604|GA": {
+  "lat": 31.9252,
+  "lng": -81.3327,
+  "address": "4401 Hwy. 17",
+  "zip": "31324",
+  "phone": "912-756-3381",
+  "name": "TA Savannah"
+ },
+ "605|FL": {
+  "lat": 30.7187,
+  "lng": -85.1837,
+  "address": "2112 Highway 71 South",
+  "zip": "32448",
+  "phone": "850-526-3303",
+  "name": "TA Marianna"
+ },
+ "213|SC": {
+  "lat": 33.7046,
+  "lng": -80.242,
+  "address": "3014 Paxville Highway",
+  "zip": "29102",
+  "phone": "803-791-9095",
+  "name": "TA Manning"
+ },
+ "725|LA": {
+  "lat": 30.2864,
+  "lng": -89.7511,
+  "address": "1682 Gause Blvd",
+  "zip": "70458",
+  "phone": "985-643-9974",
+  "name": "TA Slidell"
+ },
+ "5058|NV": {
+  "lat": 40.6932,
+  "lng": -118.056,
+  "address": "6000 E. Frontage Road",
+  "zip": "89418",
+  "phone": "775-538-7311",
+  "name": "TA Mill City"
+ },
+ "5060|OR": {
+  "lat": 45.5438,
+  "lng": -122.3958,
+  "address": "790 N W Frontage Road",
+  "zip": "97060",
+  "phone": "503-666-1588",
+  "name": "TA Troutdale"
+ },
+ "5064|UT": {
+  "lat": 37.8607,
+  "lng": -112.8291,
+  "address": "1130 N. 100 W.",
+  "zip": "84761",
+  "phone": "435-477-3311",
+  "name": "TA Express Parowan"
+ },
+ "5065|WY": {
+  "lat": 41.1602,
+  "lng": -104.5207,
+  "address": "4000 I-80 Service Road",
+  "zip": "82053",
+  "phone": "307-365-6670",
+  "name": "TA Cheyenne"
+ },
+ "5067|WY": {
+  "lat": 41.3144,
+  "lng": -110.5095,
+  "address": "I-80 at Bigelow Road, Exit 30",
+  "zip": "82933",
+  "phone": "307-209-2115",
+  "name": "TA Ft. Bridger"
+ },
+ "512|NE": {
+  "lat": 40.7998,
+  "lng": -98.496,
+  "address": "8033 West Holling Rd.",
+  "zip": "68810",
+  "phone": "308-382-5902",
+  "name": "TA Grand Island"
+ },
+ "102|NY": {
+  "lat": 43.0059,
+  "lng": -78.4056,
+  "address": "8420 Alleghany",
+  "zip": "14036",
+  "phone": "585-599-4577",
+  "name": "TA Pembroke"
+ },
+ "672|FL": {
+  "lat": 27.6381,
+  "lng": -80.511,
+  "address": "8909 20th Street",
+  "zip": "32966",
+  "phone": "772-562-1791",
+  "name": "TA Vero Beach"
+ },
+ "5199|IL": {
+  "lat": 38.7338,
+  "lng": -89.9098,
+  "address": "819 Edwardsville Rd.",
+  "zip": "62294",
+  "phone": "618-667-9931",
+  "name": "TA Troy"
+ },
+ "6201|TN": {
+  "lat": 36.3254,
+  "lng": -82.8354,
+  "address": "195 Van Hill Road",
+  "zip": "37745",
+  "phone": "423-234-4451",
+  "name": "TA Davy Crockett Travel Center"
+ },
+ "6207|NY": {
+  "lat": 42.1013,
+  "lng": -75.8418,
+  "address": "753 Upper Court Street",
+  "zip": "13904",
+  "phone": "607-775-3500",
+  "name": "TA Binghamton"
+ },
+ "6208|NY": {
+  "lat": 42.5662,
+  "lng": -77.7195,
+  "address": "9616 Commerce Drive",
+  "zip": "14437",
+  "phone": "585-335-6023",
+  "name": "TA Dansville"
+ },
+ "6210|NY": {
+  "lat": 41.5042,
+  "lng": -74.2207,
+  "address": "125 Neelytown Road",
+  "zip": "12549",
+  "phone": "845-457-3163",
+  "name": "TA Maybrook"
+ },
+ "6211|NH": {
+  "lat": 43.0431,
+  "lng": -70.8182,
+  "address": "108 Ocean Road",
+  "zip": "03840",
+  "phone": "603-436-3636",
+  "name": "TA Greenland"
+ },
+ "6212|PA": {
+  "lat": 41.0143,
+  "lng": -76.4928,
+  "address": "6 Buckhorn Road",
+  "zip": "17815",
+  "phone": "570-784-9400",
+  "name": "TA Bloomsburg"
+ },
+ "6213|PA": {
+  "lat": 39.7846,
+  "lng": -77.7126,
+  "address": "10835 John Wayne Drive",
+  "zip": "17225",
+  "phone": "717-597-7762",
+  "name": "TA Greencastle"
+ },
+ "6214|PA": {
+  "lat": 40.9589,
+  "lng": -77.763,
+  "address": "875 N. Eagle Valley Rd.",
+  "zip": "16853",
+  "phone": "814-355-7561",
+  "name": "TA Milesburg"
+ },
+ "6215|PA": {
+  "lat": 42.1409,
+  "lng": -79.9246,
+  "address": "4050 Depot Road",
+  "zip": "16510",
+  "phone": "814-899-1919",
+  "name": "TA Harborcreek"
+ },
+ "6216|MD": {
+  "lat": 39.2775,
+  "lng": -76.5488,
+  "address": "5501 O'Donnell Street",
+  "zip": "21224",
+  "phone": "410-633-4611",
+  "name": "TA Baltimore"
+ },
+ "6220|IN": {
+  "lat": 41.6125,
+  "lng": -87.0985,
+  "address": "1600 West US Hwy 20",
+  "zip": "46304",
+  "phone": "219-926-8566",
+  "name": "TA Porter"
+ },
+ "6221|NC": {
+  "lat": 35.5432,
+  "lng": -82.754,
+  "address": "153 Wiggins Road",
+  "zip": "28715",
+  "phone": "828-665-1156",
+  "name": "TA Candler"
+ },
+ "6224|AR": {
+  "lat": 33.8112,
+  "lng": -93.427,
+  "address": "1806 Hwy 371 West",
+  "zip": "71857",
+  "phone": "870-887-8900",
+  "name": "TA Prescott"
+ },
+ "6225|AZ": {
+  "lat": 33.4587,
+  "lng": -112.7823,
+  "address": "1010 N. 339th Avenue",
+  "zip": "85354",
+  "phone": "623-386-6443",
+  "name": "TA Tonopah"
+ },
+ "6226|AZ": {
+  "lat": 32.2688,
+  "lng": -109.8479,
+  "address": "1501 North Fort Grant Road",
+  "zip": "85643",
+  "phone": "520-384-5311",
+  "name": "TA Willcox"
+ },
+ "6227|CA": {
+  "lat": 34.8537,
+  "lng": -117.0888,
+  "address": "2930 Lenwood Road",
+  "zip": "92311",
+  "phone": "760-253-2922",
+  "name": "TA Barstow"
+ },
+ "6228|CO": {
+  "lat": 39.271,
+  "lng": -103.7067,
+  "address": "2200 Ninth Street",
+  "zip": "80828",
+  "phone": "719-775-2811",
+  "name": "TA Limon"
+ },
+ "6229|NM": {
+  "lat": 35.0095,
+  "lng": -106.065,
+  "address": "1700 U.S. Route 66 West",
+  "zip": "87035",
+  "phone": "505-832-4421",
+  "name": "TA Moriarty"
+ },
+ "6230|TX": {
+  "lat": 32.2648,
+  "lng": -101.49,
+  "address": "704 West Interstate 20",
+  "zip": "79720",
+  "phone": "432-264-4444",
+  "name": "TA Big Spring"
+ },
+ "6231|TX": {
+  "lat": 29.0496,
+  "lng": -96.5034,
+  "address": "802 E. York, Hwy 59",
+  "zip": "77962",
+  "phone": "361-541-5575",
+  "name": "TA Ganado"
+ },
+ "6232|TX": {
+  "lat": 29.7489,
+  "lng": -98.0579,
+  "address": "4817 I-35 North",
+  "zip": "78130",
+  "phone": "830-608-9395",
+  "name": "TA New Braunfels"
+ },
+ "6233|TX": {
+  "lat": 32.6908,
+  "lng": -96.2441,
+  "address": "1700 Wilson Road",
+  "zip": "75161",
+  "phone": "972-563-6939",
+  "name": "TA Terrell"
+ },
+ "6234|WY": {
+  "lat": 41.7762,
+  "lng": -107.2243,
+  "address": "1400 Higley Blvd., Exit 214",
+  "zip": "82301",
+  "phone": "307-324-8722",
+  "name": "TA Rawlins"
+ },
+ "5085|TX": {
+  "lat": 26.3845,
+  "lng": -98.1435,
+  "address": "8301 N.Hwy. 281",
+  "zip": "78541",
+  "phone": "956-383-0788",
+  "name": "TA Edinburg"
+ },
+ "6236|IL": {
+  "lat": 41.3917,
+  "lng": -88.4203,
+  "address": "21 Romines Drive",
+  "zip": "60450",
+  "phone": "815-942-5690",
+  "name": "TA Morris"
+ },
+ "6237|LA": {
+  "lat": 32.4461,
+  "lng": -93.9493,
+  "address": "8560 Greenwood Rd",
+  "zip": "71033",
+  "phone": "318-938-5411",
+  "name": "TA Greenwood"
+ },
+ "6238|SC": {
+  "lat": 33.9533,
+  "lng": -80.9896,
+  "address": "2154 S. Beltline Blvd.",
+  "zip": "29201",
+  "phone": "803-908-4889",
+  "name": "Petro Columbia"
+ },
+ "6239|CA": {
+  "lat": 34.992,
+  "lng": -118.9412,
+  "address": "5552 South Wheeler Ridge Road",
+  "zip": "93203",
+  "phone": "661-858-2804",
+  "name": "TA Wheeler Ridge"
+ },
+ "6241|IN": {
+  "lat": 41.1456,
+  "lng": -87.2597,
+  "address": "11166 West State Road 10",
+  "zip": "46310",
+  "phone": "219-507-7013",
+  "name": "TA DeMotte"
+ },
+ "6242|MI": {
+  "lat": 42.3029,
+  "lng": -85.0811,
+  "address": "15874 Eleven Mile Rd.",
+  "zip": "49014",
+  "phone": "269-965-7721",
+  "name": "TA Battle Creek"
+ },
+ "6245|TN": {
+  "lat": 35.5955,
+  "lng": -89.0557,
+  "address": "155 Hwy. 138, Providence Rd.",
+  "zip": "38391",
+  "phone": "731-424-5591",
+  "name": "TA Denmark"
+ },
+ "6246|AZ": {
+  "lat": 34.9054,
+  "lng": -110.2108,
+  "address": "3747 Express Drive",
+  "zip": "86025",
+  "phone": "928-524-3006",
+  "name": "TA Holbrook"
+ },
+ "6247|FL": {
+  "lat": 30.2855,
+  "lng": -81.9841,
+  "address": "1024 US 301 South",
+  "zip": "32234",
+  "phone": "904-266-4281",
+  "name": "TA Baldwin"
+ },
+ "6248|FL": {
+  "lat": 30.0661,
+  "lng": -81.4961,
+  "address": "1650 C.R. 210 West",
+  "zip": "32259",
+  "phone": "904-829-3946",
+  "name": "TA Jacksonville South"
+ },
+ "6249|GA": {
+  "lat": 30.644,
+  "lng": -83.1876,
+  "address": "6901 Bellville Road",
+  "zip": "31636",
+  "phone": "229-559-5113",
+  "name": "TA Lake Park"
+ },
+ "6251|NC": {
+  "lat": 35.925,
+  "lng": -80.5917,
+  "address": "1670 US Hwy 601 N",
+  "zip": "27028",
+  "phone": "336-751-3815",
+  "name": "TA Mocksville"
+ },
+ "6252|KS": {
+  "lat": 38.4276,
+  "lng": -95.7272,
+  "address": "2775 Highway 75",
+  "zip": "66856",
+  "phone": "620-256-6311",
+  "name": "TA Beto Junction"
+ },
+ "6253|RI": {
+  "lat": 41.6081,
+  "lng": -71.6638,
+  "address": "849 Victory Hwy West",
+  "zip": "02817",
+  "phone": "401-397-7774",
+  "name": "TA West Greenwich"
+ },
+ "6254|IA": {
+  "lat": 41.6978,
+  "lng": -92.4459,
+  "address": "4124 V18 Rd.",
+  "zip": "52211",
+  "phone": "641-631-0047",
+  "name": "TA Brooklyn"
+ },
+ "6255|TN": {
+  "lat": 36.3771,
+  "lng": -84.2463,
+  "address": "305 Howard Baker Hwy",
+  "zip": "37847",
+  "phone": "423-562-3490",
+  "name": "TA Caryville"
+ },
+ "6257|IN": {
+  "lat": 39.6113,
+  "lng": -86.4807,
+  "address": "10346 S. State Road 39",
+  "zip": "46118",
+  "phone": "317-539-6515",
+  "name": "TA Clayton"
+ },
+ "6258|GA": {
+  "lat": 31.1381,
+  "lng": -81.5799,
+  "address": "185 S. Port Parkway",
+  "zip": "31523",
+  "phone": "912-279-3386",
+  "name": "TA Brunswick"
+ },
+ "6259|ND": {
+  "lat": 47.8053,
+  "lng": -103.6452,
+  "address": "14256 US-85",
+  "zip": "58831",
+  "phone": "701-707-1770",
+  "name": "TA Express Alexander"
+ },
+ "6261|MT": {
+  "lat": 45.6823,
+  "lng": -108.7038,
+  "address": "11360 South Frontage Road",
+  "zip": "59044",
+  "phone": "406-628-4324",
+  "name": "TA Laurel"
+ },
+ "6266|TX": {
+  "lat": 33.2622,
+  "lng": -97.1767,
+  "address": "6420 North I-35",
+  "zip": "76207",
+  "phone": "940-383-1458",
+  "name": "TA Denton"
+ },
+ "6268|GA": {
+  "lat": 33.2065,
+  "lng": -84.0585,
+  "address": "122 Truckstop Way",
+  "zip": "30233",
+  "phone": "770-775-2076",
+  "name": "TA Atlanta South"
+ },
+ "6269|TN": {
+  "lat": 35.8731,
+  "lng": -84.2379,
+  "address": "615 Watt Road",
+  "zip": "37922",
+  "phone": "865-531-7676",
+  "name": "TA Knoxville West"
+ },
+ "6270|TX": {
+  "lat": 29.7427,
+  "lng": -96.3301,
+  "address": "6701 US Hwy 90",
+  "zip": "77474",
+  "phone": "979-732-2986",
+  "name": "TA Bernardo"
+ },
+ "1750|ND": {
+  "lat": 46.8618,
+  "lng": -99.9157,
+  "address": "620 Mitchell Avenue North",
+  "zip": "58482",
+  "phone": "701-475-2274",
+  "name": "TA Express Steele"
+ },
+ "6273|SD": {
+  "lat": 43.3986,
+  "lng": -103.3958,
+  "address": "27638 US 385",
+  "zip": "57747",
+  "phone": "605-745-4215",
+  "name": "TA Express Hot Springs"
+ },
+ "6274|SD": {
+  "lat": 45.3112,
+  "lng": -97.0463,
+  "address": "45789 US Hwy 12",
+  "zip": "57266",
+  "phone": "605-398-6493",
+  "name": "TA Express Summit"
+ },
+ "6275|SD": {
+  "lat": 42.785,
+  "lng": -96.797,
+  "address": "47051 SD Hwy 50",
+  "zip": "57010",
+  "phone": "605-624-2062",
+  "name": "TA Express Vermillion"
+ },
+ "6276|OR": {
+  "lat": 44.2934,
+  "lng": -117.2249,
+  "address": "5945 US Hwy 30",
+  "zip": "97907",
+  "phone": "541-869-2301",
+  "name": "TA Huntington"
+ },
+ "6277|TX": {
+  "lat": 29.7774,
+  "lng": -94.9135,
+  "address": "5490 N Hwy 146",
+  "zip": "77523",
+  "phone": "409-277-3841",
+  "name": "TA Express Baytown South"
+ },
+ "6279|OR": {
+  "lat": 45.6688,
+  "lng": -120.8349,
+  "address": "91464 Biggs-Rufus Hwy",
+  "zip": "97065",
+  "phone": "541-739-2106",
+  "name": "TA Express Biggs Junction"
+ },
+ "6281|TX": {
+  "lat": 32.4288,
+  "lng": -94.8643,
+  "address": "4403 TX - 42",
+  "zip": "75662",
+  "phone": "430-253-2656",
+  "name": "TA Express Kilgore"
+ },
+ "6282|TX": {
+  "lat": 29.6141,
+  "lng": -95.3882,
+  "address": "12602 South Freeway",
+  "zip": "77047",
+  "phone": "713-788-8639",
+  "name": "TA Express Almeda"
+ },
+ "6283|GA": {
+  "lat": 32.9304,
+  "lng": -85.1161,
+  "address": "3000 Kia Blvd",
+  "zip": "31833",
+  "phone": "706-984-9499",
+  "name": "TA Express West Point"
+ },
+ "6284|KS": {
+  "lat": 38.7628,
+  "lng": -94.9625,
+  "address": "32501 W 200th Street",
+  "zip": "66021",
+  "phone": "913-882-3362",
+  "name": "TA Express Edgerton"
+ },
+ "6286|TX": {
+  "lat": 33.1491,
+  "lng": -95.2094,
+  "address": "300 SE Access Rd",
+  "zip": "75457",
+  "phone": "903-537-9200",
+  "name": "TA Express Mount Vernon"
+ },
+ "6287|TN": {
+  "lat": 36.1305,
+  "lng": -85.4796,
+  "address": "1750 Salem Road",
+  "zip": "38506",
+  "phone": "931-510-3326",
+  "name": "TA Express Cookeville"
+ },
+ "6288|FL": {
+  "lat": 29.9956,
+  "lng": -82.5967,
+  "address": "14197 South US HWY 441",
+  "zip": "32024",
+  "phone": "386-202-6500",
+  "name": "TA Lake City"
+ },
+ "6289|TX": {
+  "lat": 31.6521,
+  "lng": -94.6788,
+  "address": "2615 NW Stallings Drive",
+  "zip": "75964",
+  "phone": "936-234-7998",
+  "name": "TA Express Nacogdoches"
+ },
+ "6290|TX": {
+  "lat": 31.7256,
+  "lng": -96.1777,
+  "address": "1015 West Commerce St",
+  "zip": "75840",
+  "phone": "903-915-8296",
+  "name": "TA Express Fairfield"
+ },
+ "6292|AZ": {
+  "lat": 35.684,
+  "lng": -114.4672,
+  "address": "19210 US Hwy 93",
+  "zip": "86445",
+  "phone": "928-285-2431",
+  "name": "TA Express White Hills"
+ },
+ "6293|TX": {
+  "lat": 32.1298,
+  "lng": -94.3326,
+  "address": "1086 US 59 South",
+  "zip": "75633",
+  "phone": "903-690-0272",
+  "name": "TA Express Carthage"
+ },
+ "6301|TX": {
+  "lat": 31.6609,
+  "lng": -106.2424,
+  "address": "1295 Horizon Blvd.",
+  "zip": "79927",
+  "phone": "915-790-4529",
+  "name": "Petro El Paso"
+ },
+ "6302|TX": {
+  "lat": 32.7389,
+  "lng": -97.7654,
+  "address": "2001 Santa Fe Dr",
+  "zip": "76086",
+  "phone": "817-599-9411",
+  "name": "Petro Weatherford"
+ },
+ "6303|WY": {
+  "lat": 41.3287,
+  "lng": -105.6194,
+  "address": "1855 West Curtis",
+  "zip": "82070",
+  "phone": "307-745-6480",
+  "name": "Petro Laramie"
+ },
+ "6304|TX": {
+  "lat": 30.037,
+  "lng": -94.1561,
+  "address": "5405 Walden Rd",
+  "zip": "77705",
+  "phone": "409-842-9600",
+  "name": "Petro Beaumont"
+ },
+ "6305|TX": {
+  "lat": 29.4376,
+  "lng": -98.3799,
+  "address": "1112 Ackerman Road",
+  "zip": "78219",
+  "phone": "210-661-9416",
+  "name": "Petro San Antonio"
+ },
+ "6306|AZ": {
+  "lat": 32.8124,
+  "lng": -111.6702,
+  "address": "5235 N. Sunland Gin Rd.",
+  "zip": "85131",
+  "phone": "520-836-3983",
+  "name": "Petro Eloy"
+ },
+ "6307|TX": {
+  "lat": 35.1917,
+  "lng": -101.7437,
+  "address": "8500 E I-40 @ Lakeside Drive",
+  "zip": "79118",
+  "phone": "806-372-4899",
+  "name": "Petro Amarillo"
+ },
+ "6308|LA": {
+  "lat": 32.4446,
+  "lng": -93.901,
+  "address": "6910 W Bert Kouns Industrial Loop",
+  "zip": "71129",
+  "phone": "318-686-6111",
+  "name": "Petro Shreveport"
+ },
+ "6309|CA": {
+  "lat": 39.9059,
+  "lng": -122.1967,
+  "address": "2151 South Avenue",
+  "zip": "96021",
+  "phone": "530-824-4685",
+  "name": "Petro Corning"
+ },
+ "6310|LA": {
+  "lat": 30.477,
+  "lng": -90.4579,
+  "address": "2100 S.W. Railroad Ave.",
+  "zip": "70403",
+  "phone": "985-542-4981",
+  "name": "Petro Hammond"
+ },
+ "6311|AR": {
+  "lat": 35.1544,
+  "lng": -90.136,
+  "address": "3900 Petro Road",
+  "zip": "72301",
+  "phone": "870-702-5540",
+  "name": "Petro W. Memphis"
+ },
+ "6312|TN": {
+  "lat": 35.875,
+  "lng": -84.2361,
+  "address": "722 Watt Road",
+  "zip": "37934",
+  "phone": "865-693-6542",
+  "name": "Petro Knoxville"
+ },
+ "6313|NM": {
+  "lat": 35.181,
+  "lng": -107.9038,
+  "address": "1430 Motel Drive",
+  "zip": "87021",
+  "phone": "505-285-6648",
+  "name": "Petro Milan"
+ },
+ "6314|NJ": {
+  "lat": 40.1234,
+  "lng": -74.7131,
+  "address": "402 Rising Sun Square Road",
+  "zip": "08505",
+  "phone": "609-298-6070",
+  "name": "Petro Bordentown"
+ },
+ "6315|AZ": {
+  "lat": 35.1779,
+  "lng": -113.7887,
+  "address": "970 South Blake Ranch Road",
+  "zip": "86401",
+  "phone": "928-681-5246",
+  "name": "Petro Kingman"
+ },
+ "6316|OK": {
+  "lat": 35.4662,
+  "lng": -97.4755,
+  "address": "20 Martin Luther King Blvd",
+  "zip": "73117",
+  "phone": "405-228-7040",
+  "name": "Petro Oklahoma City"
+ },
+ "6317|OH": {
+  "lat": 41.5355,
+  "lng": -83.4664,
+  "address": "26416 Baker Rd.",
+  "zip": "43551",
+  "phone": "419-443-1800",
+  "name": "Petro Perrysburg"
+ },
+ "6318|MO": {
+  "lat": 38.9405,
+  "lng": -91.9399,
+  "address": "3304 Gold Road",
+  "zip": "65262",
+  "phone": "573-642-0676",
+  "name": "Petro Kingdom City"
+ },
+ "6319|AL": {
+  "lat": 33.2796,
+  "lng": -87.0919,
+  "address": "22526 Highway 216",
+  "zip": "35111",
+  "phone": "205-477-9178",
+  "name": "Petro Bucksville"
+ },
+ "6320|OH": {
+  "lat": 41.1408,
+  "lng": -80.7172,
+  "address": "1 Petro Place",
+  "zip": "44420",
+  "phone": "330-505-3700",
+  "name": "Petro Girard"
+ },
+ "6321|IL": {
+  "lat": 39.1197,
+  "lng": -88.5723,
+  "address": "1805 West Fayette Ave",
+  "zip": "62401",
+  "phone": "217-347-0480",
+  "name": "Petro Effingham"
+ },
+ "6322|GA": {
+  "lat": 33.7865,
+  "lng": -84.4905,
+  "address": "3181 Donald Lee Hollowell Pkwy.",
+  "zip": "30318",
+  "phone": "404-794-7772",
+  "name": "Petro Atlanta"
+ },
+ "6323|FL": {
+  "lat": 29.409,
+  "lng": -82.2462,
+  "address": "7401 West Hwy 318",
+  "zip": "32686",
+  "phone": "352-591-1881",
+  "name": "Petro Ocala"
+ },
+ "6324|OR": {
+  "lat": 42.2795,
+  "lng": -122.8116,
+  "address": "3730 Fern Valley Rd.",
+  "zip": "97535",
+  "phone": "541-535-3372",
+  "name": "Petro Phoenix"
+ },
+ "6325|OH": {
+  "lat": 41.1738,
+  "lng": -83.6475,
+  "address": "12906 Deshler Rd.",
+  "zip": "45872",
+  "phone": "419-257-3744",
+  "name": "Petro North Baltimore"
+ },
+ "6326|AR": {
+  "lat": 34.781,
+  "lng": -92.1298,
+  "address": "3205 Valentine Road",
+  "zip": "72117",
+  "phone": "501-945-3206",
+  "name": "Petro N. Little Rock"
+ },
+ "6327|CA": {
+  "lat": 34.9861,
+  "lng": -118.9481,
+  "address": "5821 Dennis McCarthy Dr.",
+  "zip": "93243",
+  "phone": "661-663-4341",
+  "name": "Petro Wheeler Ridge"
+ },
+ "6329|NC": {
+  "lat": 36.0772,
+  "lng": -79.2251,
+  "address": "500 Buckhorn Road",
+  "zip": "27302",
+  "phone": "919-304-7476",
+  "name": "Petro Mebane"
+ },
+ "6330|KY": {
+  "lat": 37.5984,
+  "lng": -85.8734,
+  "address": "554 W. Glendale Hodgenville Road",
+  "zip": "42740",
+  "phone": "270-369-6840",
+  "name": "Petro Glendale"
+ },
+ "6331|NV": {
+  "lat": 36.2797,
+  "lng": -115.0261,
+  "address": "6595 North Hollywood Blvd",
+  "zip": "89115",
+  "phone": "702-632-2640",
+  "name": "Petro North Las Vegas"
+ },
+ "6333|TX": {
+  "lat": 32.0455,
+  "lng": -97.092,
+  "address": "160 State Hwy 77",
+  "zip": "76645",
+  "phone": "254-283-6556",
+  "name": "TA Hillsboro"
+ },
+ "6336|PA": {
+  "lat": 40.2319,
+  "lng": -77.1418,
+  "address": "1201 Harrisburg Ave, Route 11",
+  "zip": "17013",
+  "phone": "717-249-1919",
+  "name": "Petro Carlisle"
+ },
+ "6338|NV": {
+  "lat": 39.5233,
+  "lng": -119.7087,
+  "address": "1950 East Greg St.",
+  "zip": "89431",
+  "phone": "775-355-8888",
+  "name": "Petro Sparks"
+ },
+ "6339|WA": {
+  "lat": 47.5906,
+  "lng": -117.5612,
+  "address": "10506 West Aero Road",
+  "zip": "99224",
+  "phone": "509-842-1100",
+  "name": "Petro Spokane"
+ },
+ "6344|GA": {
+  "lat": 30.7942,
+  "lng": -81.6662,
+  "address": "1105 East King Avenue",
+  "zip": "31548",
+  "phone": "912-882-3111",
+  "name": "Petro Kingsland"
+ },
+ "6346|CA": {
+  "lat": 37.0547,
+  "lng": -121.0155,
+  "address": "28991 West Gonzaga",
+  "zip": "95322",
+  "phone": "209-827-8025",
+  "name": "Petro Santa Nella"
+ },
+ "6347|KY": {
+  "lat": 36.7163,
+  "lng": -86.5244,
+  "address": "101 Trotter Lane",
+  "zip": "42134",
+  "phone": "270-586-0877",
+  "name": "TA Truck Service Franklin"
+ },
+ "6349|TN": {
+  "lat": 36.0824,
+  "lng": -87.0955,
+  "address": "162 Luyben Hills Road",
+  "zip": "37082",
+  "phone": "615-952-3208",
+  "name": "Petro Kingston Springs"
+ },
+ "6350|TX": {
+  "lat": 31.9581,
+  "lng": -106.58,
+  "address": "601 Westway Blvd.",
+  "zip": "79835",
+  "phone": "915-886-5761",
+  "name": "TA Express Vinton"
+ },
+ "6352|AL": {
+  "lat": 33.9956,
+  "lng": -86.0827,
+  "address": "1724 West Grand Avenue",
+  "zip": "35904",
+  "phone": "256-413-7135",
+  "name": "Petro Gadsden"
+ },
+ "6354|MO": {
+  "lat": 37.0072,
+  "lng": -94.5523,
+  "address": "4240 Highway 43",
+  "zip": "64804",
+  "phone": "417-624-3400",
+  "name": "Petro Joplin"
+ },
+ "6357|OH": {
+  "lat": 39.8346,
+  "lng": -84.8111,
+  "address": "9787 US Route 40 West",
+  "zip": "45347",
+  "phone": "937-637-7800",
+  "name": "Petro New Paris"
+ },
+ "6359|IL": {
+  "lat": 41.9356,
+  "lng": -89.0335,
+  "address": "900 Petro Rd",
+  "zip": "61068",
+  "phone": "815-562-3716",
+  "name": "Petro Rochelle"
+ },
+ "6361|ND": {
+  "lat": 46.8503,
+  "lng": -96.8632,
+  "address": "4510 19th Ave S.W.",
+  "zip": "58103",
+  "phone": "701-282-8105",
+  "name": "Petro Fargo"
+ },
+ "6362|NE": {
+  "lat": 40.8182,
+  "lng": -97.5989,
+  "address": "4700 S. Lincoln Ave.",
+  "zip": "68467",
+  "phone": "402-362-1776",
+  "name": "Petro York"
+ },
+ "6367|IL": {
+  "lat": 41.4258,
+  "lng": -87.7549,
+  "address": "5915 Monee Road",
+  "zip": "60449",
+  "phone": "708-534-0400",
+  "name": "Petro Monee"
+ },
+ "6369|IN": {
+  "lat": 41.5638,
+  "lng": -87.3557,
+  "address": "3001 Grant Street",
+  "zip": "46408",
+  "phone": "219-884-1133",
+  "name": "Petro Gary"
+ },
+ "6371|NY": {
+  "lat": 42.9653,
+  "lng": -76.8454,
+  "address": "1255 Route 414",
+  "zip": "13165",
+  "phone": "315-220-6550",
+  "name": "Petro Waterloo"
+ },
+ "6372|VA": {
+  "lat": 36.7708,
+  "lng": -81.7793,
+  "address": "12433 Maple St.",
+  "zip": "24340",
+  "phone": "276-429-6000",
+  "name": "Petro Glade Spring"
+ },
+ "6376|IN": {
+  "lat": 39.4455,
+  "lng": -87.127,
+  "address": "1035 W. State Road 42",
+  "zip": "47834",
+  "phone": "812-446-2296",
+  "name": "Petro Brazil"
+ },
+ "6377|GA": {
+  "lat": 34.3481,
+  "lng": -83.3199,
+  "address": "10200 Old Federal Rd.",
+  "zip": "30521",
+  "phone": "706-335-1984",
+  "name": "Petro Carnesville"
+ },
+ "6378|PA": {
+  "lat": 41.3302,
+  "lng": -75.7417,
+  "address": "98 Grove St.",
+  "zip": "18641",
+  "phone": "570-654-5111",
+  "name": "Petro Scranton"
+ },
+ "6379|IN": {
+  "lat": 39.3188,
+  "lng": -85.326,
+  "address": "1409 South County Rd. 850 East",
+  "zip": "47240",
+  "phone": "812-663-2333",
+  "name": "Petro Greensburg"
+ },
+ "6382|IN": {
+  "lat": 40.767,
+  "lng": -87.1261,
+  "address": "4230 West Highway 24",
+  "zip": "47977",
+  "phone": "219-261-2172",
+  "name": "Petro Remington"
+ },
+ "6385|NM": {
+  "lat": 32.2386,
+  "lng": -107.9927,
+  "address": "14150 STE C Hwy 418 SW",
+  "zip": "88030",
+  "phone": "575-546-7070",
+  "name": "Petro Deming"
+ },
+ "6386|KS": {
+  "lat": 39.3617,
+  "lng": -101.0537,
+  "address": "700 West Horton",
+  "zip": "67701",
+  "phone": "785-460-0044",
+  "name": "Petro Colby"
+ },
+ "6388|OH": {
+  "lat": 41.4178,
+  "lng": -84.1045,
+  "address": "900 American Road",
+  "zip": "43545",
+  "phone": "567-694-9977",
+  "name": "Petro Napoleon"
+ },
+ "6389|MN": {
+  "lat": 45.4126,
+  "lng": -94.0549,
+  "address": "950 State Highway 24",
+  "zip": "55320",
+  "phone": "320-558-2261",
+  "name": "Petro Clearwater"
+ },
+ "6392|NV": {
+  "lat": 41.101,
+  "lng": -114.9561,
+  "address": "1440 6th Street",
+  "zip": "89835",
+  "phone": "775-455-4305",
+  "name": "Petro Wells"
+ },
+ "6393|SC": {
+  "lat": 34.2665,
+  "lng": -79.7321,
+  "address": "3001 TV Rd.",
+  "zip": "29501",
+  "phone": "843-669-5736",
+  "name": "Petro Florence"
+ },
+ "5026|NC": {
+  "lat": 35.582,
+  "lng": -78.1457,
+  "address": "923 Johnston Pkwy.",
+  "zip": "27542",
+  "phone": "919-284-5121",
+  "name": "Petro Kenly"
+ },
+ "6398|MN": {
+  "lat": 43.6571,
+  "lng": -93.3174,
+  "address": "820 Happy Trails Lane",
+  "zip": "56007",
+  "phone": "507-481-9434",
+  "name": "Petro Albert Lea"
+ },
+ "6399|CO": {
+  "lat": 40.363,
+  "lng": -104.984,
+  "address": "2842 SE Frontage Road",
+  "zip": "80534",
+  "phone": "970-667-2069",
+  "name": "Petro Johnson's Corner"
+ },
+ "6402|IL": {
+  "lat": 41.3454,
+  "lng": -88.1974,
+  "address": "24225 W. Lorenzo Road",
+  "zip": "60481",
+  "phone": "779-232-7975",
+  "name": "Petro Wilmington"
+ },
+ "6403|WI": {
+  "lat": 43.4864,
+  "lng": -89.498,
+  "address": "North 5800 Kinney Rd.",
+  "zip": "53901",
+  "phone": "608-742-6551",
+  "name": "Petro Portage"
+ },
+ "6418|GA": {
+  "lat": 32.3031,
+  "lng": -81.8722,
+  "address": "2930 Highway 301 South",
+  "zip": "30452",
+  "phone": "912-480-0102",
+  "name": "TA Express Statesboro"
+ },
+ "6422|AZ": {
+  "lat": 35.2216,
+  "lng": -112.4975,
+  "address": "950 W Old Highway 66",
+  "zip": "86320",
+  "phone": "928-405-7788",
+  "name": "TA Ash Fork"
+ },
+ "6426|TX": {
+  "lat": 32.4486,
+  "lng": -100.4433,
+  "address": "100 South Hopkins Rd",
+  "zip": "79556",
+  "phone": "325-235-8488",
+  "name": "TA Sweetwater"
+ },
+ "6427|VA": {
+  "lat": 37.929,
+  "lng": -79.2292,
+  "address": "2440 Raphine Road",
+  "zip": "24472",
+  "phone": "540-377-2111",
+  "name": "Petro Raphine"
+ },
+ "6428|VA": {
+  "lat": 37.8318,
+  "lng": -79.3779,
+  "address": "2516 N. Lee Highway",
+  "zip": "24450",
+  "phone": "540-463-3478",
+  "name": "TA Lexington"
+ },
+ "6430|CA": {
+  "lat": 36.0477,
+  "lng": -117.9454,
+  "address": "20 Gills Station Road",
+  "zip": "93549",
+  "phone": "760-961-4377",
+  "name": "TA Express Olancha"
+ },
+ "6431|WI": {
+  "lat": 44.5783,
+  "lng": -91.1993,
+  "address": "12613 Gunderson Road",
+  "zip": "54758",
+  "phone": "715-533-6884",
+  "name": "TA Express Osseo"
+ },
+ "6433|IL": {
+  "lat": 39.8424,
+  "lng": -89.521,
+  "address": "2855 Overpass Road",
+  "zip": "62561",
+  "phone": "217-606-7666",
+  "name": "TA Express Riverton"
+ },
+ "6435|GA": {
+  "lat": 33.5099,
+  "lng": -82.4497,
+  "address": "2657 Cobbham Road",
+  "zip": "30824",
+  "phone": "706-962-1708",
+  "name": "TA Express Thomson"
+ },
+ "6437|PA": {
+  "lat": 40.0197,
+  "lng": -76.1818,
+  "address": "2622 Lincoln Hwy East",
+  "zip": "17527",
+  "phone": "717-687-6112",
+  "name": "TA Express Ronks"
+ },
+ "6442|TX": {
+  "lat": 30.7391,
+  "lng": -95.5911,
+  "address": "500 I-45",
+  "zip": "77320",
+  "phone": "936-295-2488",
+  "name": "TA Express Huntsville"
+ },
+ "6443|MO": {
+  "lat": 40.4656,
+  "lng": -93.9742,
+  "address": "24063 E 240th Ave",
+  "zip": "64442",
+  "phone": "660-415-5903",
+  "name": "TA Express Eagleville"
+ },
+ "6444|IN": {
+  "lat": 38.1822,
+  "lng": -86.9862,
+  "address": "102 Rocket Way",
+  "zip": "47523",
+  "phone": "812-937-6918",
+  "name": "TA Express Dale"
+ },
+ "6445|TX": {
+  "lat": 28.9952,
+  "lng": -98.4333,
+  "address": "109963 Interstate 37",
+  "zip": "78064",
+  "phone": "726-224-0813",
+  "name": "TA Express Pleasanton"
+ },
+ "6448|AR": {
+  "lat": 35.8081,
+  "lng": -90.6272,
+  "address": "3021 DR MLK JR DR",
+  "zip": "72401",
+  "phone": "870-919-7760",
+  "name": "TA Express Jonesboro"
+ },
+ "6449|TX": {
+  "lat": 30.9854,
+  "lng": -97.503,
+  "address": "8101 South Interstate Hwy 35 Service Rd.",
+  "zip": "76513",
+  "phone": "737-333-5305",
+  "name": "TA Express Belton"
+ },
+ "6450|MO": {
+  "lat": 37.1169,
+  "lng": -92.4201,
+  "address": "741 State Hwy E",
+  "zip": "65717",
+  "phone": "417-746-4777",
+  "name": "TA Express Norwood"
+ },
+ "6451|OK": {
+  "lat": 36.696,
+  "lng": -97.3515,
+  "address": "16700 W South Ave",
+  "zip": "74653",
+  "phone": "580-670-1199",
+  "name": "TA Express Tonkawa"
+ },
+ "6456|TX": {
+  "lat": 33.2027,
+  "lng": -97.5684,
+  "address": "3400 S US Highway 287",
+  "zip": "76234",
+  "phone": "940-245-8146",
+  "name": "TA Express Decatur"
+ },
+ "6458|NV": {
+  "lat": 40.7421,
+  "lng": -114.0588,
+  "address": "800 Leppy Hills Blvd",
+  "zip": "89883",
+  "phone": "775-546-1649",
+  "name": "TA Express Wendover"
+ },
+ "6459|AZ": {
+  "lat": 36.8933,
+  "lng": -113.9317,
+  "address": "3225 E Rincon Road",
+  "zip": "86432",
+  "phone": "928-727-3707",
+  "name": "TA Express Littlefield"
+ },
+ "6460|MO": {
+  "lat": 39.015,
+  "lng": -94.131,
+  "address": "301 SW First Street",
+  "zip": "64075",
+  "phone": "816-690-4455",
+  "name": "Petro Oak Grove"
+ },
+ "6461|MO": {
+  "lat": 38.0739,
+  "lng": -91.4069,
+  "address": "5922 MO - 19",
+  "zip": "65453",
+  "phone": "573-885-3992",
+  "name": "TA Cuba"
+ },
+ "6465|SC": {
+  "lat": 34.5046,
+  "lng": -82.9655,
+  "address": "272 Herring Rd",
+  "zip": "29643",
+  "phone": "864-280-7320",
+  "name": "TA Express Fair Play"
+ },
+ "6468|KY": {
+  "lat": 37.045,
+  "lng": -86.2104,
+  "address": "605 S Main St",
+  "zip": "42171",
+  "phone": "270-563-4713",
+  "name": "TA Smiths Grove"
+ },
+ "6469|NM": {
+  "lat": 36.45,
+  "lng": -104.5929,
+  "address": "18 Old French Rd.",
+  "zip": "87747",
+  "phone": "575-483-5004",
+  "name": "TA Springer"
+ },
+ "6471|NM": {
+  "lat": 35.1752,
+  "lng": -103.1041,
+  "address": "1583 Frontage Rd 4132",
+  "zip": "88434",
+  "phone": "575-288-9968",
+  "name": "TA Glenrio"
+ },
+ "6476|PA": {
+  "lat": 40.0004,
+  "lng": -78.2341,
+  "address": "16563 Lincoln Hwy",
+  "zip": "15533",
+  "phone": "814-707-9284",
+  "name": "TA Breezewood"
+ },
+ "6477|SC": {
+  "lat": 35.0469,
+  "lng": -81.8123,
+  "address": "175 Truck Stop Rd",
+  "zip": "29330",
+  "phone": "864-755-4335",
+  "name": "TA Cowpens"
+ },
+ "6478|KS": {
+  "lat": 39.0906,
+  "lng": -94.6829,
+  "address": "4610 Kansas Ave",
+  "zip": "66106",
+  "phone": "913-359-6767",
+  "name": "TA Express Kansas City"
+ },
+ "6479|LA": {
+  "lat": 30.0862,
+  "lng": -90.445,
+  "address": "4301 Main St.",
+  "zip": "70068",
+  "phone": "985-315-8194",
+  "name": "TA Express Laplace"
+ },
+ "6480|LA": {
+  "lat": 29.9735,
+  "lng": -90.2991,
+  "address": "10405 E. Airline Hwy",
+  "zip": "70087",
+  "phone": "985-262-7189",
+  "name": "TA Express St. Rose"
+ },
+ "6481|PA": {
+  "lat": 39.9988,
+  "lng": -78.2356,
+  "address": "16520 Lincoln HWY",
+  "zip": "15533",
+  "phone": "814-517-5377",
+  "name": "Goasis Breezewood"
+ },
+ "6482|OR": {
+  "lat": 44.1364,
+  "lng": -123.0574,
+  "address": "32910 E. Pearl St.",
+  "zip": "97408",
+  "phone": "541-868-2880",
+  "name": "TA Coburg"
+ },
+ "6483|OR": {
+  "lat": 44.1351,
+  "lng": -123.0549,
+  "address": "91039 Coburg Industrial Way",
+  "zip": "97408",
+  "phone": "541-868-2880",
+  "name": "Goasis Coburg Crossing"
+ },
+ "6485|AL": {
+  "lat": 34.0508,
+  "lng": -86.8723,
+  "address": "426 Alabama Highway 69 S",
+  "zip": "35077",
+  "phone": "256-287-1299",
+  "name": "Petro Dodge City"
+ },
+ "6486|VA": {
+  "lat": 36.9777,
+  "lng": -77.3955,
+  "address": "13306 St. John Church Road",
+  "zip": "23882",
+  "phone": "434-246-2881",
+  "name": "TA Express Stony Creek"
+ },
+ "6488|VA": {
+  "lat": 36.9406,
+  "lng": -77.7352,
+  "address": "12461 Old Stage Rd.",
+  "zip": "23889",
+  "phone": "804-478-4403",
+  "name": "TA Express Warfield"
+ },
+ "6489|IL": {
+  "lat": 41.6683,
+  "lng": -88.0641,
+  "address": "1321 N Joliet Rd",
+  "zip": "60446",
+  "phone": "630-743-3605",
+  "name": "Thorntons Romeoville"
+ },
+ "6490|IL": {
+  "lat": 41.8274,
+  "lng": -87.7428,
+  "address": "3503 South Cicero Ave",
+  "zip": "60804",
+  "phone": "708-652-6539",
+  "name": "Thorntons Cicero"
+ },
+ "6491|WI": {
+  "lat": 42.7251,
+  "lng": -87.9557,
+  "address": "717 S. Sylvania Avenue",
+  "zip": "53177",
+  "phone": "262-884-7500",
+  "name": "Petro Racine"
+ },
+ "6502|IA": {
+  "lat": 42.4666,
+  "lng": -92.7672,
+  "address": "16250 N Ave",
+  "zip": "50642",
+  "phone": "319-823-1477",
+  "name": "TA Express Holland"
+ },
+ "6505|AL": {
+  "lat": 32.4056,
+  "lng": -85.9556,
+  "address": "428 Main St",
+  "zip": "36075",
+  "phone": "334-727-3354",
+  "name": "Petro Shorter"
+ },
+ "6506|MS": {
+  "lat": 32.2787,
+  "lng": -90.1977,
+  "address": "970 W Frontage Road",
+  "zip": "39201",
+  "phone": "601-292-0950",
+  "name": "Petro Jackson"
+ },
+ "6507|SC": {
+  "lat": 34.0747,
+  "lng": -80.9971,
+  "address": "99 Plumbers Road",
+  "zip": "29203",
+  "phone": "839-228-0693",
+  "name": "TA Columbia North"
+ },
+ "6508|NY": {
+  "lat": 42.9485,
+  "lng": -74.3631,
+  "address": "40 Riverside Drive",
+  "zip": "12072",
+  "phone": "838-292-9580",
+  "name": "TA Fultonville"
+ },
+ "6510|TX": {
+  "lat": 29.938,
+  "lng": -95.3725,
+  "address": "1104 N Sam Houston Pkwy E",
+  "zip": "77032",
+  "phone": "346-740-1066",
+  "name": "TA Express North Houston"
+ },
+ "6512|IN": {
+  "lat": 41.1186,
+  "lng": -85.1842,
+  "address": "3037 Goshen Road",
+  "zip": "46808",
+  "phone": "260-402-4570",
+  "name": "TA Express Fort Wayne"
+ },
+ "6513|OH": {
+  "lat": 38.9965,
+  "lng": -82.5533,
+  "address": "80 Dixon Run Road",
+  "zip": "45640",
+  "phone": "740-988-7793",
+  "name": "TA Jackson"
+ },
+ "6515|TX": {
+  "lat": 30.4176,
+  "lng": -99.6723,
+  "address": "115 S Segovia Access Rd",
+  "zip": "76849",
+  "phone": "325-338-0993",
+  "name": "TA Express Junction"
+ },
+ "6518|TX": {
+  "lat": 27.5318,
+  "lng": -97.8415,
+  "address": "2104 E. Corral Ave",
+  "zip": "78363",
+  "phone": "361-424-1518",
+  "name": "TA Express Kingsville"
+ },
+ "6519|UT": {
+  "lat": 38.9504,
+  "lng": -112.3528,
+  "address": "885 S Park Ave",
+  "zip": "84631",
+  "phone": "435-222-4431",
+  "name": "TA Fillmore"
+ },
+ "6520|WY": {
+  "lat": 41.6122,
+  "lng": -109.2297,
+  "address": "1620 Elk Street",
+  "zip": "82901",
+  "phone": "307-522-8996",
+  "name": "TA Express Rock Springs"
+ },
+ "6524|MO": {
+  "lat": 38.9941,
+  "lng": -93.5678,
+  "address": "102 N W 4th Street",
+  "zip": "64020",
+  "phone": "660-460-7412",
+  "name": "TA Concordia"
+ },
+ "6525|MN": {
+  "lat": 45.1969,
+  "lng": -93.5492,
+  "address": "13400 Rogers Drive",
+  "zip": "55374",
+  "phone": "763-428-2277",
+  "name": "TA Rogers"
+ },
+ "6526|WI": {
+  "lat": 44.9655,
+  "lng": -92.6785,
+  "address": "713 Hwy 12",
+  "zip": "54016",
+  "phone": "715-386-5835",
+  "name": "TA Hudson"
+ },
+ "6527|SC": {
+  "lat": 34.2364,
+  "lng": -79.8065,
+  "address": "2301 W. Lucas Street",
+  "zip": "29501",
+  "phone": "843-292-0386",
+  "name": "TA Florence"
+ },
+ "6528|MI": {
+  "lat": 43.3517,
+  "lng": -83.869,
+  "address": "6364 Dixie Hwy",
+  "zip": "48722",
+  "phone": "989-777-7650",
+  "name": "TA Bridgeport"
+ },
+ "6529|NJ": {
+  "lat": 39.819,
+  "lng": -75.2385,
+  "address": "171 Berkley Road",
+  "zip": "08066",
+  "phone": "856-423-5500",
+  "name": "TA Paulsboro"
+ },
+ "6530|MI": {
+  "lat": 42.1065,
+  "lng": -84.9897,
+  "address": "15587 M-60",
+  "zip": "49092",
+  "phone": "517-767-4135",
+  "name": "TA Tekonsha"
+ },
+ "6531|MT": {
+  "lat": 46.9485,
+  "lng": -114.1298,
+  "address": "8018 Hwy 93 N",
+  "zip": "59808",
+  "phone": "406-549-2327",
+  "name": "TA Missoula"
+ },
+ "6532|AL": {
+  "lat": 33.5865,
+  "lng": -86.1248,
+  "address": "75246 Alabama 77",
+  "zip": "35096",
+  "phone": "205-763-2771",
+  "name": "TA Lincoln"
+ },
+ "6533|TX": {
+  "lat": 32.0794,
+  "lng": -97.0552,
+  "address": "101 Cornelius Road",
+  "zip": "76645",
+  "phone": "254-714-3000",
+  "name": "Petro North Hillsboro"
+ },
+ "6534|LA": {
+  "lat": 30.2314,
+  "lng": -92.4624,
+  "address": "114 Jasmin",
+  "zip": "70531",
+  "phone": "337-783-0424",
+  "name": "Petro Egan"
+ },
+ "6535|IN": {
+  "lat": 41.7483,
+  "lng": -84.9932,
+  "address": "7265 North Baker Road",
+  "zip": "46737",
+  "phone": "260-322-2582",
+  "name": "Petro Angola"
+ },
+ "6536|KS": {
+  "lat": 38.8789,
+  "lng": -97.613,
+  "address": "2125 N. 9th St.",
+  "zip": "67401",
+  "phone": "785-825-7723",
+  "name": "Petro Salina"
+ },
+ "6537|IN": {
+  "lat": 40.2772,
+  "lng": -85.5526,
+  "address": "14000 West State Road 28",
+  "zip": "47342",
+  "phone": "765-358-3326",
+  "name": "Petro Gaston"
+ },
+ "6538|TX": {
+  "lat": 28.8996,
+  "lng": -99.1158,
+  "address": "110 S. I-35 Frontage Rd.",
+  "zip": "78061",
+  "phone": "830-334-8222",
+  "name": "Petro Pearsall"
+ },
+ "6539|AL": {
+  "lat": 32.3275,
+  "lng": -86.3322,
+  "address": "980 West South Blvd",
+  "zip": "36105",
+  "phone": "334-288-3700",
+  "name": "TA Montgomery"
+ },
+ "6543|IN": {
+  "lat": 41.5906,
+  "lng": -87.2393,
+  "address": "1201 Ripley Street",
+  "zip": "46405",
+  "phone": "219-962-6552",
+  "name": "TA Lake Station"
+ },
+ "6544|TN": {
+  "lat": 35.8603,
+  "lng": -86.8299,
+  "address": "4400 Peytonsville Road",
+  "zip": "37064",
+  "phone": "615-794-8406",
+  "name": "TA Franklin"
+ },
+ "6554|WV": {
+  "lat": 39.1031,
+  "lng": -80.3897,
+  "address": "102 Jesse Run Rd",
+  "zip": "26378",
+  "phone": "304-543-9604",
+  "name": "TA Jane Lew"
+ },
+ "6555|NY": {
+  "lat": 43.107,
+  "lng": -78.9944,
+  "address": "6021 Porter Rd",
+  "zip": "14304",
+  "phone": "716-461-4759",
+  "name": "TA Express Niagara Falls"
+ },
+ "6556|FL": {
+  "lat": 25.8847,
+  "lng": -80.3662,
+  "address": "12200 NW South River Drive",
+  "zip": "33178",
+  "phone": "786-697-6329",
+  "name": "TA Express Medley"
+ },
+ "6567|LA": {
+  "lat": 32.5431,
+  "lng": -92.7107,
+  "address": "1130 RWE Jones RD",
+  "zip": "71245",
+  "phone": "318-265-7559",
+  "name": "TA Express Grambling"
+ },
+ "13648|CO": {
+  "lat": 40.2665,
+  "lng": -103.621,
+  "address": "1041 N. Colorado Avenue",
+  "zip": "80723",
+  "phone": "970-842-3122",
+  "name": "TA Express Brush"
+ },
+ "13649|CO": {
+  "lat": 37.6537,
+  "lng": -104.7938,
+  "address": "455 US-85",
+  "zip": "81089",
+  "phone": "719-738-5733",
+  "name": "TA Express Walsenburg"
+ },
+ "6701|OH": {
+  "lat": 40.8566,
+  "lng": -82.2623,
+  "address": "715 US 250 East",
+  "zip": "44805",
+  "phone": "567-215-9000",
+  "name": "Goasis Ashland"
+ },
+ "6917|WA": {
+  "lat": 48.9913,
+  "lng": -122.7341,
+  "address": "1300 Boblett St",
+  "zip": "98230",
+  "phone": "360-312-7779",
+  "name": "TA Express Blaine"
+ },
+ "6919|CA": {
+  "lat": 36.8524,
+  "lng": -119.9518,
+  "address": "32603 Avenue 7",
+  "zip": "93637",
+  "phone": "559-214-2444",
+  "name": "TA Madera"
+ },
+ "6924|MO": {
+  "lat": 37.0906,
+  "lng": -93.8012,
+  "address": "1501 East Mt. Vernon Blvd",
+  "zip": "65712",
+  "phone": "417-701-3938",
+  "name": "TA Mt. Vernon"
+ },
+ "6925|MS": {
+  "lat": 31.1895,
+  "lng": -90.4862,
+  "address": "1120 Airport Fernwood Road",
+  "zip": "39648",
+  "phone": "601-996-0614",
+  "name": "TA McComb"
+ },
+ "6926|MS": {
+  "lat": 34.2791,
+  "lng": -88.5687,
+  "address": "590 MS 371",
+  "zip": "38857",
+  "phone": "662-205-6298",
+  "name": "TA Express Mooreville"
+ },
+ "6929|CO": {
+  "lat": 38.097,
+  "lng": -102.6191,
+  "address": "708 N. Main Street",
+  "zip": "81052",
+  "phone": "719-688-4024",
+  "name": "TA Express Lamar"
+ },
+ "6930|OK": {
+  "lat": 36.9854,
+  "lng": -95.625,
+  "address": "111 E. County Road 2",
+  "zip": "74072",
+  "phone": "918-842-4000",
+  "name": "TA Express South Coffeyville"
+ },
+ "6932|KS": {
+  "lat": 38.0053,
+  "lng": -100.8842,
+  "address": "1265 Solar Avenue",
+  "zip": "67846",
+  "phone": "620-644-3844",
+  "name": "TA Garden City"
+ },
+ "6933|CO": {
+  "lat": 38.3444,
+  "lng": -104.6217,
+  "address": "1275 Drew Dix Parkway",
+  "zip": "81008",
+  "phone": "719-877-2453",
+  "name": "TA Pueblo"
+ },
+ "6939|LA": {
+  "lat": 32.8979,
+  "lng": -93.8648,
+  "address": "6411 Hwy 2",
+  "zip": "71043",
+  "phone": "318-716-7057",
+  "name": "TA Express Hosston"
+ },
+ "6940|ID": {
+  "lat": 44.1766,
+  "lng": -112.2366,
+  "address": "424 W. Main Street",
+  "zip": "83423",
+  "phone": "208-374-5381",
+  "name": "TA Express Dubois"
+ },
+ "6941|IA": {
+  "lat": 42.4741,
+  "lng": -95.5441,
+  "address": "2010 Indorf Avenue",
+  "zip": "51025",
+  "phone": "712-371-9965",
+  "name": "TA Express Holstein"
+ },
+ "6943|KS": {
+  "lat": 39.8412,
+  "lng": -95.7331,
+  "address": "801 W. 1st Street",
+  "zip": "66425",
+  "phone": "785-288-8089",
+  "name": "TA Express Fairview"
+ },
+ "6945|TX": {
+  "lat": 34.1599,
+  "lng": -99.2966,
+  "address": "2817 Frontage Rd South",
+  "zip": "76384",
+  "phone": "940-553-7121",
+  "name": "TA Vernon, TX"
+ },
+ "6946|LA": {
+  "lat": 32.572,
+  "lng": -93.2029,
+  "address": "2198 Highway 532",
+  "zip": "71055",
+  "phone": "318-588-0192",
+  "name": "TA Express Minden"
+ },
+ "6947|AL": {
+  "lat": 33.5294,
+  "lng": -86.8512,
+  "address": "901 Bankhead Hwy",
+  "zip": "35204",
+  "phone": "205-777-9910",
+  "name": "TA Express Birmingham"
+ },
+ "6948|ND": {
+  "lat": 47.9322,
+  "lng": -97.0956,
+  "address": "1212 North 47th Street",
+  "zip": "58203",
+  "phone": "701-317-3785",
+  "name": "TA Express Grand Forks"
+ },
+ "6949|ND": {
+  "lat": 48.3433,
+  "lng": -103.6159,
+  "address": "13553 64th Street",
+  "zip": "58801",
+  "phone": "701-641-1393",
+  "name": "TA Express Williston"
+ },
+ "6951|WA": {
+  "lat": 46.2759,
+  "lng": -119.9288,
+  "address": "100 Higgins Way",
+  "zip": "98930",
+  "phone": "509-405-0911",
+  "name": "TA Grandview"
+ },
+ "6954|AR": {
+  "lat": 35.2216,
+  "lng": -92.8259,
+  "address": "100 Fish Lake Road",
+  "zip": "72823",
+  "phone": "479-886-6925",
+  "name": "TA Atkins"
+ },
+ "6958|IA": {
+  "lat": 42.4718,
+  "lng": -93.5655,
+  "address": "3065 220th Street",
+  "zip": "50271",
+  "phone": "515-851-1339",
+  "name": "TA Williams"
+ },
+ "6962|PA": {
+  "lat": 40.9388,
+  "lng": -76.0358,
+  "address": "492 Can Do Expressway",
+  "zip": "18202",
+  "phone": "570-599-5063",
+  "name": "TA Express Hazleton"
+ },
+ "6963|PA": {
+  "lat": 40.5339,
+  "lng": -76.4317,
+  "address": "482 Suedberg Road",
+  "zip": "17963",
+  "phone": "717-454-6803",
+  "name": "TA Express Pine Grove"
+ },
+ "6966|OK": {
+  "lat": 34.8334,
+  "lng": -95.8396,
+  "address": "9062 US Hwy 69",
+  "zip": "74565",
+  "phone": "405-446-4501",
+  "name": "TA Express Savanna"
+ },
+ "6968|NV": {
+  "lat": 35.9671,
+  "lng": -114.9157,
+  "address": "1700 Railroad Pass Casino Road",
+  "zip": "89002",
+  "phone": "725-305-0745",
+  "name": "Petro Henderson"
+ },
+ "6969|NV": {
+  "lat": 35.9715,
+  "lng": -114.9105,
+  "address": "1550 Railroad Pass Casino Road",
+  "zip": "89002",
+  "phone": "725-277-0932",
+  "name": "TA Express Henderson"
+ },
+ "6974|WV": {
+  "lat": 39.1948,
+  "lng": -81.526,
+  "address": "470 Frontage Road",
+  "zip": "26150",
+  "phone": "304-761-3854",
+  "name": "TA Mineral Wells"
+ },
+ "6975|NV": {
+  "lat": 40.7207,
+  "lng": -116.1076,
+  "address": "932 Fir Street",
+  "zip": "89822",
+  "phone": "702-421-3701",
+  "name": "TA Express Carlin"
+ },
+ "6976|KS": {
+  "lat": 38.0086,
+  "lng": -97.9421,
+  "address": "1515 South Main Street",
+  "zip": "67505",
+  "phone": "620-669-9900",
+  "name": "TA Express Hutchinson"
+ },
+ "6977|MN": {
+  "lat": 44.1697,
+  "lng": -93.9254,
+  "address": "3010 Adams St.",
+  "zip": "56001",
+  "phone": "320-470-9288",
+  "name": "TA Express Mankato"
+ },
+ "6978|TX": {
+  "lat": 29.8038,
+  "lng": -95.2649,
+  "address": "4808 N McCarty Street",
+  "zip": "77013",
+  "phone": "832-993-7704",
+  "name": "TA Express Houston"
+ },
+ "6979|CO": {
+  "lat": 39.109,
+  "lng": -108.6408,
+  "address": "2222 Highway 6",
+  "zip": "81505",
+  "phone": "970-901-1445",
+  "name": "TA Express Grand Junction"
+ },
+ "6982|WI": {
+  "lat": 43.8858,
+  "lng": -90.1466,
+  "address": "1700 E Bridge Street",
+  "zip": "53950",
+  "phone": "608-350-9882",
+  "name": "TA Express New Lisbon"
+ },
+ "6983|TX": {
+  "lat": 30.4462,
+  "lng": -95.0302,
+  "address": "10100 US Highway 59",
+  "zip": "77371",
+  "phone": "936-933-9574",
+  "name": "TA Shepherd"
+ },
+ "6986|AR": {
+  "lat": 35.2684,
+  "lng": -91.6762,
+  "address": "9674 State Highway 13",
+  "zip": "72081",
+  "phone": "501-530-1455",
+  "name": "TA Express Judsonia"
+ },
+ "6987|KS": {
+  "lat": 38.7076,
+  "lng": -95.074,
+  "address": "1021 Poplar Street",
+  "zip": "66092",
+  "phone": "785-800-5229",
+  "name": "TA Wellsville"
+ },
+ "6989|AL": {
+  "lat": 30.6304,
+  "lng": -87.6158,
+  "address": "27801 County Road 64",
+  "zip": "36567",
+  "phone": "251-960-1150",
+  "name": "TA Robertsdale"
+ }
+}

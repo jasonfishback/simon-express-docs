@@ -51,7 +51,9 @@ export async function GET(req: NextRequest) {
   // Anything else (old/wrong lat/lng, address, zip, phone, name) gets thrown out
   // and re-applied from the current station-coords.json.
   const pricingRows = data.stations.map((s: any) => ({
+    brand: (s.brand || 'pfj') as 'pfj' | 'loves' | 'ta',
     site: String(s.site),
+    name: s.name ? String(s.name) : undefined,
     city: String(s.city),
     state: String(s.state),
     retailPrice: Number(s.retailPrice ?? s.yourPrice ?? 0),
@@ -61,8 +63,9 @@ export async function GET(req: NextRequest) {
 
   const { stations: enriched, cacheHits, cacheMisses } = enrichStations(pricingRows)
 
-  // Write back to blob
+  // Write back to blob (preserving per-brand freshness stamps if present)
   const newBlob = {
+    ...data,
     updatedAt: data.updatedAt,
     stations: enriched,
   }
