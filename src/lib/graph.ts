@@ -37,7 +37,8 @@ export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<stri
     body.set('client_secret', clientSecret!)
   }
 
-  const res = await fetch(tokenUrl, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() })
+  const res = await fetch(tokenUrl, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString(), cache: 'no-store' })
+  const azureDate = res.headers.get('date')
   if (!res.ok) {
     const text = await res.text()
     const mode = oidcToken ? 'OIDC federation' : 'client_secret'
@@ -49,12 +50,13 @@ export async function getGraphToken(opts?: { skipOidc?: boolean }): Promise<stri
     throw new Error(`Failed to get Graph token (${mode}): ${res.status} ${text}`)
   }
   const json = (await res.json()) as { access_token: string; expires_in: number }
-  // TEMP DIAG (fuel-graph-diag): decode the token's real exp so we can see if
-  // OIDC-exchanged tokens come back with a truncated lifetime.
+  // TEMP DIAG (fuel-graph-diag): distinguish clock-skew vs stale-token. Log the
+  // token's iat/nbf/exp, the lambda's raw now, and Azure's own Date header.
   try {
     const p = JSON.parse(Buffer.from(json.access_token.split('.')[1], 'base64').toString())
-    const now = Math.floor(Date.now() / 1000)
-    console.log(`[graph-diag] token minted via ${oidcToken ? 'OIDC' : 'client_secret'}: expires_in=${json.expires_in}s jwt_exp-now=${p.exp - now}s appid=${p.appid} aud=${p.aud} roles=${JSON.stringify(p.roles)}`)
+    const nowMs = Date.now()
+    const now = Math.floor(nowMs / 1000)
+    console.log(`[graph-diag] via ${oidcToken ? 'OIDC' : 'client_secret'} appid=${p.appid} | lambda_now=${now} (${new Date(nowMs).toISOString()}) | azure_date=${azureDate} | tok.iat=${p.iat} tok.nbf=${p.nbf} tok.exp=${p.exp} | exp-now=${p.exp - now}s iat-now=${p.iat - now}s`)
   } catch (e: any) { console.log(`[graph-diag] token decode failed: ${e?.message}`) }
   cachedToken = { value: json.access_token, expiresAt: Date.now() + json.expires_in * 1000, viaOidc: !!oidcToken }
   return cachedToken.value
