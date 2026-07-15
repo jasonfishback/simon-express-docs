@@ -208,6 +208,9 @@ export default function FuelPage() {
   // Kevin's Dallas→Ontario route from Utah and the blip landed in Utah).
   const truckPosRef = useRef<{ lat: number, lng: number } | null>(null)
   const truckPosLastRef = useRef<{ lat: number, lng: number, at: string } | null>(null)
+  // Route signature already logged as a "fuel route run" (one per distinct
+  // origin→destination), so fuel-slider re-runs don't spam the usage log.
+  const lastLoggedRunRef = useRef<string>('')
   const [nextRouteSuggestion, setNextRouteSuggestion] = useState<{
     station: Station, miles: number, toward: string, assumed: boolean, nextOrder: string | null,
   } | null>(null)
@@ -1341,6 +1344,7 @@ export default function FuelPage() {
     setViaPoints([])
     setExtraMilesFromVias(0)
     setIsRoundTrip(false)
+    lastLoggedRunRef.current = ''
     if (googleMap.current) {
       googleMap.current.setCenter({ lat: 39.5, lng: -98.35 })
       googleMap.current.setZoom(4)
@@ -1354,6 +1358,48 @@ export default function FuelPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentFuelEighths])
+
+  // Log a "fuel route run" once per distinct route so dispatch can see who's
+  // using fuel routing and the stations they got (kpi /dashboard/fuel-checkins
+  // + the 7am non-compliance email). Fires when a plan has been computed for a
+  // logged-in driver; deduped by origin→destination so slider tweaks don't
+  // re-log. optimizedPlan === [] (enough fuel / no stops) still counts as a run.
+  useEffect(() => {
+    if (viewMode !== 'route' || optimizedPlan === null || !routeInfo) return
+    if (!getDriverFromDocumentCookie()) return
+    const sig = `${origin}||${destination}`
+    if (!origin || !destination || sig === lastLoggedRunRef.current) return
+    lastLoggedRunRef.current = sig
+    const stops = optimizedPlan.map(st => ({
+      brand: st.station.brand || 'pfj',
+      site: st.station.site,
+      name: stationLabel(st.station),
+      city: st.station.city,
+      state: st.station.state,
+      price: st.station.yourPrice,
+      gallons: Math.round(st.gallons),
+      miles_from_origin: Math.round(st.milesFromOrigin),
+    }))
+    const sum = (f: (s: { cost: number; savings: number; gallons: number }) => number) => optimizedPlan.reduce((a, s) => a + (f(s) || 0), 0)
+    fetch('/api/fuel-run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        order_num: useMyLoad ? currentLoad?.order_num ?? null : null,
+        used_my_load: useMyLoad,
+        origin, destination,
+        dest_in_ca: caEscapeMiles > 0,
+        total_miles: routeInfo.miles,
+        current_fuel_eighths: currentFuelEighths,
+        stops,
+        total_gallons: Math.round(sum(s => s.gallons)),
+        total_cost: Math.round(sum(s => s.cost)),
+        total_savings: Math.round(sum(s => s.savings)),
+      }),
+      keepalive: true,
+    }).catch(() => {})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [optimizedPlan, origin, destination])
 
   // Fuel optimizer: finds cheapest fill strategy, penalizing stations that require
   // long detours off the main route (> 20 miles detour unless savings justify it).
