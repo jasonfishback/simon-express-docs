@@ -36,7 +36,12 @@ const COORDS: Record<FuelBrand, Record<string, CoordEntry>> = {
 }
 
 const DEFAULT_NAME: Record<FuelBrand, string> = {
-  pfj: 'Pilot Travel Center',
+  // Parent-company name, not a specific sub-brand: a PFJ store that matches no
+  // amenity `description` (Pilot-vs-Flying-J is only known from that file) must
+  // not assert "Pilot Travel Center" when it could be a Flying J. "Pilot Flying
+  // J" is correct for either. Confirmed stores label from `description`, so this
+  // default only shows for the handful with no amenity match.
+  pfj: 'Pilot Flying J',
   loves: "Love's Travel Stop",
   ta: 'TA Travel Center',
 }
