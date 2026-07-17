@@ -73,7 +73,7 @@ function usPlace(s: string): string {
  *  amenity-file name ("Flying J"), `name` comes from the feed/coord caches
  *  ("Love's Travel Stop", "TA Tuscaloosa"). */
 function stationLabel(s: { description?: string; name?: string }): string {
-  return s.description || s.name || 'Pilot Travel Center'
+  return s.description || s.name || 'Truck Stop'
 }
 
 /** Stable per-station identity. Site numbers are PER-BRAND namespaces — Pilot

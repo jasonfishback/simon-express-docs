@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const data = await res.json()
     const stations = data.stations as Array<{ state: string, yourPrice: number }>
 
-    // Group by state, compute average Pilot price per state
+    // Group by state, compute average price per state across all brands
     const byState: Record<string, { sum: number, count: number }> = {}
     for (const s of stations) {
       if (!s.state || !s.yourPrice) continue

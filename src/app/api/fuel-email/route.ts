@@ -180,7 +180,7 @@ export async function POST(req: NextRequest) {
       // Clickable station name — uses exact lat/lng coordinates so it opens the PRECISE station
       // location. Use the ACTUAL STREET ADDRESS in the query so Google Maps geocodes and routes
       // to the exact building — not just a pin at lat/lng coordinates.
-      const stationLabel = stop.station.description || stop.station.name || 'Pilot Travel Center'
+      const stationLabel = stop.station.description || stop.station.name || 'Truck Stop'
       let mapsUrl: string
       if (stop.station.address && stop.station.address.trim()) {
         const fullAddress = [stop.station.address, stop.station.city, stop.station.state, stop.station.zip].filter(Boolean).join(', ')
@@ -307,7 +307,7 @@ export async function POST(req: NextRequest) {
       ).join('')
       statsHtml = `
         <tr><td style="padding:24px 24px 0 24px;">
-          <div style="font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Pilot Fuel Price Snapshot</div>
+          <div style="font-size:11px;color:#888;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;">Fuel Price Snapshot</div>
           <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
             <tr>
               <td style="width:50%;padding:14px;background:#fef2f2;border-radius:8px;vertical-align:top;">
