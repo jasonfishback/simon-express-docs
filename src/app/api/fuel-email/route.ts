@@ -16,6 +16,7 @@ interface Stop {
     savings: number
     lat: number
     lng: number
+    name?: string          // brand for non-PFJ stations (TA, Love's, etc.)
     description?: string
     interstate?: string
     parking?: number
@@ -179,7 +180,7 @@ export async function POST(req: NextRequest) {
       // Clickable station name — uses exact lat/lng coordinates so it opens the PRECISE station
       // location. Use the ACTUAL STREET ADDRESS in the query so Google Maps geocodes and routes
       // to the exact building — not just a pin at lat/lng coordinates.
-      const stationLabel = stop.station.description || 'Pilot Travel Center'
+      const stationLabel = stop.station.description || stop.station.name || 'Pilot Travel Center'
       let mapsUrl: string
       if (stop.station.address && stop.station.address.trim()) {
         const fullAddress = [stop.station.address, stop.station.city, stop.station.state, stop.station.zip].filter(Boolean).join(', ')
