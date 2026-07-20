@@ -173,7 +173,7 @@ export async function POST(req: NextRequest) {
       const fillLabel = displayAsFull ? 'Fill to 100%' : `${stop.gallons} gal`
       const badge = displayAsFull
         ? '<span style="background:#CC0000;color:#fff;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:0.5px;">FULL</span>'
-        : `<span style="background:#f3d9a4;color:#996515;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;">PARTIAL · ${Math.round((stop.gallons/240)*100)}%</span>`
+        : `<span style="background:#f3d9a4;color:#996515;padding:2px 8px;border-radius:3px;font-size:10px;font-weight:700;">PARTIAL · ${Math.round((stop.gallons/220)*100)}%</span>`
       const detourBadge = stop.detour && stop.detour > 0
         ? `<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:3px;font-size:10px;margin-left:6px;">+${stop.detour.toFixed(1)}mi detour</span>`
         : ''
@@ -491,7 +491,7 @@ export async function POST(req: NextRequest) {
     const plainText = plainTextGreeting +
       `SIMON EXPRESS FUEL PLAN\n${origin} -> ${destination}\n${distance} / ${duration}\n\n${stops.length} ${stops.length === 1 ? 'STOP' : 'STOPS'}:\n` +
       stops.map((stop, i) => {
-        const label = stop.resultsInFullTank ? 'FULL' : `${Math.round((stop.gallons/240)*100)}%`
+        const label = stop.resultsInFullTank ? 'FULL' : `${Math.round((stop.gallons/220)*100)}%`
         const gallonsText = stop.resultsInFullTank ? 'Fill to 100%' : `${stop.gallons} gal`
         return `\n${i+1}. ${stop.station.city}, ${stop.station.state} (Mi ${stop.milesFromOrigin.toFixed(0)})\n   Fill: ${gallonsText} [${label}] @ $${stop.station.yourPrice.toFixed(2)}/gal\n   Cost: $${stop.cost.toFixed(2)} | Save: $${stop.savings.toFixed(2)}`
       }).join('\n') +

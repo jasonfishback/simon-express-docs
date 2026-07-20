@@ -1413,7 +1413,7 @@ export default function FuelPage() {
   const optimizeFuel = (stations: Station[], distMap: Map<string, number>, totalMiles: number, detourMap: Map<string, number> = new Map(), startMile = 0, escapeMiles = 0) => {
     if (totalMiles === 0) { setOptimizedPlan(null); setOptimizerError(''); setSkippedStopIndices(new Set()); return }
     const planEndMile = totalMiles + escapeMiles
-    const TANK = 240, MIN_FUEL = 60, MIN_FILL = 50, MPG = 6, THRESHOLD = 0.20
+    const TANK = 220, MIN_FUEL = 60, MIN_FILL = 50, MPG = 6, THRESHOLD = 0.20  // tank 240->220 (Jason 7/20: 240 planned too tight)
     // Corridor = stations within 10 miles of route. These are always preferred.
     const CORRIDOR_DETOUR = 10
     // Mid-detour zone: 10-20mi off route. Only allowed if SIGNIFICANTLY cheaper than corridor option.
@@ -1540,7 +1540,7 @@ export default function FuelPage() {
         // exists past that point. This prevents "stop 49 miles from origin" cases at any starting level.
         // If no reachable station exists past 3/8, fall through to the 5/8 rule and normal logic.
         if (iter === 0) {
-          const FIRST_STOP_THRESHOLD = 0.375 * TANK  // 90 gal = 3/8 of 240
+          const FIRST_STOP_THRESHOLD = 0.375 * TANK  // 3/8 tank (82.5 gal at 220)
           if (fuel > FIRST_STOP_THRESHOLD) {
             const gallonsUntilFirstStop = fuel - FIRST_STOP_THRESHOLD
             const milesUntilFirstStop = gallonsUntilFirstStop * MPG
@@ -1601,7 +1601,7 @@ export default function FuelPage() {
         // But if you started with a full tank and a station is 40 miles away, arriving fuel is
         // ~97% which is above 5/8, so it's NOT eligible — keep driving until fuel drops lower.
         {
-          const thresholdFuel = 0.625 * TANK  // 150 gal = 5/8 of 240
+          const thresholdFuel = 0.625 * TANK  // 5/8 tank (137.5 gal at 220)
           // Only apply this filter if we currently have MORE than 5/8 (otherwise normal logic kicks in)
           if (fuel > thresholdFuel) {
             const gallonsUntilThreshold = fuel - thresholdFuel
@@ -2322,7 +2322,7 @@ export default function FuelPage() {
                   </div>
                 </div>
                 <p style={{ fontSize: 11, color: 'var(--mute)', fontFamily: 'var(--mono)' }}>
-                  ≈ {((currentFuelEighths/8) * 240).toFixed(0)} gal in 240-gal tank · 6 mpg · min 1/4 tank reserve
+                  ≈ {((currentFuelEighths/8) * 220).toFixed(0)} gal in 220-gal tank · 6 mpg · min 1/4 tank reserve
                 </p>
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
@@ -2471,7 +2471,7 @@ export default function FuelPage() {
                                 if (skippedStopIndices.has(i)) return null
                                 // Shows FULL if the fill results in a full tank (accounting for current level), else PARTIAL
                                 const displayAsFull = !!stop.resultsInFullTank
-                                const fillPct = Math.round((stop.gallons / 240) * 100)
+                                const fillPct = Math.round((stop.gallons / 220) * 100)
                                 const isExpanded = expandedPlanStop === i
                                 // Look ahead: is there a future stop on the plan that's significantly cheaper (≥20¢/gal)?
                                 // Only consider the very next non-skipped stop in the plan.
