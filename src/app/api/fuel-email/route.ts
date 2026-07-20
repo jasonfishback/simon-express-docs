@@ -384,7 +384,7 @@ export async function POST(req: NextRequest) {
       <tr><td style="background:linear-gradient(135deg,#1d4ed8 0%,#1e40af 100%);background-color:#1d4ed8;padding:20px 24px;text-align:center;">
         <div style="color:rgba(255,255,255,0.9);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Cheapest In-Network Route</div>
         <div style="color:#fff;font-size:38px;font-weight:800;line-height:1;letter-spacing:-1px;">$${totalCost.toFixed(2)}</div>
-        <div style="color:rgba(255,255,255,0.85);font-size:12px;margin-top:6px;">lowest net price found — no vendor discount applies on this ${stops.length === 1 ? 'stop' : 'leg'} (our price = pump price there)</div>
+        <div style="color:rgba(255,255,255,0.85);font-size:12px;margin-top:6px;line-height:1.5;">The $0.00 savings is real — no vendor discount applies at ${stops.length === 1 ? 'this stop' : 'these stops'} (our price = pump price there).<br/>It still won because its net price beats every discounted station on this route.</div>
       </td></tr>`}
 
       <!-- Greeting -->
