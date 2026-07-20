@@ -46,7 +46,7 @@ interface FeedDef {
   from: string            // exact address, or "@domain.com" for any sender at that domain
   subjectContains: string
   // Parse every relevant attachment into station rows (may span brands).
-  parse: (attachments: FuelAttachment[]) => { stations: ParsedStation[]; parsedFiles: string[] }
+  parse: (attachments: FuelAttachment[]) => { stations: ParsedStation[]; parsedFiles: string[]; attachmentErrors?: string[] }
 }
 
 const isSpreadsheet = (a: FuelAttachment) =>
@@ -72,19 +72,28 @@ const FEEDS: FeedDef[] = [
     from: '@englandlogistics.com',
     subjectContains: 'Cost-Plus',
     parse: (attachments) => {
+      // Per-attachment isolation (7/20: a TA header change threw and starved
+      // BOTH brands — the Love's file in the same email was fine). A failing
+      // file is reported, the good one still ingests; the email is kept for
+      // retry so the broken brand recovers as soon as the parser is fixed.
       const stations: ParsedStation[] = []
       const parsedFiles: string[] = []
+      const attachmentErrors: string[] = []
       for (const a of attachments.filter(isSpreadsheet)) {
         const buffer = Buffer.from(a.contentBytes, 'base64')
-        if (/loves/i.test(a.name)) {
-          stations.push(...parseLovesXlsx(buffer))
-          parsedFiles.push(a.name)
-        } else if (/ta\s?petro|tapetro/i.test(a.name)) {
-          stations.push(...parseTaXls(buffer))
-          parsedFiles.push(a.name)
+        try {
+          if (/loves/i.test(a.name)) {
+            stations.push(...parseLovesXlsx(buffer))
+            parsedFiles.push(a.name)
+          } else if (/ta\s?petro|tapetro/i.test(a.name)) {
+            stations.push(...parseTaXls(buffer))
+            parsedFiles.push(a.name)
+          }
+        } catch (e: any) {
+          attachmentErrors.push(`${a.name}: ${e?.message || e}`)
         }
       }
-      return { stations, parsedFiles }
+      return { stations, parsedFiles, attachmentErrors }
     },
   },
 ]
@@ -136,15 +145,28 @@ export async function GET(req: NextRequest) {
         const detail: any = { feed: feed.key, id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
         try {
           const attachments = await getMessageAttachments(mailbox, msg.id)
-          const { stations, parsedFiles } = feed.parse(attachments)
+          const { stations, parsedFiles, attachmentErrors = [] } = feed.parse(attachments)
           detail.parsedFiles = parsedFiles
           detail.parsedStations = stations.length
+          if (attachmentErrors.length > 0) {
+            detail.attachmentErrors = attachmentErrors
+            summary.errors.push(...attachmentErrors.map(e => `${msg.subject}: ${e}`))
+            console.error(`[fuel-ingest] attachment parse error(s) on "${msg.subject}":`, attachmentErrors.join(' || '))
+          }
 
           if (stations.length === 0) {
+            if (attachmentErrors.length > 0) {
+              // Pricing files ARE here but none parsed (vendor format change).
+              // KEEP the email so it retries once the parser is fixed —
+              // deleting it here would silently throw away the day's prices.
+              detail.status = 'parse-failed-kept'
+              summary.details.push(detail)
+              continue
+            }
             // Sender+subject matched but there's no parseable pricing file
-            // (a reply, a bounce, a format change). Delete it so it doesn't
-            // re-list every tick — we no longer use isRead to skip handled
-            // mail. A real pricing email always carries its spreadsheet.
+            // (a reply, a bounce). Delete it so it doesn't re-list every tick —
+            // we no longer use isRead to skip handled mail. A real pricing
+            // email always carries its spreadsheet.
             detail.status = 'no-pricing-attachment-deleted'
             detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
             summary.skipped++
@@ -203,8 +225,15 @@ export async function GET(req: NextRequest) {
           console.log(`[fuel-ingest] ${feed.key}: blob written (${merged.length} stations, brands=${delivered.join('+')}, updatedAt=${updatedAt}); snapshot: ${snapshotBlob.url}`)
           detail.uploadResponse = { success: true, count: merged.length, delivered, updatedAt, blobUrl: blob.url, snapshotUrl: snapshotBlob.url }
 
-          await deleteMessage(mailbox, msg.id)
-          detail.status = 'deleted'
+          if (attachmentErrors.length > 0) {
+            // Partial ingest (e.g. Love's parsed, TA didn't): keep the email so
+            // the failed brand retries next tick; re-ingesting the good brand
+            // from the same email is an idempotent replace.
+            detail.status = 'partial-ingested-kept'
+          } else {
+            await deleteMessage(mailbox, msg.id)
+            detail.status = 'deleted'
+          }
           summary.processed++
         } catch (err: any) {
           detail.status = 'error'
