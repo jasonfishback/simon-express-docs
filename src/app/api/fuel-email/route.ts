@@ -371,12 +371,21 @@ export async function POST(req: NextRequest) {
         <div style="color:#888;font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:4px;">Optimized Fuel Plan</div>
       </td></tr>
 
-      <!-- Savings Banner -->
+      <!-- Savings Banner. $0 savings usually means the cheapest NET stop has no
+           negotiated discount (our price = pump — common in CA/NV) — the plan
+           is still the lowest-cost option, so say THAT instead of a $0 headline
+           that reads like a broken plan (7/20 Kevin/FRIK CA→CO). -->
+      ${totalSav >= 1 ? `
       <tr><td style="background:linear-gradient(135deg,#16a34a 0%,#15803d 100%);background-color:#16a34a;padding:20px 24px;text-align:center;">
         <div style="color:rgba(255,255,255,0.9);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Total Savings on This Route</div>
         <div style="color:#fff;font-size:38px;font-weight:800;line-height:1;letter-spacing:-1px;">$${totalSav.toFixed(2)}</div>
         <div style="color:rgba(255,255,255,0.85);font-size:12px;margin-top:6px;">vs. retail pump price across ${stops.length} ${stops.length === 1 ? 'stop' : 'stops'}</div>
-      </td></tr>
+      </td></tr>` : `
+      <tr><td style="background:linear-gradient(135deg,#1d4ed8 0%,#1e40af 100%);background-color:#1d4ed8;padding:20px 24px;text-align:center;">
+        <div style="color:rgba(255,255,255,0.9);font-size:11px;letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-bottom:4px;">Cheapest In-Network Route</div>
+        <div style="color:#fff;font-size:38px;font-weight:800;line-height:1;letter-spacing:-1px;">$${totalCost.toFixed(2)}</div>
+        <div style="color:rgba(255,255,255,0.85);font-size:12px;margin-top:6px;">lowest net price found — no vendor discount applies on this ${stops.length === 1 ? 'stop' : 'leg'} (our price = pump price there)</div>
+      </td></tr>`}
 
       <!-- Greeting -->
       <tr><td style="padding:24px 24px 0 24px;">
