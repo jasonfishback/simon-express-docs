@@ -85,6 +85,40 @@ function stationKey(s: { brand?: string; site: string | number }): string {
   return `${s.brand || 'pfj'}|${s.site}`
 }
 
+/** Brand colors + monograms for map pins and plan cards. No logo image assets
+ *  exist in this repo, so brands render as colored monogram tiles. */
+function brandMeta(brand?: string): { label: string; name: string; bg: string; fg: string } {
+  switch (brand || 'pfj') {
+    case 'loves': return { label: 'L', name: "Love's", bg: '#FFC72C', fg: '#B3282D' }
+    case 'ta': return { label: 'TA', name: 'TA · Petro', bg: '#00447C', fg: '#fff' }
+    default: return { label: 'PFJ', name: 'Pilot · Flying J', bg: '#C8102E', fg: '#fff' }
+  }
+}
+
+/** Mudflap-style plan-stop map pin: bold our-price pill over a brand monogram
+ *  tile. Plain DOM because it lives in a Google Maps OverlayView pane. */
+function makePlanPinEl(station: Station, onClick: () => void): HTMLDivElement {
+  const b = brandMeta(station.brand)
+  const wrap = document.createElement('div')
+  wrap.style.cssText = 'position:absolute;cursor:pointer;transform:translate(-50%,-100%);transform-origin:50% 100%;transition:transform .15s ease;z-index:10;'
+  wrap.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div data-pill style="background:#111827;color:#fff;font:800 13px/1 Inter,system-ui,sans-serif;padding:5px 8px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,.35);white-space:nowrap;transition:background .15s ease;">$${station.yourPrice.toFixed(2)}</div>
+      <div style="height:3px;"></div>
+      <div style="width:30px;height:30px;border-radius:10px;background:${b.bg};color:${b.fg};display:flex;align-items:center;justify-content:center;font:800 ${b.label.length > 2 ? 9 : 12}px/1 Inter,system-ui,sans-serif;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.3);letter-spacing:.3px;">${b.label}</div>
+      <div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:7px solid #fff;margin-top:-2px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));"></div>
+    </div>`
+  wrap.addEventListener('click', e => { e.stopPropagation(); onClick() })
+  return wrap
+}
+
+function stylePlanPin(wrap: HTMLDivElement, sel: boolean) {
+  wrap.style.zIndex = sel ? '30' : '10'
+  wrap.style.transform = `translate(-50%,-100%)${sel ? ' scale(1.18)' : ''}`
+  const pill = wrap.querySelector('[data-pill]') as HTMLElement | null
+  if (pill) pill.style.background = sel ? '#D71920' : '#111827'
+}
+
 /**
  * Build a Google Maps URL that routes to the ACTUAL STREET ADDRESS of a station.
  * Google Maps geocodes the address text and plots driving directions to that specific building,
@@ -248,6 +282,11 @@ export default function FuelPage() {
   const destAutoRef = useRef<any>(null)
   const viaRefs = useRef<Array<HTMLInputElement | null>>([])
   const viaAutoRefs = useRef<Array<any>>([])
+  // Plan-stop brand price pins (OverlayView) + card refs so a pin tap can
+  // scroll that stop's card into view.
+  const planOverlaysRef = useRef<any[]>([])
+  const planPinElsRef = useRef<Array<HTMLDivElement | null>>([])
+  const planCardRefs = useRef<Array<HTMLDivElement | null>>([])
 
   useEffect(() => {
     // Helper: merge amenity data (from Pilot_FJ_Locations.xlsx) into each station by Store #
@@ -551,7 +590,10 @@ export default function FuelPage() {
 
     const stations = filteredStations
 
-    stations.forEach(station => {
+    // While an optimized plan is showing, its stops get brand price pins
+    // (separate effect below) — no circle markers on top of them.
+    const planActive = viewMode === 'route' && showOptimizer && !!optimizedPlan && optimizedPlan.length > 0
+    if (!planActive) stations.forEach(station => {
       const color = getMarkerColor(station, stations)
       const marker = new G.maps.Marker({
         position: { lat: station.lat, lng: station.lng },
@@ -586,7 +628,56 @@ export default function FuelPage() {
       stations.forEach(s => bounds.extend({ lat: s.lat, lng: s.lng }))
       googleMap.current.fitBounds(bounds, { padding: 40 })
     }
-  }, [mapLoaded, data, filteredStations, colorMode, selectedState, viewMode, getMarkerColor])
+  }, [mapLoaded, data, filteredStations, colorMode, selectedState, viewMode, getMarkerColor, showOptimizer, optimizedPlan])
+
+  // Brand price pins for the optimized plan — tap a pin and that stop's card
+  // scrolls into view + expands. Replaces circle markers while a plan shows.
+  useEffect(() => {
+    if (!mapLoaded || !googleMap.current) return
+    const G = (window as any).google
+    if (!G) return
+    planOverlaysRef.current.forEach(o => o.setMap(null))
+    planOverlaysRef.current = []
+    planPinElsRef.current = []
+    const planActive = viewMode === 'route' && showOptimizer && !!optimizedPlan && optimizedPlan.length > 0
+    if (!planActive || !optimizedPlan) return
+    const map = googleMap.current
+    class PlanPin extends G.maps.OverlayView {
+      pos: { lat: number, lng: number }
+      el: HTMLDivElement
+      constructor(pos: { lat: number, lng: number }, el: HTMLDivElement) {
+        super()
+        this.pos = pos
+        this.el = el
+        this.setMap(map)
+      }
+      onAdd() { this.getPanes()?.overlayMouseTarget.appendChild(this.el) }
+      draw() {
+        const p = this.getProjection()?.fromLatLngToDivPixel(new G.maps.LatLng(this.pos.lat, this.pos.lng))
+        if (p) { this.el.style.left = `${p.x}px`; this.el.style.top = `${p.y}px` }
+      }
+      onRemove() { this.el.remove() }
+    }
+    optimizedPlan.forEach((stop, i) => {
+      if (skippedStopIndices.has(i)) return
+      const el = makePlanPinEl(stop.station, () => {
+        setExpandedPlanStop(i)
+        googleMap.current?.panTo({ lat: stop.station.lat, lng: stop.station.lng })
+        planCardRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      })
+      planPinElsRef.current[i] = el
+      planOverlaysRef.current.push(new PlanPin({ lat: stop.station.lat, lng: stop.station.lng }, el))
+    })
+    return () => {
+      planOverlaysRef.current.forEach(o => o.setMap(null))
+      planOverlaysRef.current = []
+    }
+  }, [mapLoaded, viewMode, showOptimizer, optimizedPlan, skippedStopIndices])
+
+  // Highlight the expanded stop's pin (red pill + slight scale-up).
+  useEffect(() => {
+    planPinElsRef.current.forEach((el, i) => { if (el) stylePlanPin(el, i === expandedPlanStop) })
+  }, [expandedPlanStop, optimizedPlan, skippedStopIndices])
 
   // User location marker
   useEffect(() => {
@@ -2037,6 +2128,41 @@ export default function FuelPage() {
           ))}
         </div>
 
+        {/* Map — up top like a real fuel app; zooms to the planned route and
+            carries the brand price pins. One unconditional mount point so the
+            Google Map instance survives view toggles. */}
+        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden', marginBottom: 12 }}>
+          <div ref={mapRef} style={{ height: 420, width: '100%' }} />
+          {!mapLoaded && (
+            <div style={{ height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--mute-2)', fontSize: 13, fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Loading map...
+            </div>
+          )}
+        </div>
+
+        {/* Legend — price-dot colors; hidden while a plan is showing (plan
+            stops render as brand price pins instead of dots) */}
+        {!(viewMode === 'route' && showOptimizer && optimizedPlan && optimizedPlan.length > 0) && (
+        <div style={{ display: 'flex', gap: 16, marginBottom: 14, fontSize: 11, color: 'var(--mute)', alignItems: 'center', flexWrap: 'wrap', fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 500 }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
+            Cheapest
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#CA8A04', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
+            Mid-range
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--red)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
+            Most expensive
+          </span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
+            <span style={{ width: 14, height: 14, borderRadius: '50%', background: '#1D4ED8', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
+            Your Location
+          </span>
+        </div>
+        )}
+
         {/* Route planner panel */}
         {viewMode === 'route' && (
           <div className="sx-card sx-fade-in" style={{ marginBottom: 14 }}>
@@ -2488,7 +2614,7 @@ export default function FuelPage() {
                                   break // only check the immediate next stop, regardless of whether it qualifies
                                 }
                                 return (
-                                  <div key={i} style={{
+                                  <div key={i} ref={el => { planCardRefs.current[i] = el }} style={{
                                     borderBottom: i < optimizedPlan.length - 1 ? '1px solid var(--line)' : 'none',
                                   }}>
                                     <div onClick={() => {
@@ -2501,15 +2627,25 @@ export default function FuelPage() {
                                       transition: 'background var(--t-fast) var(--ease)',
                                     }}>
                                     <div style={{ display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                                      {/* Stop number circle */}
-                                      <div style={{
-                                        width: 34, height: 34, borderRadius: '50%',
-                                        background: 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)',
-                                        color: '#fff',
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        fontFamily: 'var(--display)', fontSize: 16, fontWeight: 600, flexShrink: 0,
-                                        boxShadow: 'var(--sh-red)',
-                                      }}>{i + 1}</div>
+                                      {/* Brand tile + stop number badge (matches the map pin) */}
+                                      <div style={{ position: 'relative', flexShrink: 0 }}>
+                                        <div style={{
+                                          width: 40, height: 40, borderRadius: 12,
+                                          background: brandMeta(stop.station.brand).bg,
+                                          color: brandMeta(stop.station.brand).fg,
+                                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          fontFamily: 'var(--body)', fontWeight: 800,
+                                          fontSize: brandMeta(stop.station.brand).label.length > 2 ? 11 : 14,
+                                          letterSpacing: '0.3px',
+                                          boxShadow: 'inset 0 1px 0 rgba(255,255,255,.2), var(--sh-sm)',
+                                        }} title={brandMeta(stop.station.brand).name}>{brandMeta(stop.station.brand).label}</div>
+                                        <div style={{
+                                          position: 'absolute', top: -6, left: -6, width: 18, height: 18, borderRadius: '50%',
+                                          background: 'var(--ink)', color: '#fff',
+                                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                          fontSize: 10, fontWeight: 800, border: '2px solid var(--white)',
+                                        }}>{i + 1}</div>
+                                      </div>
                                       <div style={{ flex: 1, minWidth: 0 }}>
                                         <p style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)', marginBottom: 3, fontFamily: 'var(--body)' }}>
                                           {stationLabel(stop.station)} — {stop.station.city}, {stop.station.state}
@@ -2526,7 +2662,6 @@ export default function FuelPage() {
                                         )}
                                         <div style={{ display: 'flex', gap: 14, fontSize: 12, color: 'var(--mute)', marginBottom: 10, flexWrap: 'wrap' }}>
                                           <span className="sx-mono">📍 Mile {stop.milesFromOrigin.toFixed(0)}</span>
-                                          <span className="sx-mono">💵 ${stop.station.yourPrice.toFixed(2)}/gal</span>
                                           {stop.detour !== undefined && stop.detour > 2 && (
                                             <span className="sx-mono" style={{ color: stop.detour > 20 ? '#92400E' : 'var(--mute)' }}>
                                               ↪ {stop.detour.toFixed(0)} mi detour
@@ -2536,6 +2671,34 @@ export default function FuelPage() {
                                             {isExpanded ? '▲ Less' : '▼ Maps'}
                                           </span>
                                         </div>
+                                        {/* OUR price bold, pump price struck through, per-gal discount */}
+                                        <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 10, marginBottom: 10, flexWrap: 'wrap' }}>
+                                          <div>
+                                            <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--ink)', lineHeight: 1 }}>
+                                              ${stop.station.yourPrice.toFixed(2)}<span style={{ fontSize: 13, color: 'var(--mute)' }}>/gal</span>
+                                            </p>
+                                            <p className="sx-kicker" style={{ marginTop: 3 }}>Your price</p>
+                                          </div>
+                                          {stop.station.savings > 0 && (
+                                            <div style={{ textAlign: 'right' }}>
+                                              <p style={{ fontSize: 13, color: 'var(--mute)' }}>
+                                                Pump price <s className="sx-mono" style={{ color: 'var(--mute-2)', fontWeight: 600 }}>${(stop.station.yourPrice + stop.station.savings).toFixed(2)}</s>
+                                              </p>
+                                              <span className="sx-pill sx-pill-green" style={{ marginTop: 4, display: 'inline-block' }}>
+                                                Save ${stop.station.savings.toFixed(2)}/gal
+                                              </span>
+                                            </div>
+                                          )}
+                                        </div>
+                                        {/* Amenities (PFJ amenity file) */}
+                                        {(stop.station.parking || stop.station.showers || stop.station.catScale || stop.station.dieselLanes) ? (
+                                          <div style={{ display: 'flex', gap: 12, fontSize: 12, color: 'var(--mute)', marginBottom: 10, flexWrap: 'wrap' }}>
+                                            {stop.station.parking ? <span>🅿 {stop.station.parking} parking</span> : null}
+                                            {stop.station.showers ? <span>🚿 {stop.station.showers} showers</span> : null}
+                                            {stop.station.catScale ? <span>⚖ CAT scale</span> : null}
+                                            {stop.station.dieselLanes ? <span>⛽ {stop.station.dieselLanes} diesel lanes</span> : null}
+                                          </div>
+                                        ) : null}
                                         <div style={{
                                           background: displayAsFull ? '#FFF5F5' : 'var(--amber-bg)',
                                           border: '2px solid ' + (displayAsFull ? 'var(--red)' : 'var(--amber-line)'),
@@ -2660,8 +2823,14 @@ export default function FuelPage() {
                                   ${optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.cost, 0).toFixed(2)}
                                 </span>
                               </div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, alignItems: 'baseline' }}>
+                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>Same fuel at pump prices:</span>
+                                <span className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: 'var(--mute-2)', textDecoration: 'line-through' }}>
+                                  ${optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.cost + p.savings, 0).toFixed(2)}
+                                </span>
+                              </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 10, borderTop: '1px solid rgba(255,255,255,0.10)', alignItems: 'baseline' }}>
-                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>💰 Total savings vs retail:</span>
+                                <span style={{ fontSize: 13, color: 'var(--mute-3)' }}>💰 Your discount keeps:</span>
                                 <span className="sx-display sx-mono" style={{ fontSize: 22, color: 'var(--green)' }}>
                                   ${optimizedPlan.filter((_, idx) => !skippedStopIndices.has(idx)).reduce((s, p) => s + p.savings, 0).toFixed(2)}
                                 </span>
@@ -2832,36 +3001,6 @@ export default function FuelPage() {
             </p>
           </div>
         )}
-
-        {/* Map */}
-        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden', marginBottom: 12 }}>
-          <div ref={mapRef} style={{ height: 420, width: '100%' }} />
-          {!mapLoaded && (
-            <div style={{ height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--mute-2)', fontSize: 13, fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-              Loading map...
-            </div>
-          )}
-        </div>
-
-        {/* Legend */}
-        <div style={{ display: 'flex', gap: 16, marginBottom: 14, fontSize: 11, color: 'var(--mute)', alignItems: 'center', flexWrap: 'wrap', fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase', fontWeight: 500 }}>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--green)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
-            Cheapest
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#CA8A04', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
-            Mid-range
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--red)', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
-            Most expensive
-          </span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <span style={{ width: 14, height: 14, borderRadius: '50%', background: '#1D4ED8', display: 'inline-block', boxShadow: '0 1px 2px rgba(0,0,0,0.15)' }}/>
-            Your Location
-          </span>
-        </div>
 
         {/* Selected station detail */}
         {selectedStation && (
