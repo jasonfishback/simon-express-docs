@@ -8,7 +8,7 @@
 
 import { useEffect, useState } from 'react'
 
-interface HosNight { date: string; backHrs: number }
+interface HosNight { date: string; label?: string; backHrs: number; cumulativeHrs?: number | null }
 export interface HosSummary {
   reliable: boolean
   fetchedAt: string | null
@@ -71,17 +71,40 @@ export default function HoursPanel({ open, onClose, avoidNight, onAvoidNight }: 
             {clock('Shift left', hos.dutyLeftHrs, 'var(--ink)')}
             {clock('Cycle left', hos.cycleLeftHrs, 'var(--green)')}
           </div>
-          {(hos.recapTonightHrs != null || hos.nights.length > 0) && (
-            <div style={{ marginTop: 12 }}>
+          {hos.nights.length > 0 && (
+            <div style={{ marginTop: 14 }}>
               <p className="sx-kicker" style={{ marginBottom: 6 }}>Hours back each night</p>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                {hos.recapTonightHrs != null && (
-                  <span className="sx-pill sx-pill-green">Tonight +{hos.recapTonightHrs.toFixed(1)}h</span>
-                )}
-                {hos.nights.slice(0, 6).map(n => (
-                  <span key={n.date} className="sx-pill">{n.date.slice(5)} +{n.backHrs.toFixed(1)}h</span>
+              <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--r-md)', overflow: 'hidden' }}>
+                {hos.nights.slice(0, 7).map((n, i) => (
+                  <div
+                    key={n.date}
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      gap: 10, padding: '10px 12px', minHeight: 44,
+                      borderBottom: i < Math.min(7, hos.nights.length) - 1 ? '1px solid var(--line)' : 'none',
+                      background: i === 0 ? 'rgba(22,163,74,0.06)' : 'var(--white)',
+                    }}
+                  >
+                    <span style={{ fontSize: 13, fontWeight: i === 0 ? 700 : 500, color: 'var(--ink)' }}>
+                      {n.label || n.date}
+                    </span>
+                    <span style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexShrink: 0 }}>
+                      <span className="sx-mono" style={{ fontSize: 15, fontWeight: 700, color: 'var(--green)' }}>
+                        +{n.backHrs.toFixed(1)}h
+                      </span>
+                      {n.cumulativeHrs != null && (
+                        <span className="sx-mono" style={{ fontSize: 12, color: 'var(--mute)' }}>
+                          → {n.cumulativeHrs.toFixed(1)} avail
+                        </span>
+                      )}
+                    </span>
+                  </div>
                 ))}
               </div>
+              <p style={{ fontSize: 11, color: 'var(--mute-2)', marginTop: 6, lineHeight: 1.5 }}>
+                Hours come back on the 70 as each day ages out of your 8-day window. Tomorrow night is from
+                the ELD; later nights are estimates from your logged duty.
+              </p>
             </div>
           )}
         </>
