@@ -2214,11 +2214,35 @@ export default function FuelPage() {
         {/* Map — up top like a real fuel app; zooms to the planned route and
             carries the brand price pins. One unconditional mount point so the
             Google Map instance survives view toggles. */}
-        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden', marginBottom: 12 }}>
+        <div className="sx-card-solid" style={{ padding: 0, overflow: 'hidden', marginBottom: 12, position: 'relative' }}>
           <div ref={mapRef} style={{ height: 420, width: '100%' }} />
           {!mapLoaded && (
             <div style={{ height: 420, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--mute-2)', fontSize: 13, fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
               Loading map...
+            </div>
+          )}
+          {/* Quick toggle floating on the map: plan stops only (default) vs
+              every station on the route line. */}
+          {viewMode === 'route' && showOptimizer && optimizedPlan && optimizedPlan.length > 0 && extraRouteStops.length > 0 && (
+            <div style={{ position: 'absolute', top: 10, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 10, pointerEvents: 'none' }}>
+              <div style={{ display: 'flex', background: '#fff', borderRadius: 999, boxShadow: '0 2px 12px rgba(0,0,0,0.22)', padding: 3, pointerEvents: 'auto' }}>
+                {([false, true] as const).map(all => (
+                  <button
+                    key={String(all)}
+                    onClick={() => { setShowAllRouteStops(all); if (!all) setExpandedExtraIdx(null) }}
+                    style={{
+                      fontFamily: 'var(--display)', fontSize: 12, fontWeight: 600, letterSpacing: '0.06em',
+                      textTransform: 'uppercase', padding: '8px 14px', borderRadius: 999, border: 'none',
+                      cursor: 'pointer', whiteSpace: 'nowrap',
+                      background: showAllRouteStops === all ? 'linear-gradient(180deg, #1A1B1F 0%, #0B0B0C 100%)' : 'transparent',
+                      color: showAllRouteStops === all ? '#fff' : 'var(--ink)',
+                      transition: 'all var(--t-fast) var(--ease)',
+                    }}
+                  >
+                    {all ? `🗺 All stops (+${extraRouteStops.length})` : '⛽ Plan stops'}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
