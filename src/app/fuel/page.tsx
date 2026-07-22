@@ -1656,7 +1656,13 @@ export default function FuelPage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        order_num: useMyLoad ? currentLoad?.order_num ?? null : null,
+        // Coverage is LOAD-SCOPED by order_num, so a next-load-only plan must
+        // log the NEXT load — logging the current one would mark a load
+        // covered that was never planned (and suppress the morning text).
+        // Both selected: the run starts on the current load, so log that.
+        order_num: useMyLoad
+          ? (selLoads.current ? currentLoad?.order_num : nextLoad?.order_num) ?? null
+          : null,
         used_my_load: useMyLoad,
         origin, destination,
         dest_in_ca: caEscapeMiles > 0,
@@ -2370,23 +2376,35 @@ export default function FuelPage() {
         {/* Route planner panel */}
         {viewMode === 'route' && (
           <div className="sx-card sx-fade-in" style={{ marginBottom: 14 }}>
-            {!routePanelOpen ? (
+            {!routePanelOpen && (
               <button
                 onClick={() => setRoutePanelOpen(true)}
                 style={{ width: '100%', minHeight: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, background: 'var(--white)', border: '1px solid var(--line)', borderRadius: 'var(--r-md)', padding: '10px 14px', cursor: 'pointer', boxShadow: 'var(--sh-sm)' }}
               >
-                <span style={{ textAlign: 'left', minWidth: 0 }}>
+                {/* Two lines so the DESTINATION is never the part that gets
+                    clipped on a 375px phone (a multi-stop route line is far
+                    too long to fit on one). */}
+                <span style={{ textAlign: 'left', minWidth: 0, flex: 1 }}>
                   <span className="sx-kicker" style={{ display: 'block' }}>
-                    Route · {['Empty','1/8','1/4','3/8','1/2','5/8','3/4','7/8','Full'][currentFuelEighths]} tank
+                    {['Empty','1/8','1/4','3/8','1/2','5/8','3/4','7/8','Full'][currentFuelEighths]} tank
+                    {viaPoints.filter(v => v.trim()).length > 0 ? ` · ${viaPoints.filter(v => v.trim()).length + 1} legs` : ''}
+                  </span>
+                  <span style={{ fontSize: 13, color: 'var(--mute)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    from {origin}
                   </span>
                   <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {origin} → {viaPoints.filter(v => v.trim()).map(v => `${v} → `).join('')}{destination}
+                    to {destination}
                   </span>
                 </span>
                 <span className="sx-pill" style={{ flexShrink: 0 }}>✏️ Edit</span>
               </button>
-            ) : (
-            <>
+            )}
+            {/* Kept MOUNTED and hidden with CSS when collapsed — unmounting
+                would orphan the Places autocomplete already attached to these
+                inputs (attachAutocomplete's acRef guard never re-attaches to a
+                fresh DOM node), same reason the manual-entry block below is
+                hidden rather than removed. */}
+            <div style={{ display: routePanelOpen ? 'block' : 'none' }}>
             <p className="sx-kicker" style={{ marginBottom: 12 }}>
               Plan Your Route
             </p>
@@ -2394,13 +2412,29 @@ export default function FuelPage() {
               {/* Step 1 — load picker. Big thumb-size buttons; multi-select
                   chains current + next into one multi-stop plan and kills the
                   wrong-trip problem (the driver says which run they're on). */}
-              {currentLoad && !manualRoute && (
+              {/* One assigned load = nothing to choose. Show it plainly
+                  instead of asking a question with a single dead checkbox. */}
+              {currentLoad && !nextLoad && !manualRoute && (
+                <div style={{
+                  padding: '14px 16px',
+                  background: 'rgba(22,163,74,0.06)',
+                  border: '1px solid rgba(22,163,74,0.25)',
+                  borderRadius: 'var(--r-md)',
+                  boxShadow: 'var(--sh-sm)',
+                }}>
+                  <p className="sx-kicker" style={{ color: 'var(--green-deep)' }}>🚚 Your load · #{currentLoad.order_num}</p>
+                  <p className="sx-display" style={{ fontSize: 17, marginTop: 8, color: 'var(--ink)' }}>
+                    {currentLoad.origin} → {currentLoad.destination}
+                  </p>
+                </div>
+              )}
+              {currentLoad && nextLoad && !manualRoute && (
                 <div>
                   <p className="sx-kicker" style={{ marginBottom: 8 }}>Step 1 · Which trip are you fueling?</p>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {([
                       { key: 'current' as const, load: currentLoad, tag: '🚚 Current load' },
-                      ...(nextLoad ? [{ key: 'next' as const, load: nextLoad, tag: '📅 Next load' }] : []),
+                      { key: 'next' as const, load: nextLoad, tag: '📅 Next load' },
                     ]).map(({ key, load, tag }) => {
                       const on = selLoads[key]
                       return (
@@ -2433,19 +2467,23 @@ export default function FuelPage() {
                       )
                     })}
                   </div>
-                  {selLoads.current && selLoads.next && nextLoad && (
+                  {/* Explain the chained run only while they're choosing —
+                      once a plan exists the results pill says the same thing. */}
+                  {selLoads.current && selLoads.next && (!optimizedPlan || optimizedPlan.length === 0) && (
                     <p style={{ fontSize: 12, color: 'var(--green-deep)', marginTop: 8, fontWeight: 600 }}>
                       ✓ Multi-stop plan: deliver #{currentLoad.order_num}, deadhead to pickup, deliver #{nextLoad.order_num} — one fuel plan for the whole run.
                     </p>
                   )}
-                  <button
-                    className="sx-btn-soft"
-                    style={{ marginTop: 10, minHeight: 48 }}
-                    onClick={() => { setManualRoute(true); setUseMyLoad(false); resetRouteResults(); setViaPoints([]) }}
-                  >
-                    ✏️ Run a different route
-                  </button>
                 </div>
+              )}
+              {currentLoad && !manualRoute && (
+                <button
+                  className="sx-btn-soft"
+                  style={{ minHeight: 48 }}
+                  onClick={() => { setManualRoute(true); setUseMyLoad(false); resetRouteResults(); setViaPoints([]) }}
+                >
+                  ✏️ Run a different route
+                </button>
               )}
               {currentLoad && manualRoute && (
                 <button
@@ -2708,15 +2746,18 @@ export default function FuelPage() {
                 >
                   {routeLoading ? 'Finding Route...' : '🛣 Find Fuel Stops'}
                 </button>
-                {routeStations.length > 0 && (
+                {/* "Clear" drops all the way out to the all-stations browser,
+                    which is jarring mid-trip — offer it only to drivers who
+                    typed a route by hand. Load-picker users switch trips with
+                    the buttons above instead. */}
+                {routeStations.length > 0 && (!currentLoad || manualRoute) && (
                   <button onClick={clearRoute} className="sx-btn-ghost">
                     Clear
                   </button>
                 )}
               </div>
             </div>
-            </>
-            )}
+            </div>
             {routeError && <p style={{ fontSize: 13, color: 'var(--red)', marginTop: 10, fontWeight: 500 }}>{routeError}</p>}
             {routeStartNote && <p style={{ fontSize: 13, color: 'var(--ink, #18181b)', marginTop: 10, fontWeight: 600 }}>{routeStartNote}</p>}
             {caEscapeMiles > 0 && (
@@ -2927,7 +2968,7 @@ export default function FuelPage() {
                                           {avoidNight && (() => {
                                             const t = nightArrival(stop.milesFromOrigin - truckStartMile)
                                             return t ? (
-                                              <span className="sx-pill sx-pill-amber" style={{ fontSize: 10 }}>🌙 lands ~{t} (rough)</span>
+                                              <span className="sx-pill sx-pill-amber" style={{ fontSize: 12 }}>🌙 ~{t} arrival</span>
                                             ) : null
                                           })()}
                                           <span style={{ color: 'var(--mute-2)', fontSize: 11, marginLeft: 'auto', fontFamily: 'var(--display)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
@@ -3130,8 +3171,8 @@ export default function FuelPage() {
                                                 </div>
                                               ) : null}
                                               <div style={{ display: 'flex', gap: 10, paddingTop: 12 }}>
-                                                <a href={appleMapsUrl(x.station)} onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none', minHeight: 44 }}>🍎 Apple Maps</a>
-                                                <a href={googleMapsUrl(x.station)} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none', minHeight: 44 }}>🗺 Google Maps</a>
+                                                <a href={appleMapsUrl(x.station)} onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none', minHeight: 48 }}>🍎 Apple Maps</a>
+                                                <a href={googleMapsUrl(x.station)} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none', minHeight: 48 }}>🗺 Google Maps</a>
                                               </div>
                                             </div>
                                           )}

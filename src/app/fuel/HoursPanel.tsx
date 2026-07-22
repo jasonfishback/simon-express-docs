@@ -50,7 +50,7 @@ export default function HoursPanel({ open, onClose, avoidNight, onAvoidNight }: 
     <div className="sx-card sx-fade-in" style={{ marginTop: 12 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
         <p className="sx-kicker">🕐 My Hours &amp; Stops</p>
-        <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 22, color: 'var(--mute-2)', cursor: 'pointer', lineHeight: 1, padding: 4 }}>×</button>
+        <button onClick={onClose} aria-label="Close hours panel" style={{ background: 'none', border: 'none', fontSize: 24, color: 'var(--mute-2)', cursor: 'pointer', lineHeight: 1, minWidth: 48, minHeight: 48 }}>×</button>
       </div>
 
       {hos === 'loading' ? (
@@ -98,8 +98,11 @@ export default function HoursPanel({ open, onClose, avoidNight, onAvoidNight }: 
           transition: 'all var(--t-fast) var(--ease)',
         }}
       >
-        🌙 Avoid night driving{avoidNight ? ' · ON — night arrivals flagged on your plan' : ''}
+        🌙 {avoidNight ? 'Flagging night arrivals · ON' : 'Flag stops I’d reach at night'}
       </button>
+      <p style={{ fontSize: 11, color: 'var(--mute-2)', marginTop: 6, textAlign: 'center', lineHeight: 1.5 }}>
+        Marks any stop you&apos;d roll into between 9pm and 5am. It doesn&apos;t change the plan — the cheapest stops stay the plan.
+      </p>
     </div>
   )
 }
