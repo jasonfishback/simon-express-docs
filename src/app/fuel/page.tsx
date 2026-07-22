@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import stationAmenities from '../../data/station-amenities.json'
 import DriverBadge from '@/components/DriverBadge'
 import { getDriverFromDocumentCookie } from '@/lib/driver-auth'
@@ -117,6 +117,52 @@ function stylePlanPin(wrap: HTMLDivElement, sel: boolean) {
   wrap.style.transform = `translate(-50%,-100%)${sel ? ' scale(1.18)' : ''}`
   const pill = wrap.querySelector('[data-pill]') as HTMLElement | null
   if (pill) pill.style.background = sel ? '#D71920' : '#111827'
+}
+
+/** Muted mini pin for a non-plan station that's right on the route — visible
+ *  only when the driver taps "show more stops". Smaller and lighter than the
+ *  plan pins so the optimized stops stay dominant. */
+function makeExtraPinEl(station: Station, onClick: () => void): HTMLDivElement {
+  const b = brandMeta(station.brand)
+  const wrap = document.createElement('div')
+  wrap.style.cssText = 'position:absolute;cursor:pointer;transform:translate(-50%,-100%);transform-origin:50% 100%;transition:transform .15s ease;z-index:5;'
+  wrap.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;">
+      <div data-pill style="background:#fff;color:#111827;font:700 11px/1 Inter,system-ui,sans-serif;padding:4px 6px;border-radius:7px;border:1px solid #d1d5db;box-shadow:0 1px 4px rgba(0,0,0,.25);white-space:nowrap;transition:background .15s ease,color .15s ease;">$${station.yourPrice.toFixed(2)}</div>
+      <div style="height:2px;"></div>
+      <div style="width:18px;height:18px;border-radius:6px;background:${b.bg};color:${b.fg};display:flex;align-items:center;justify-content:center;font:800 ${b.label.length > 2 ? 6 : 9}px/1 Inter,system-ui,sans-serif;border:1.5px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.25);">${b.label}</div>
+    </div>`
+  wrap.addEventListener('click', e => { e.stopPropagation(); onClick() })
+  return wrap
+}
+
+function styleExtraPin(wrap: HTMLDivElement, sel: boolean) {
+  wrap.style.zIndex = sel ? '20' : '5'
+  wrap.style.transform = `translate(-50%,-100%)${sel ? ' scale(1.25)' : ''}`
+  const pill = wrap.querySelector('[data-pill]') as HTMLElement | null
+  if (pill) {
+    pill.style.background = sel ? '#D71920' : '#fff'
+    pill.style.color = sel ? '#fff' : '#111827'
+  }
+}
+
+/** "Exactly on the route": detour (out-and-back) at most this many miles.
+ *  Corridor stations can sit up to 10 mi off the line; these can't. */
+const ON_ROUTE_DETOUR_MI = 6
+
+/** Attach an HTML element to the map as a clickable overlay pin. */
+function createPinOverlay(G: any, map: any, pos: { lat: number, lng: number }, el: HTMLDivElement): any {
+  const Pin = class extends G.maps.OverlayView {
+    onAdd() { this.getPanes()?.overlayMouseTarget.appendChild(el) }
+    draw() {
+      const p = this.getProjection()?.fromLatLngToDivPixel(new G.maps.LatLng(pos.lat, pos.lng))
+      if (p) { el.style.left = `${p.x}px`; el.style.top = `${p.y}px` }
+    }
+    onRemove() { el.remove() }
+  }
+  const pin = new Pin()
+  pin.setMap(map)
+  return pin
 }
 
 /**
@@ -287,6 +333,13 @@ export default function FuelPage() {
   const planOverlaysRef = useRef<any[]>([])
   const planPinElsRef = useRef<Array<HTMLDivElement | null>>([])
   const planCardRefs = useRef<Array<HTMLDivElement | null>>([])
+  // "Show more stops on this route": non-plan stations sitting right on the
+  // route line. Plan always stays optimized-cheapest — these are informational.
+  const [showAllRouteStops, setShowAllRouteStops] = useState(false)
+  const [expandedExtraIdx, setExpandedExtraIdx] = useState<number | null>(null)
+  const extraOverlaysRef = useRef<any[]>([])
+  const extraPinElsRef = useRef<Array<HTMLDivElement | null>>([])
+  const extraRowRefs = useRef<Array<HTMLDivElement | null>>([])
 
   useEffect(() => {
     // Helper: merge amenity data (from Pilot_FJ_Locations.xlsx) into each station by Store #
@@ -642,22 +695,6 @@ export default function FuelPage() {
     const planActive = viewMode === 'route' && showOptimizer && !!optimizedPlan && optimizedPlan.length > 0
     if (!planActive || !optimizedPlan) return
     const map = googleMap.current
-    class PlanPin extends G.maps.OverlayView {
-      pos: { lat: number, lng: number }
-      el: HTMLDivElement
-      constructor(pos: { lat: number, lng: number }, el: HTMLDivElement) {
-        super()
-        this.pos = pos
-        this.el = el
-        this.setMap(map)
-      }
-      onAdd() { this.getPanes()?.overlayMouseTarget.appendChild(this.el) }
-      draw() {
-        const p = this.getProjection()?.fromLatLngToDivPixel(new G.maps.LatLng(this.pos.lat, this.pos.lng))
-        if (p) { this.el.style.left = `${p.x}px`; this.el.style.top = `${p.y}px` }
-      }
-      onRemove() { this.el.remove() }
-    }
     optimizedPlan.forEach((stop, i) => {
       if (skippedStopIndices.has(i)) return
       const el = makePlanPinEl(stop.station, () => {
@@ -666,7 +703,7 @@ export default function FuelPage() {
         planCardRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
       })
       planPinElsRef.current[i] = el
-      planOverlaysRef.current.push(new PlanPin({ lat: stop.station.lat, lng: stop.station.lng }, el))
+      planOverlaysRef.current.push(createPinOverlay(G, map, { lat: stop.station.lat, lng: stop.station.lng }, el))
     })
     return () => {
       planOverlaysRef.current.forEach(o => o.setMap(null))
@@ -678,6 +715,52 @@ export default function FuelPage() {
   useEffect(() => {
     planPinElsRef.current.forEach((el, i) => { if (el) stylePlanPin(el, i === expandedPlanStop) })
   }, [expandedPlanStop, optimizedPlan, skippedStopIndices])
+
+  // Non-plan stations sitting essentially ON the route line, sorted by mile.
+  // The plan always stays optimized-cheapest — these are driver-requested
+  // visibility into everything else along the way.
+  const extraRouteStops = useMemo(() => {
+    if (viewMode !== 'route' || !showOptimizer || !optimizedPlan || optimizedPlan.length === 0) return []
+    return routeStations
+      .filter(s => !optimizedPlan.some(p => stationKey(p.station) === stationKey(s)))
+      .filter(s => (routeDetourMap.get(stationKey(s)) ?? Infinity) <= ON_ROUTE_DETOUR_MI)
+      .map(s => ({
+        station: s,
+        mile: routeDistanceMap.get(stationKey(s)) ?? 0,
+        detour: routeDetourMap.get(stationKey(s)) ?? 0,
+      }))
+      .sort((a, b) => a.mile - b.mile)
+  }, [viewMode, showOptimizer, optimizedPlan, routeStations, routeDetourMap, routeDistanceMap])
+
+  // Mini pins for the on-route extras — only while the driver has them shown.
+  useEffect(() => {
+    if (!mapLoaded || !googleMap.current) return
+    const G = (window as any).google
+    if (!G) return
+    extraOverlaysRef.current.forEach(o => o.setMap(null))
+    extraOverlaysRef.current = []
+    extraPinElsRef.current = []
+    if (!showAllRouteStops || extraRouteStops.length === 0) return
+    const map = googleMap.current
+    extraRouteStops.forEach((x, j) => {
+      const el = makeExtraPinEl(x.station, () => {
+        setExpandedExtraIdx(j)
+        googleMap.current?.panTo({ lat: x.station.lat, lng: x.station.lng })
+        extraRowRefs.current[j]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      })
+      extraPinElsRef.current[j] = el
+      extraOverlaysRef.current.push(createPinOverlay(G, map, { lat: x.station.lat, lng: x.station.lng }, el))
+    })
+    return () => {
+      extraOverlaysRef.current.forEach(o => o.setMap(null))
+      extraOverlaysRef.current = []
+    }
+  }, [mapLoaded, showAllRouteStops, extraRouteStops])
+
+  // Highlight the tapped extra stop's mini pin.
+  useEffect(() => {
+    extraPinElsRef.current.forEach((el, j) => { if (el) styleExtraPin(el, j === expandedExtraIdx) })
+  }, [expandedExtraIdx, extraRouteStops, showAllRouteStops])
 
   // User location marker
   useEffect(() => {
@@ -2798,6 +2881,69 @@ export default function FuelPage() {
                                 )
                               })}
                             </div>
+
+                            {/* More fuel stops exactly on the route — the plan
+                                above stays optimized-cheapest; this is opt-in
+                                visibility into everything else on the line. */}
+                            {extraRouteStops.length > 0 && (
+                              <div style={{ marginTop: 12 }}>
+                                <button
+                                  className="sx-btn-soft"
+                                  style={{ width: '100%', textAlign: 'center', justifyContent: 'center' }}
+                                  onClick={() => { setShowAllRouteStops(v => !v); setExpandedExtraIdx(null) }}
+                                >
+                                  {showAllRouteStops
+                                    ? '▲ Hide extra stops — back to the plan'
+                                    : `⛽ Show ${extraRouteStops.length} more fuel ${extraRouteStops.length === 1 ? 'stop' : 'stops'} on this route`}
+                                </button>
+                                {showAllRouteStops && (
+                                  <div className="sx-fade-in" style={{ background: 'var(--white)', border: '1px solid var(--line)', borderRadius: 'var(--r-lg)', marginTop: 8, overflow: 'hidden' }}>
+                                    <p className="sx-kicker" style={{ padding: '12px 16px 4px' }}>
+                                      Also on your route · sorted by mile
+                                    </p>
+                                    {extraRouteStops.map((x, j) => {
+                                      const isOpen = expandedExtraIdx === j
+                                      const b = brandMeta(x.station.brand)
+                                      return (
+                                        <div key={stationKey(x.station)} ref={el => { extraRowRefs.current[j] = el }} style={{ borderBottom: j < extraRouteStops.length - 1 ? '1px solid var(--line)' : 'none' }}>
+                                          <div
+                                            onClick={() => {
+                                              setExpandedExtraIdx(isOpen ? null : j)
+                                              if (googleMap.current) googleMap.current.panTo({ lat: x.station.lat, lng: x.station.lng })
+                                            }}
+                                            style={{ padding: '12px 16px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10, background: isOpen ? 'var(--paper-warm)' : 'transparent', transition: 'background var(--t-fast) var(--ease)' }}
+                                          >
+                                            <div style={{ width: 28, height: 28, borderRadius: 9, background: b.bg, color: b.fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: b.label.length > 2 ? 8 : 11, flexShrink: 0 }} title={b.name}>{b.label}</div>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                              <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                {stationLabel(x.station)} — {x.station.city}, {x.station.state}
+                                              </p>
+                                              <p className="sx-mono" style={{ fontSize: 11, color: 'var(--mute)', marginTop: 2 }}>
+                                                Mile {Math.round(x.mile)}{x.detour > 2 ? ` · +${Math.round(x.detour)} mi off route` : ' · on route'}
+                                              </p>
+                                            </div>
+                                            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                              <p className="sx-mono" style={{ fontSize: 16, fontWeight: 700, color: 'var(--ink)' }}>${x.station.yourPrice.toFixed(2)}</p>
+                                              {x.station.savings > 0 && (
+                                                <p className="sx-mono" style={{ fontSize: 11, color: 'var(--green)', fontWeight: 600 }}>save ${x.station.savings.toFixed(2)}/gal</p>
+                                              )}
+                                            </div>
+                                          </div>
+                                          {isOpen && (
+                                            <div style={{ padding: '0 16px 12px', background: 'var(--paper-warm)' }}>
+                                              <div style={{ display: 'flex', gap: 10, paddingTop: 10 }}>
+                                                <a href={appleMapsUrl(x.station)} onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none' }}>🍎 Apple Maps</a>
+                                                <a href={googleMapsUrl(x.station)} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()} className="sx-btn-ghost" style={{ flex: 1, textDecoration: 'none' }}>🗺 Google Maps</a>
+                                              </div>
+                                            </div>
+                                          )}
+                                        </div>
+                                      )
+                                    })}
+                                  </div>
+                                )}
+                              </div>
+                            )}
 
                             {/* Summary box */}
                             <div style={{
