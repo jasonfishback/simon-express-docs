@@ -3195,12 +3195,19 @@ export default function FuelPage() {
               </a>
             )}
 
-            <div style={{ display: 'flex', gap: 24, marginTop: 14 }}>
+            <div style={{ display: 'flex', gap: 24, marginTop: 14, flexWrap: 'wrap' }}>
               <div>
                 <p className="sx-kicker" style={{ marginBottom: 4 }}>Your Price</p>
                 <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--red)' }}>${selectedStation.yourPrice.toFixed(2)}</p>
                 <p style={{ fontSize: 10, color: 'var(--mute-2)', fontFamily: 'var(--display)', letterSpacing: '0.10em', textTransform: 'uppercase' }}>per gallon</p>
               </div>
+              {selectedStation.savings > 0 && (
+                <div>
+                  <p className="sx-kicker" style={{ marginBottom: 4 }}>Pump Price</p>
+                  <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--mute-2)', textDecoration: 'line-through' }}>${(selectedStation.yourPrice + selectedStation.savings).toFixed(2)}</p>
+                  <p style={{ fontSize: 10, color: 'var(--mute-2)', fontFamily: 'var(--display)', letterSpacing: '0.10em', textTransform: 'uppercase' }}>without discount</p>
+                </div>
+              )}
               <div>
                 <p className="sx-kicker" style={{ marginBottom: 4 }}>You Save</p>
                 <p className="sx-display sx-mono" style={{ fontSize: 26, color: 'var(--green)' }}>${selectedStation.savings.toFixed(2)}</p>
@@ -3341,7 +3348,12 @@ export default function FuelPage() {
                     }
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: 14 }}>
-                    <p className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: 'var(--red)' }}>${station.yourPrice.toFixed(2)}</p>
+                    <p className="sx-mono" style={{ fontSize: 15, fontWeight: 600, color: 'var(--red)' }}>
+                      {station.savings > 0 && (
+                        <span style={{ fontSize: 11, fontWeight: 500, color: 'var(--mute-2)', textDecoration: 'line-through', marginRight: 6 }}>${(station.yourPrice + station.savings).toFixed(2)}</span>
+                      )}
+                      ${station.yourPrice.toFixed(2)}
+                    </p>
                     <p className="sx-mono" style={{ fontSize: 11, color: 'var(--green)' }}>Save ${station.savings.toFixed(2)}</p>
                     {viewMode === 'route' && routeDistanceMap.get(stationKey(station)) !== undefined && (
                       <p className="sx-mono" style={{ fontSize: 11, color: 'var(--mute)' }}>
