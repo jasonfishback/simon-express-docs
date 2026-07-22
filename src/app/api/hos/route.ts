@@ -11,6 +11,13 @@ import { DRIVER_COOKIE, kpiBaseUrl, parseDriverCookieValue } from '@/lib/driver-
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
+export const maxDuration = 30
+
+// kpi serves recap nights from a nightly cache (fast), but falls back to a
+// live ~10s SOAP page when a driver has no cache row yet. 6s (the fuel-run
+// default) silently aborted every one of those, so the panel always showed
+// its empty state — give the fallback room to answer.
+const KPI_TIMEOUT_MS = 20_000
 
 export async function GET(req: NextRequest) {
   const driver = parseDriverCookieValue(req.cookies.get(DRIVER_COOKIE)?.value)
@@ -19,7 +26,7 @@ export async function GET(req: NextRequest) {
   try {
     const r = await fetch(`${kpiBaseUrl()}/api/driver-login/hos?code=${encodeURIComponent(driver.code)}`, {
       cache: 'no-store',
-      signal: AbortSignal.timeout(6000),
+      signal: AbortSignal.timeout(KPI_TIMEOUT_MS),
     })
     if (r.ok) {
       const j = await r.json().catch(() => null)
