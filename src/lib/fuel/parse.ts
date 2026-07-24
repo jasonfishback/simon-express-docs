@@ -83,6 +83,23 @@ function findHeaderFuzzy(
   return null
 }
 
+/**
+ * Header spellings we've seen (or expect) for the column holding OUR price —
+ * the whole point of the feed. England's vendors keep renaming this one:
+ * 7/20 TA reshuffled its layout, 7/24 it dropped "Disc" entirely
+ * ("Carrier Disc Price" -> "Carrier Price"), starving TA for a day.
+ * Matched only AFTER '~retail' has claimed the retail column, so a plain
+ * '~carrier'/'~price' fallback can't steal it.
+ */
+const DISCOUNT_PRICE_CANDIDATES = [
+  '~disc',
+  '~carrier price',
+  '~your price',
+  '~cost plus',
+  '~net price',
+  '~carrier',
+]
+
 // Find the row whose cells contain every one of `labels` (case-insensitive,
 // trimmed), and return { row index, column index per label }.
 function findHeader(rows: any[][], labels: string[]): { row: number; cols: Record<string, number> } | null {
@@ -150,7 +167,7 @@ export function parseLovesXlsx(buffer: Buffer): ParsedStation[] {
       { key: 'City', candidates: ['city', '~city'] },
       { key: 'State', candidates: ['state', 'st'] },
       { key: 'Retail Price', candidates: ['~retail'] },
-      { key: 'Disc. Price', candidates: ['~disc'] },
+      { key: 'Disc. Price', candidates: DISCOUNT_PRICE_CANDIDATES },
     ])
   if (!header) throw new Error(`Could not find header row (Loves Store No. / City / State ...) in Loves xlsx — sheet preview: ${sheetPreview(rows)}`)
   const savingsCol =
@@ -194,7 +211,7 @@ export function parseTaXls(buffer: Buffer): ParsedStation[] {
       { key: 'Travel Center', candidates: ['~travel center', '~location name', '~site name', 'location', 'name'] },
       { key: 'ST', candidates: ['st', 'state'] },
       { key: 'Retail Price', candidates: ['~retail'] },
-      { key: 'Carrier Disc Price', candidates: ['~disc'] },
+      { key: 'Carrier Disc Price', candidates: DISCOUNT_PRICE_CANDIDATES },
     ])
   if (!header) {
     throw new Error(
