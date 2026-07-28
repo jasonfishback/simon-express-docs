@@ -687,12 +687,19 @@ export default function FuelPage() {
         map: googleMap.current,
         icon: {
           path: G.maps.SymbolPath.CIRCLE,
-          scale: 7,
+          scale: 8,
           fillColor: color,
           fillOpacity: 1,
           strokeColor: '#ffffff',
           strokeWeight: 1.5,
         },
+        // Single brand initial on the dot — truck stops cluster across the
+        // street from each other (Petro/Pilot at Amarillo exit 75, TA/Love's
+        // at exit 74), and identical circles read as one station.
+        label: { text: brandMeta(station.brand).label.charAt(0), color: '#ffffff', fontSize: '9px', fontWeight: '700' },
+        // Cheapest renders on top, so the station a driver should pick is
+        // never buried under its across-the-street neighbor.
+        zIndex: Math.round((10 - station.yourPrice) * 1000),
         title: `${stationLabel(station)}\n${station.city}, ${station.state} — $${station.yourPrice.toFixed(2)}`,
       })
 
