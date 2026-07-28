@@ -773,6 +773,40 @@ export default function FuelPage() {
       .sort((a, b) => a.mile - b.mile)
   }, [viewMode, showOptimizer, optimizedPlan, routeStations, routeDetourMap, routeDistanceMap])
 
+  // Price-tied neighbors for each plan stop: in-corridor stations within a few
+  // pennies and a few route-miles of the picked stop. Same-money calls (Petro
+  // vs TA across the street in Amarillo) belong to the driver, not the
+  // optimizer — the plan card lists them so the driver can take their pick.
+  const PRICE_TIE_DOLLARS = 0.05
+  const TIE_RADIUS_MILES = 15
+  const planStopAlternates = useMemo(() => {
+    const out = new Map<number, Array<{ station: Station, mile: number, detour: number }>>()
+    if (viewMode !== 'route' || !showOptimizer || !optimizedPlan || optimizedPlan.length === 0) return out
+    optimizedPlan.forEach((stop, i) => {
+      const alts = routeStations
+        .filter(s => !optimizedPlan.some(p => stationKey(p.station) === stationKey(s)))
+        .map(s => ({
+          station: s,
+          mile: routeDistanceMap.get(stationKey(s)) ?? -1,
+          detour: routeDetourMap.get(stationKey(s)) ?? Infinity,
+        }))
+        .filter(x =>
+          x.mile > truckStartMile &&
+          Math.abs(x.mile - stop.milesFromOrigin) <= TIE_RADIUS_MILES &&
+          x.detour <= 10 &&
+          x.station.yourPrice - stop.station.yourPrice <= PRICE_TIE_DOLLARS &&
+          // Never tempt a driver into CA for a "tie" the optimizer priced out.
+          (x.station.state !== 'CA' || stop.station.state === 'CA')
+        )
+        .sort((a, b) =>
+          (a.station.yourPrice - b.station.yourPrice) ||
+          (Math.abs(a.mile - stop.milesFromOrigin) - Math.abs(b.mile - stop.milesFromOrigin)))
+        .slice(0, 3)
+      if (alts.length > 0) out.set(i, alts)
+    })
+    return out
+  }, [viewMode, showOptimizer, optimizedPlan, routeStations, routeDistanceMap, routeDetourMap, truckStartMile])
+
   // Mini pins for the on-route extras — only while the driver has them shown.
   useEffect(() => {
     if (!mapLoaded || !googleMap.current) return
@@ -3068,6 +3102,61 @@ export default function FuelPage() {
                                         </div>
                                       </div>
                                     )}
+                                    {/* Same-money neighbors: stations within a few pennies right around
+                                        this stop. The plan's pick stays #1 — these are the driver's call. */}
+                                    {(() => {
+                                      const alts = planStopAlternates.get(i)
+                                      if (!alts || alts.length === 0) return null
+                                      return (
+                                        <div style={{
+                                          margin: '0 16px 12px 16px',
+                                          background: 'var(--white)',
+                                          border: '1px dashed var(--line)',
+                                          borderRadius: 'var(--r-md)',
+                                          padding: '10px 14px',
+                                        }}>
+                                          <p className="sx-kicker" style={{ marginBottom: 2 }}>
+                                            ⚖ Same money nearby — your choice
+                                          </p>
+                                          {alts.map(x => {
+                                            const b = brandMeta(x.station.brand)
+                                            const diff = x.station.yourPrice - stop.station.yourPrice
+                                            const rel = x.mile - stop.milesFromOrigin
+                                            return (
+                                              <div key={stationKey(x.station)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: '1px solid var(--line)' }}>
+                                                <div style={{ width: 28, height: 28, borderRadius: 9, background: b.bg, color: b.fg, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: b.label.length > 2 ? 8 : 11, flexShrink: 0 }} title={b.name}>{b.label}</div>
+                                                <div style={{ flex: 1, minWidth: 0 }}>
+                                                  <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', lineHeight: 1.3 }}>
+                                                    {stationLabel(x.station)}
+                                                  </p>
+                                                  <p style={{ fontSize: 11, color: 'var(--mute)', marginTop: 1 }}>
+                                                    {x.station.city}, {x.station.state}
+                                                    <span className="sx-mono">{Math.abs(rel) >= 1 ? ` · ${Math.abs(rel).toFixed(0)} mi ${rel > 0 ? 'ahead' : 'before'}` : ' · same exit area'}</span>
+                                                  </p>
+                                                </div>
+                                                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                                  <p className="sx-mono" style={{ fontSize: 14, fontWeight: 700, color: 'var(--ink)' }}>${x.station.yourPrice.toFixed(2)}</p>
+                                                  <p className="sx-mono" style={{ fontSize: 10, fontWeight: 600, color: diff <= 0.001 ? 'var(--green)' : 'var(--mute)' }}>
+                                                    {diff < -0.001 ? `${Math.ceil(-diff * 100)}¢/gal less` : diff <= 0.001 ? 'same price' : `+${Math.ceil(diff * 100)}¢/gal`}
+                                                  </p>
+                                                </div>
+                                                <a
+                                                  href={googleMapsUrl(x.station)}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  onClick={e => e.stopPropagation()}
+                                                  className="sx-btn-ghost"
+                                                  style={{ textDecoration: 'none', flexShrink: 0, padding: '8px 10px', minHeight: 40 }}
+                                                  title="Open in Google Maps"
+                                                >
+                                                  🗺
+                                                </a>
+                                              </div>
+                                            )
+                                          })}
+                                        </div>
+                                      )
+                                    })()}
                                     {/* Price-savings note: if the next stop is at least 20¢/gal cheaper,
                                         show a tappable note suggesting the driver skip this stop if they have enough fuel */}
                                     {nextCheaperStop && nextCheaperStopIndex !== null && (
