@@ -124,14 +124,39 @@ export async function listFuelMessages(mailbox: string, folderId: string, fromAd
   return res.value
     .filter(m => {
       const sender = (m.from?.emailAddress?.address || '').toLowerCase()
-      const want = fromAddress.toLowerCase()
-      // Exact address, or "@domain.com" to match any sender at that domain.
-      const senderOk = want.startsWith('@') ? sender.endsWith(want) : sender === want
+      // Comma-separated list of acceptable senders: exact address, or
+      // "@domain.com" to match any sender at that domain. (9/14: Pilot moved
+      // from DailyPricing@ to daily.pricing@ without notice — one exact
+      // address silently dropped the whole feed for two weeks.)
+      const senderOk = fromAddress.toLowerCase().split(',').map(w => w.trim()).filter(Boolean)
+        .some(want => (want.startsWith('@') ? sender.endsWith(want) : sender === want))
       const subjectOk = (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase())
       return senderOk && subjectOk
     })
     .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
     .reverse() // oldest first so multiple pending days apply in order
+}
+
+/**
+ * Same match as listFuelMessages, but for a busy folder (the Inbox): filters
+ * server-side on exact sender addresses so a pricing email can't scroll out of
+ * the top-25 window behind ordinary mail. Domain-style ("@x.com") senders
+ * aren't filterable this way and are skipped. Why: the vendor's pricing email
+ * only reaches the KPI-FEED folder via a mailbox rule keyed on the sender
+ * address, and when Pilot changed theirs (DailyPricing@ → daily.pricing@,
+ * 8/30/26) the mail sat in the Inbox untouched. Scanning the Inbox for the
+ * known senders removes the rule from the critical path.
+ */
+export async function listFuelMessagesInInbox(mailbox: string, fromAddress: string, subjectContains: string): Promise<FuelMessage[]> {
+  const exact = fromAddress.toLowerCase().split(',').map(w => w.trim()).filter(w => w && !w.startsWith('@'))
+  if (exact.length === 0) return []
+  const filter = exact.map(a => `from/emailAddress/address eq '${a.replace(/'/g, "''")}'`).join(' or ')
+  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/inbox/messages?$select=id,subject,receivedDateTime,from&$filter=${encodeURIComponent(filter)}&$top=25`
+  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }> }>(path)
+  return res.value
+    .filter(m => (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase()))
+    .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
+    .sort((a, b) => (a.receivedDateTime || '').localeCompare(b.receivedDateTime || ''))
 }
 
 export interface FuelAttachment { id: string; name: string; contentType: string; contentBytes: string; size: number }

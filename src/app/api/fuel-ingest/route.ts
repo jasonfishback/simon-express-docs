@@ -3,6 +3,7 @@ import { put } from '@vercel/blob'
 import {
   findFolderIdByName,
   listFuelMessages,
+  listFuelMessagesInInbox,
   getMessageAttachments,
   deleteMessage,
   FuelAttachment,
@@ -55,10 +56,20 @@ const isSpreadsheet = (a: FuelAttachment) =>
 const FEEDS: FeedDef[] = [
   {
     key: 'pilot',
-    from: process.env.OUTLOOK_FUEL_FROM || 'DailyPricing@pilotflyingj.com',
+    // Pilot has sent from both spellings; accept either (see listFuelMessages).
+    from: process.env.OUTLOOK_FUEL_FROM || 'DailyPricing@pilotflyingj.com,daily.pricing@pilotflyingj.com',
     subjectContains: process.env.OUTLOOK_FUEL_SUBJECT || 'Pricing - Pilot Flying J',
     parse: (attachments) => {
-      const xls = attachments.find(isSpreadsheet)
+      // Pilot's file is named cp<ascend account>.xls. From 9/15 Pilot also
+      // sends account 118215's sheet as a SEPARATE daily email; the optimizer
+      // and every kpi price history row are built on 370934, and a second
+      // list would just overwrite it (brand-replace). Until Jason decides how
+      // the two contracts relate, only the configured account is ingested;
+      // other accounts' emails are dropped as no-pricing (logged).
+      const account = process.env.OUTLOOK_FUEL_PILOT_ACCOUNT || '370934'
+      const sheets = attachments.filter(isSpreadsheet)
+      const xls = sheets.find(a => new RegExp('^cp' + account + '\\b', 'i').test(a.name)) ??
+        (sheets.length && !sheets.some(a => /^cp\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
       if (!xls) return { stations: [], parsedFiles: [] }
       return {
         stations: parsePilotXls(Buffer.from(xls.contentBytes, 'base64')),
@@ -138,7 +149,14 @@ export async function GET(req: NextRequest) {
     }
 
     for (const feed of FEEDS) {
-      const messages = await listFuelMessages(mailbox, folderId, feed.from, feed.subjectContains)
+      // KPI-FEED (where the mailbox rule files them) PLUS the Inbox (where
+      // they land when the vendor changes its sender and the rule misses).
+      const inFolder = await listFuelMessages(mailbox, folderId, feed.from, feed.subjectContains)
+      const inInbox = await listFuelMessagesInInbox(mailbox, feed.from, feed.subjectContains)
+      const seen = new Set(inFolder.map(m => m.id))
+      const messages = [...inFolder, ...inInbox.filter(m => !seen.has(m.id))]
+        .sort((a, b) => (a.receivedDateTime || '').localeCompare(b.receivedDateTime || ''))
+      if (inInbox.length > 0) summary.details.push({ feed: feed.key, status: 'inbox-scan', found: inInbox.length })
       summary.found += messages.length
 
       for (const msg of messages) {
