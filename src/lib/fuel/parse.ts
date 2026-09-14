@@ -58,7 +58,7 @@ function normCell(v: any): string {
  */
 function findHeaderFuzzy(
   rows: any[][],
-  specs: Array<{ key: string; candidates: string[] }>,
+  specs: Array<{ key: string; candidates: string[]; optional?: boolean }>,
 ): { row: number; cols: Record<string, number> } | null {
   for (let i = 0; i < Math.min(rows.length, 40); i++) {
     const cells = (rows[i] || []).map(normCell)
@@ -74,7 +74,14 @@ function findHeaderFuzzy(
           !used.has(idx) && c.length > 0 && (contains ? c.includes(needle) : c === needle))
         if (found >= 0) break
       }
-      if (found < 0) { ok = false; break }
+      if (found < 0) {
+        // Optional columns (retail/pump price) may be missing or renamed
+        // beyond recognition — the row still counts as the header. Callers
+        // see -1 and derive the value instead.
+        if (spec.optional) { cols[spec.key] = -1; continue }
+        ok = false
+        break
+      }
       cols[spec.key] = found
       used.add(found)
     }
@@ -91,6 +98,21 @@ function findHeaderFuzzy(
  * Matched only AFTER '~retail' has claimed the retail column, so a plain
  * '~carrier'/'~price' fallback can't steal it.
  */
+/**
+ * Header spellings for the pump/retail price column. 9/8 TA renamed
+ * "Retail Price" -> "Fuel Price" and the whole TA feed starved for a week.
+ * Retail is display-only (the crossed-out pump price), so it's OPTIONAL:
+ * when no column matches we derive it from discount + savings.
+ */
+const RETAIL_PRICE_CANDIDATES = ['~retail', '~fuel price', '~pump', '~list price', '~street', '~cash price']
+
+/** Retail from the sheet when present, else discount + savings, else 0. */
+function retailOrDerived(retail: number, yours: number, savings: number): number {
+  if (retail > 0) return retail
+  if (isFinite(savings) && savings > 0) return Math.round((yours + savings) * 1000) / 1000
+  return 0
+}
+
 const DISCOUNT_PRICE_CANDIDATES = [
   '~disc',
   '~carrier price',
@@ -163,10 +185,11 @@ export function parseLovesXlsx(buffer: Buffer): ParsedStation[] {
   const header =
     findHeader(rows, ['Loves Store No.', 'City', 'State', 'Retail Price', 'Disc. Price']) ??
     findHeaderFuzzy(rows, [
-      { key: 'Loves Store No.', candidates: ['~store no', '~store #', '~site', 'no', '#', 'number'] },
+      // 8/24: "Loves Store No." -> "Loves Store" (no "no") and Love's starved.
+      { key: 'Loves Store No.', candidates: ['~store no', '~store #', '~store', '~loves', '~site', 'no', '#', 'number'] },
       { key: 'City', candidates: ['city', '~city'] },
       { key: 'State', candidates: ['state', 'st'] },
-      { key: 'Retail Price', candidates: ['~retail'] },
+      { key: 'Retail Price', candidates: RETAIL_PRICE_CANDIDATES, optional: true },
       { key: 'Disc. Price', candidates: DISCOUNT_PRICE_CANDIDATES },
     ])
   if (!header) throw new Error(`Could not find header row (Loves Store No. / City / State ...) in Loves xlsx — sheet preview: ${sheetPreview(rows)}`)
@@ -182,14 +205,16 @@ export function parseLovesXlsx(buffer: Buffer): ParsedStation[] {
     if (site == null || city == null || state == null) continue
     const yours = num(r[header.cols['Disc. Price']])
     if (!(yours > 0)) continue
+    const savings = savingsCol >= 0 && isFinite(num(r[savingsCol])) ? num(r[savingsCol]) : 0
+    const retailCol = header.cols['Retail Price']
     stations.push({
       brand: 'loves',
       site: String(site).trim(),
       city: String(city).trim(),
       state: String(state).trim().toUpperCase(),
-      retailPrice: num(r[header.cols['Retail Price']]) > 0 ? num(r[header.cols['Retail Price']]) : 0,
+      retailPrice: retailOrDerived(retailCol >= 0 ? num(r[retailCol]) : 0, yours, savings),
       yourPrice: yours,
-      savings: savingsCol >= 0 && isFinite(num(r[savingsCol])) ? num(r[savingsCol]) : 0,
+      savings,
     })
   }
   return stations
@@ -203,14 +228,15 @@ export function parseLovesXlsx(buffer: Buffer): ParsedStation[] {
 export function parseTaXls(buffer: Buffer): ParsedStation[] {
   const rows = sheetRows(buffer, 'Pricing')
   // Exact layout first (unchanged behavior), then a tolerant pass — TA renamed
-  // its headers on 7/20 and the exact match silently starved the whole feed.
+  // its headers on 7/20 and the exact match silently starved the whole feed;
+  // 9/8 it renamed "Retail Price" -> "Fuel Price" (retail is optional now).
   const header =
     findHeader(rows, ['#', 'Travel Center', 'ST', 'Retail Price', 'Carrier Disc Price']) ??
     findHeaderFuzzy(rows, [
       { key: '#', candidates: ['#', 'no', 'site #', 'site', '~location id', '~store no', '~store #', '~loc id', 'number'] },
       { key: 'Travel Center', candidates: ['~travel center', '~location name', '~site name', 'location', 'name'] },
       { key: 'ST', candidates: ['st', 'state'] },
-      { key: 'Retail Price', candidates: ['~retail'] },
+      { key: 'Retail Price', candidates: RETAIL_PRICE_CANDIDATES, optional: true },
       { key: 'Carrier Disc Price', candidates: DISCOUNT_PRICE_CANDIDATES },
     ])
   if (!header) {
@@ -237,15 +263,17 @@ export function parseTaXls(buffer: Buffer): ParsedStation[] {
     const city = name.replace(/^(TA EXPRESS|PETRO|TA)\s*-?\s*/i, '').trim()
     const key = String(site).trim()
     if (bySite.has(key)) continue
+    const savings = savingsCol >= 0 && isFinite(num(r[savingsCol])) ? num(r[savingsCol]) : 0
+    const retailCol = header.cols['Retail Price']
     bySite.set(key, {
       brand: 'ta',
       site: key,
       name,
       city: city || name,
       state: String(state).trim().toUpperCase(),
-      retailPrice: num(r[header.cols['Retail Price']]) > 0 ? num(r[header.cols['Retail Price']]) : 0,
+      retailPrice: retailOrDerived(retailCol >= 0 ? num(r[retailCol]) : 0, yours, savings),
       yourPrice: yours,
-      savings: savingsCol >= 0 && isFinite(num(r[savingsCol])) ? num(r[savingsCol]) : 0,
+      savings,
     })
   }
   return Array.from(bySite.values())
