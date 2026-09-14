@@ -49,7 +49,13 @@ interface FeedDef {
   from: string            // exact address, or "@domain.com" for any sender at that domain
   subjectContains: string
   // Parse every relevant attachment into station rows (may span brands).
-  parse: (attachments: FuelAttachment[]) => { stations: ParsedStation[]; parsedFiles: string[]; attachmentErrors?: string[] }
+  parse: (attachments: FuelAttachment[]) => {
+    stations: ParsedStation[]
+    parsedFiles: string[]
+    attachmentErrors?: string[]
+    /** Pricing sheets present but for an account we deliberately don't ingest. */
+    ignoredAccounts?: string[]
+  }
 }
 
 const isSpreadsheet = (a: FuelAttachment) =>
@@ -72,7 +78,13 @@ const FEEDS: FeedDef[] = [
       const sheets = attachments.filter(isSpreadsheet)
       const xls = sheets.find(a => new RegExp('^cp' + account + '\\b', 'i').test(a.name)) ??
         (sheets.length && !sheets.some(a => /^cp\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
-      if (!xls) return { stations: [], parsedFiles: [] }
+      if (!xls) {
+        // A Pilot sheet for a DIFFERENT Ascend account (118215 from 9/15/26).
+        // Jason: same pricing, don't ingest it. Report it so the email is
+        // discarded quietly instead of parked as a failure every day.
+        const other = sheets.map(a => a.name.match(/^cp(\d{5,})/i)?.[1]).filter(Boolean) as string[]
+        return { stations: [], parsedFiles: [], ignoredAccounts: other.length ? other : undefined }
+      }
       if (!xls.contentBytes) {
         // Graph listed the file but served no bytes — a fetch problem, not an
         // empty email. Report it so the message is KEPT and retried.
@@ -178,9 +190,20 @@ export async function GET(req: NextRequest) {
         const detail: any = { feed: feed.key, id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
         try {
           const attachments = await getMessageAttachments(mailbox, msg.id)
-          const { stations, parsedFiles, attachmentErrors = [] } = feed.parse(attachments)
+          const { stations, parsedFiles, attachmentErrors = [], ignoredAccounts } = feed.parse(attachments)
           detail.parsedFiles = parsedFiles
           detail.parsedStations = stations.length
+          if (stations.length === 0 && attachmentErrors.length === 0 && ignoredAccounts?.length) {
+            // Known, intentional: a sheet for an account we don't track.
+            // Discard (it's a duplicate of the list we do ingest) and say so.
+            detail.status = 'other-account-deleted'
+            detail.note = `Ignored Pilot account(s): ${ignoredAccounts.join(', ')}`
+            console.log(`[fuel-ingest] ${feed.key}: ignoring account ${ignoredAccounts.join(', ')} sheet from "${msg.subject}" ${msg.receivedDateTime}`)
+            summary.skipped++
+            await deleteMessage(mailbox, msg.id)
+            summary.details.push(detail)
+            continue
+          }
           if (attachmentErrors.length > 0) {
             detail.attachmentErrors = attachmentErrors
             summary.errors.push(...attachmentErrors.map(e => `${msg.subject}: ${e}`))
