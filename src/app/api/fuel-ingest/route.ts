@@ -187,16 +187,35 @@ export async function GET(req: NextRequest) {
             throw new Error('All parsed stations were dropped in enrichment — coord cache may be missing')
           }
 
-          // Merge: replace only the brands this email actually delivered.
-          const delivered = Array.from(new Set(enriched.map(s => s.brand))) as FuelBrand[]
-          const current = await loadCurrentBlob()
-          const kept = (current?.stations || []).filter(s => !delivered.includes((s.brand || 'pfj') as FuelBrand))
-          const merged = [...kept, ...enriched]
-
+          // Merge: replace only the brands this email actually delivered —
+          // and only where this email is at least as new as what the blob
+          // already holds. A kept (partially failed) email is retried every
+          // 30 min; 8/24–9/14 the stuck 8/24 + 9/8 England emails re-applied
+          // their OLD prices over each fresh day's sheet, so the app showed
+          // week-old prices even on days a good email had arrived.
           const emailDate = (msg.receivedDateTime || new Date().toISOString()).split('T')[0]
+          const current = await loadCurrentBlob()
+          const parsedBrands = Array.from(new Set(enriched.map(s => s.brand))) as FuelBrand[]
+          const superseded = parsedBrands.filter(b => (current?.brands?.[b]?.updatedAt || '') > emailDate)
+          const delivered = parsedBrands.filter(b => !superseded.includes(b))
+          if (superseded.length > 0) detail.supersededBrands = superseded
+          if (delivered.length === 0) {
+            // Everything this email carries is older than the blob. Nothing
+            // to write; drop it so it stops re-listing (a stuck email that a
+            // later, healthy one has already overtaken).
+            detail.status = 'superseded-deleted'
+            summary.skipped++
+            await deleteMessage(mailbox, msg.id)
+            summary.details.push(detail)
+            continue
+          }
+          const fresh = enriched.filter(s => delivered.includes(s.brand))
+          const kept = (current?.stations || []).filter(s => !delivered.includes((s.brand || 'pfj') as FuelBrand))
+          const merged = [...kept, ...fresh]
+
           const brands: FuelBlob['brands'] = { ...(current?.brands || {}) }
           for (const b of delivered) {
-            brands[b] = { updatedAt: emailDate, count: enriched.filter(s => s.brand === b).length }
+            brands[b] = { updatedAt: emailDate, count: fresh.filter(s => s.brand === b).length }
           }
           // Backfill a stamp for pre-multibrand PFJ rows we kept.
           if (!brands.pfj && kept.some(s => (s.brand || 'pfj') === 'pfj')) {
@@ -227,8 +246,8 @@ export async function GET(req: NextRequest) {
 
           if (attachmentErrors.length > 0) {
             // Partial ingest (e.g. Love's parsed, TA didn't): keep the email so
-            // the failed brand retries next tick; re-ingesting the good brand
-            // from the same email is an idempotent replace.
+            // the failed brand retries next tick. The superseded check above
+            // means the good brand can no longer overwrite a newer day's data.
             detail.status = 'partial-ingested-kept'
           } else {
             await deleteMessage(mailbox, msg.id)
