@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { put } from '@vercel/blob'
 import {
   findFolderIdByName,
+  ensureChildFolder,
   listFuelMessages,
   listFuelMessagesInInbox,
   getMessageAttachments,
   deleteMessage,
+  moveMessage,
   FuelAttachment,
 } from '@/lib/graph'
 import { parsePilotXls, parseLovesXlsx, parseTaXls, ParsedStation, FuelBrand } from '@/lib/fuel/parse'
@@ -71,6 +73,11 @@ const FEEDS: FeedDef[] = [
       const xls = sheets.find(a => new RegExp('^cp' + account + '\\b', 'i').test(a.name)) ??
         (sheets.length && !sheets.some(a => /^cp\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
       if (!xls) return { stations: [], parsedFiles: [] }
+      if (!xls.contentBytes) {
+        // Graph listed the file but served no bytes — a fetch problem, not an
+        // empty email. Report it so the message is KEPT and retried.
+        return { stations: [], parsedFiles: [], attachmentErrors: [`${xls.name}: Graph returned no contentBytes (${xls.kind}, ${xls.size} bytes)`] }
+      }
       return {
         stations: parsePilotXls(Buffer.from(xls.contentBytes, 'base64')),
         parsedFiles: [xls.name],
@@ -91,6 +98,10 @@ const FEEDS: FeedDef[] = [
       const parsedFiles: string[] = []
       const attachmentErrors: string[] = []
       for (const a of attachments.filter(isSpreadsheet)) {
+        if (!a.contentBytes) {
+          attachmentErrors.push(`${a.name}: Graph returned no contentBytes (${a.kind}, ${a.size} bytes)`)
+          continue
+        }
         const buffer = Buffer.from(a.contentBytes, 'base64')
         try {
           if (/loves/i.test(a.name)) {
@@ -147,6 +158,10 @@ export async function GET(req: NextRequest) {
     if (!folderId) {
       return NextResponse.json({ error: `Folder "${folderName}" not found in mailbox ${mailbox}.` }, { status: 404 })
     }
+    // Parking lot for matched emails we couldn't get pricing out of. Created
+    // on first use, resolved lazily so a run with nothing to park never pays.
+    let unprocessedId: string | null = null
+    const unprocessedFolder = async () => (unprocessedId ??= await ensureChildFolder(mailbox, folderId, 'Unprocessed'))
 
     for (const feed of FEEDS) {
       // KPI-FEED (where the mailbox rule files them) PLUS the Inbox (where
@@ -181,14 +196,19 @@ export async function GET(req: NextRequest) {
               summary.details.push(detail)
               continue
             }
-            // Sender+subject matched but there's no parseable pricing file
-            // (a reply, a bounce). Delete it so it doesn't re-list every tick —
-            // we no longer use isRead to skip handled mail. A real pricing
-            // email always carries its spreadsheet.
-            detail.status = 'no-pricing-attachment-deleted'
-            detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
+            // Sender+subject matched but nothing parsed and nothing complained.
+            // NEVER delete here. 8/31–9/12/26 this branch threw away thirteen
+            // days of Pilot pricing emails that the parser handles fine — the
+            // attachment simply hadn't been read. Park the message in
+            // KPI-FEED/Unprocessed (out of the poll window, recoverable by a
+            // human) and log exactly what Graph showed us.
+            const inventory = attachments.map(a => `${a.name} [${a.kind}; ${a.contentType}; ${a.size} bytes; bytes=${a.contentBytes ? 'yes' : 'NO'}]`).join(', ') || 'none'
+            detail.status = 'no-pricing-attachment-parked'
+            detail.note = `Attachments: ${inventory}`
             summary.skipped++
-            await deleteMessage(mailbox, msg.id)
+            summary.errors.push(`${feed.key} "${msg.subject}" (${msg.receivedDateTime}) parsed to 0 stations — parked in Unprocessed. Attachments: ${inventory}`)
+            console.warn(`[fuel-ingest] ${feed.key}: 0 stations from "${msg.subject}" ${msg.receivedDateTime}; parking. Attachments: ${inventory}`)
+            await moveMessage(mailbox, msg.id, await unprocessedFolder())
             summary.details.push(detail)
             continue
           }

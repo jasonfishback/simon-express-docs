@@ -159,14 +159,36 @@ export async function listFuelMessagesInInbox(mailbox: string, fromAddress: stri
     .sort((a, b) => (a.receivedDateTime || '').localeCompare(b.receivedDateTime || ''))
 }
 
-export interface FuelAttachment { id: string; name: string; contentType: string; contentBytes: string; size: number }
+export interface FuelAttachment {
+  id: string
+  name: string
+  contentType: string
+  /** base64 body; EMPTY STRING when Graph returned the attachment without contentBytes. */
+  contentBytes: string
+  size: number
+  /** The raw @odata.type Graph reported (fileAttachment / itemAttachment / referenceAttachment). */
+  kind: string
+}
 
+/**
+ * Every attachment on the message, bytes or not. Callers must check
+ * contentBytes before parsing. Earlier this silently dropped anything Graph
+ * served without contentBytes, which made a pricing email look like it had no
+ * pricing file at all — and the ingest then DELETED it as junk (see
+ * fuel-ingest, 8/31–9/12/26). Missing bytes must surface as an error, never
+ * as "nothing here".
+ */
 export async function getMessageAttachments(mailbox: string, messageId: string): Promise<FuelAttachment[]> {
   const path = `/users/${encodeURIComponent(mailbox)}/messages/${messageId}/attachments`
-  const res = await graph<{ value: Array<{ id: string; name: string; contentType: string; size: number; contentBytes: string; '@odata.type'?: string }> }>(path)
-  return res.value
-    .filter(a => a['@odata.type'] === '#microsoft.graph.fileAttachment' && a.contentBytes)
-    .map(a => ({ id: a.id, name: a.name, contentType: a.contentType, contentBytes: a.contentBytes, size: a.size }))
+  const res = await graph<{ value: Array<{ id: string; name: string; contentType: string; size: number; contentBytes?: string; '@odata.type'?: string }> }>(path)
+  return res.value.map(a => ({
+    id: a.id,
+    name: a.name || '',
+    contentType: a.contentType || '',
+    contentBytes: a.contentBytes || '',
+    size: a.size,
+    kind: String(a['@odata.type'] || '').replace('#microsoft.graph.', ''),
+  }))
 }
 
 export async function markMessageRead(mailbox: string, messageId: string): Promise<void> {
