@@ -1742,6 +1742,18 @@ export default function FuelPage() {
     const MID_DETOUR_SAVINGS_THRESHOLD = 0.20  // 20 cents/gal
     const currentFuel = (currentFuelEighths / 8) * TANK
     const fuelToBurn = (planEndMile - startMile) / MPG
+    // CA-BOUND HARD RULE (Jason 9/23/26, mirrors kpi lib/fuel/optimizer.ts):
+    // "anytime a driver is going into CA it should make them fill up before
+    // going in, so they have enough to go into CA and back out." escapeMiles
+    // already budgets the way back out; on top of that a CA-bound plan (a)
+    // never defers a stop past the last non-CA station, (b) treats CA pumps
+    // as last resort, and (c) ALWAYS tops off at the cheapest on-route non-CA
+    // station near the line — skipped only when the tank is too full for a
+    // worthwhile fill. (BLAJA 9/23: kpi said "no stop needed" into Stockton
+    // and left him buying $8 CA diesel with Fernley at $6.40 on the way.)
+    const CA_BOUND = escapeMiles > 0
+    type CandT = { station: Station, pos: number, detour: number }
+    const isNonCA = (c: CandT) => c.station.state !== 'CA'
 
     // Corridor stations with position and detour data
     // Filter out backward stations: if the station's position along route is less than its detour,
@@ -1777,7 +1789,7 @@ export default function FuelPage() {
       ? sortedPrices[Math.max(0, Math.floor(sortedPrices.length * 0.15) - 1)]
       : 0
 
-    if (currentFuel - fuelToBurn >= MIN_FUEL) {
+    if (currentFuel - fuelToBurn >= MIN_FUEL && !(CA_BOUND && byPos.some(isNonCA))) {
       setOptimizedPlan([])
       return
     }
@@ -1842,13 +1854,48 @@ export default function FuelPage() {
       return byPos.filter(s => s.pos > pos && s.pos <= physReach)
     }
 
-    const buildPlan = (selector: (cands: Array<{station: Station, pos: number, detour: number}>) => {station: Station, pos: number, detour: number}): {plan: Stop[], unreachable: boolean} => {
+    // CA-bound: a deferral rule (3/8 first stop, 5/8 arrival, 70% min-burn) may
+    // only skip ahead when its candidate set still holds a non-CA option, or
+    // when no non-CA station is reachable anyway — otherwise "wait a bit"
+    // means "wait until California".
+    const deferralOk = (cands: CandT[], pos: number, fuel: number): boolean => {
+      if (!CA_BOUND || cands.some(isNonCA)) return true
+      return !byPos.some(c => isNonCA(c) && c.pos > pos && c.pos <= pos + safeRange(fuel) && c.detour <= MAX_HARD_DETOUR)
+    }
+    // CA-bound: CA pumps are last resort — choose among non-CA candidates whenever any exist.
+    const preferNonCA = (cands: CandT[]): CandT[] => (CA_BOUND && cands.some(isNonCA) ? cands.filter(isNonCA) : cands)
+    // BORDER TOP-OFF: cheapest on-route non-CA station within BORDER_ZONE_MI of
+    // the last non-CA station (Fernley over Sparks: 30 mi earlier, 40¢ cheaper,
+    // same tank crossing the line). Corridor first, mid-detour next, any zone
+    // station last.
+    const BORDER_ZONE_MI = 120
+    let borderStation: CandT | null = null
+    if (CA_BOUND) {
+      const nonCA = byPos.filter(isNonCA)
+      if (nonCA.length > 0) {
+        const lastPos = nonCA[nonCA.length - 1].pos
+        const zone = nonCA.filter(c => c.pos >= lastPos - BORDER_ZONE_MI)
+        const corridorZone = zone.filter(c => c.detour <= CORRIDOR_DETOUR)
+        const midZone = zone.filter(c => c.detour <= MID_DETOUR)
+        const pool = corridorZone.length ? corridorZone : midZone.length ? midZone : zone
+        borderStation = pool.reduce((a, b) =>
+          effectivePrice(a.station.yourPrice, a.detour, a.station.state) <= effectivePrice(b.station.yourPrice, b.detour, b.station.state) ? a : b
+        )
+      }
+    }
+    // The border top-off station, or the last non-CA station before the line, fills to full.
+    const fillsToFullBeforeCA = (chosen: CandT): boolean =>
+      CA_BOUND && isNonCA(chosen) && (chosen === borderStation || !byPos.some(c => c.pos > chosen.pos && isNonCA(c)))
+
+    const buildPlan = (rawSelector: (cands: Array<{station: Station, pos: number, detour: number}>) => {station: Station, pos: number, detour: number}): {plan: Stop[], unreachable: boolean} => {
+      const selector = (cands: CandT[]) => rawSelector(preferNonCA(cands))
       const plan: Stop[] = []
       let pos = startMile, fuel = currentFuel
       let unreachable = false
+      let borderDone = !borderStation
       for (let iter = 0; iter < 30; iter++) {
         const distLeft = planEndMile - pos
-        if (fuel - (distLeft / MPG) >= MIN_FUEL) {
+        if (fuel - (distLeft / MPG) >= MIN_FUEL && borderDone) {
           break
         }
 
@@ -1869,7 +1916,7 @@ export default function FuelPage() {
               s.pos <= maxFirstStopPos &&
               s.detour <= MAX_HARD_DETOUR
             )
-            if (firstStopCandidates.length > 0) {
+            if (firstStopCandidates.length > 0 && deferralOk(firstStopCandidates, pos, fuel)) {
               const chosen = selector(firstStopCandidates)
               const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
               const distFromStation = planEndMile - chosen.pos
@@ -1883,6 +1930,7 @@ export default function FuelPage() {
                 const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
                 if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
                 if (fuelAtStation + fill >= TANK * 0.90) fill = roomInTank
+                if (fillsToFullBeforeCA(chosen)) fill = roomInTank
                 if (chosen.station.state === 'CA') {
                   const nextNonCA = byPos.find(s => s.pos > chosen.pos && s.station.state !== 'CA')
                   if (nextNonCA) {
@@ -1931,7 +1979,7 @@ export default function FuelPage() {
               s.pos <= maxPos &&       // and within safe reach
               s.detour <= MAX_HARD_DETOUR
             )
-            if (eligibleStations.length > 0) {
+            if (eligibleStations.length > 0 && deferralOk(eligibleStations, pos, fuel)) {
               // Use the deferred candidates for picking the cheapest (rather than ALL candidates)
               const chosen = selector(eligibleStations)
               const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
@@ -1946,6 +1994,7 @@ export default function FuelPage() {
                 const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
                 if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
                 if (fuelAtStation + fill >= TANK * 0.90) fill = roomInTank
+                if (fillsToFullBeforeCA(chosen)) fill = roomInTank
                 if (chosen.station.state === 'CA') {
                   const nextNonCA = byPos.find(s => s.pos > chosen.pos && s.station.state !== 'CA')
                   if (nextNonCA) {
@@ -1992,7 +2041,7 @@ export default function FuelPage() {
             s.pos <= pos + safeRange(fuel) &&
             s.detour <= MAX_HARD_DETOUR
           )
-          if (reachableAfterMin.length > 0) {
+          if (reachableAfterMin.length > 0 && deferralOk(reachableAfterMin, pos, fuel)) {
             // Use the deferred candidates instead of the full set
             const chosen = selector(reachableAfterMin)
             const fuelAtStation = fuel - ((chosen.pos - pos) / MPG)
@@ -2007,6 +2056,7 @@ export default function FuelPage() {
             const isBottomPrice = chosen.station.yourPrice <= lowestPriceThreshold
             if (isBottomPrice && roomInTank >= MIN_FILL) fill = roomInTank
             if (fuelAtStation + fill >= TANK * 0.90) fill = roomInTank
+                if (fillsToFullBeforeCA(chosen)) fill = roomInTank
             // CA OVERRIDE in deferred branch too
             if (chosen.station.state === 'CA') {
               const nextNonCA = byPos.find(s => s.pos > chosen.pos && s.station.state !== 'CA')
@@ -2035,7 +2085,21 @@ export default function FuelPage() {
           // Otherwise fall through to normal logic (can't safely defer)
         }
 
-        const cands = getCandidates(pos, fuel)
+        // BORDER TOP-OFF: once the border station is safely reachable, go fill
+        // there before anything else. Already past it (a deferral rule booked a
+        // later non-CA stop, which fills to full) = done. Not yet reachable =
+        // book an intermediate stop first via the normal candidates.
+        let forced: CandT | null = null
+        if (!borderDone && borderStation) {
+          if (borderStation.pos <= pos) {
+            borderDone = true
+            if (fuel - (distLeft / MPG) >= MIN_FUEL) break
+          } else if (borderStation.pos <= pos + safeRange(fuel)) {
+            borderDone = true
+            forced = borderStation
+          }
+        }
+        const cands = forced ? [forced] : getCandidates(pos, fuel)
         if (cands.length === 0) { unreachable = true; break }
 
         const chosen = selector(cands)
@@ -2069,6 +2133,9 @@ export default function FuelPage() {
         if (fuelAtStation + fill >= TANK * 0.90) {
           fill = roomInTank
         }
+        // CA-BOUND: border top-off / last non-CA station fills to full — every
+        // gallon bought here is a gallon not bought in California.
+        if (fillsToFullBeforeCA(chosen)) fill = roomInTank
 
         // CA OVERRIDE: if this station is in California, only fill enough to reach the next
         // non-CA station (plus reserve). Never top off in California.
@@ -2803,7 +2870,7 @@ export default function FuelPage() {
             {routeStartNote && <p style={{ fontSize: 13, color: 'var(--ink, #18181b)', marginTop: 10, fontWeight: 600 }}>{routeStartNote}</p>}
             {caEscapeMiles > 0 && (
               <p style={{ fontSize: 13, marginTop: 8, fontWeight: 600, color: 'var(--ink, #18181b)' }}>
-                🐻 California delivery: this plan buys enough fuel BEFORE the border to deliver <em>and</em> drive ~{caEscapeMiles} more miles out of CA — so you never pay California prices.
+                🐻 California delivery: always top off before you cross the line. This plan fills up at the cheapest stop before the border so you can deliver <em>and</em> drive ~{caEscapeMiles} more miles out of CA — you never pay California prices.
               </p>
             )}
             {nextRouteSuggestion && (
