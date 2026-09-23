@@ -339,7 +339,8 @@ export default function FuelPage() {
   const [emailAddress, setEmailAddress] = useState<string>('')
   const [emailSending, setEmailSending] = useState<boolean>(false)
   const [emailStatus, setEmailStatus] = useState<string>('')
-  const [lookupMatches, setLookupMatches] = useState<Array<{first: string, last: string, handle: string|null, email: string, truckNumber: number|null, driverCode: string|null}>>([])
+  const [lookupMatches, setLookupMatches] = useState<Array<{first: string, last: string, handle: string|null, email: string, truckNumber: number|null, driverCode: string|null, hasPhone?: boolean}>>([])
+  const [textSending, setTextSending] = useState<boolean>(false)
   const [lookupLoading, setLookupLoading] = useState<boolean>(false)
   const lookupTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const lookupSeqRef = useRef<number>(0)
@@ -1085,9 +1086,14 @@ export default function FuelPage() {
     // This lets us report "+X miles added" by the via-points.
     const validVias = viaPoints.map(v => v.trim()).filter(v => v.length > 0)
 
-    const doRoute = () => {
+    // `fromTruck`: re-route from the truck's Omnitracs position instead of the
+    // load origin. Used once when the truck is off the mapped road (9/23 CARD:
+    // Google drew Columbus IN → SLC via I-72/US-36, Dennis took I-74 → I-80 and
+    // sat at Walcott IA, "150 mi off route" → the plan reset to Indiana and
+    // booked a stop in Illinois behind him).
+    const doRoute = (fromTruck: { lat: number, lng: number } | null = null) => {
       const routeRequest: any = {
-        origin: usPlace(origin),
+        origin: fromTruck ? new G.maps.LatLng(fromTruck.lat, fromTruck.lng) : usPlace(origin),
         destination: usPlace(destination),
         travelMode: G.maps.TravelMode.DRIVING,
         avoidTolls: true,
@@ -1338,11 +1344,20 @@ export default function FuelPage() {
             const d = haversine(gpsStart.lat, gpsStart.lng, routePoints[i].lat, routePoints[i].lng)
             if (d < minDist) { minDist = d; closestIdx = i }
           }
-          if (minDist <= 30) {
+          if (fromTruck) {
+            startMile = 0
+            setRouteStartNote(`🛰️ Your truck (Omnitracs) is off the mapped road from ${origin}, so this plan is routed from where the truck actually is — ${Math.round(totalMiles)} mi to go. Stops behind you are excluded.`)
+          } else if (minDist <= 30) {
             startMile = routeCumulativeMiles[closestIdx] || 0
             setRouteStartNote(startMile > 5
               ? `🛰️ Your truck (Omnitracs) is at ~mile ${Math.round(startMile)} of ${Math.round(totalMiles)} — the fuel plan starts from the truck, not from ${origin}`
               : '🛰️ Truck is at the start of the route (Omnitracs position)')
+          } else if (validVias.length === 0) {
+            // OFF THE MAPPED ROAD: never plan the full route from the origin
+            // (that books stops the truck already passed). Re-route once from
+            // the truck itself; the callback re-enters here with fromTruck set.
+            doRoute(gpsStart)
+            return
           } else {
             setRouteStartNote(`🛰️ Truck's Omnitracs position is ${Math.round(minDist)} mi off this route — planning the full route from ${origin}`)
           }
@@ -3405,7 +3420,19 @@ export default function FuelPage() {
                             {/* Share buttons */}
                             <div style={{ marginTop: 12 }}>
                               <button
-                                onClick={() => { setShowEmailModal(true); setEmailStatus(''); }}
+                                onClick={() => {
+                                  setShowEmailModal(true); setEmailStatus('')
+                                  const me = getDriverFromDocumentCookie()
+                                  if (me && !emailAddress.trim()) {
+                                    setEmailAddress(me.code)
+                                    setLookupLoading(true)
+                                    const seq = ++lookupSeqRef.current
+                                    fetch(`/api/recipient-lookup?q=${encodeURIComponent(me.code)}`)
+                                      .then(r => r.json())
+                                      .then(json => { if (seq === lookupSeqRef.current) { setLookupMatches(json.matches || []); setLookupLoading(false) } })
+                                      .catch(() => { if (seq === lookupSeqRef.current) { setLookupMatches([]); setLookupLoading(false) } })
+                                  }
+                                }}
                                 style={{
                                   width: '100%', padding: '14px 24px',
                                   background: 'linear-gradient(180deg, #3B82F6 0%, #2563EB 60%, #1D4ED8 100%)',
@@ -3420,7 +3447,7 @@ export default function FuelPage() {
                                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)' }}
                                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)' }}
                               >
-                                ✉ Email This Plan
+                                ✉ Email / Text This Plan
                               </button>
                             </div>
                           </>
@@ -3821,13 +3848,13 @@ export default function FuelPage() {
             }}
           >
             <h3 className="sx-display" style={{ fontSize: 24, color: 'var(--ink)', marginBottom: 6 }}>
-              ✉ Email Fuel Plan
+              ✉ Send Fuel Plan
             </h3>
             <p style={{ fontSize: 13, color: 'var(--mute)', marginBottom: 20, lineHeight: 1.5 }}>
-              Sends a formatted email with the route map, fuel stops, weather forecast, and price highlights.
+              Email sends the route map, fuel stops, weather and price highlights. Text sends the stops plus a link to the plan page. Drivers are looked up live from the roster.
             </p>
             <label className="sx-kicker" style={{ display: 'block', marginBottom: 8 }}>
-              Enter email / Truck # / Driver Code
+              Driver code / Truck # / Phone / Email / Name
             </label>
             <input
               type="text"
@@ -3862,8 +3889,8 @@ export default function FuelPage() {
                   }
                 }, 250)
               }}
-              placeholder="Enter email, truck #, or driver code"
-              disabled={emailSending}
+              placeholder="e.g. CARD, 24, 801-555-1234, name@…"
+              disabled={emailSending || textSending}
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
@@ -3885,7 +3912,7 @@ export default function FuelPage() {
                 fontSize: 13,
                 fontWeight: 500,
               }}>
-                No driver found for that truck # or code. Enter a valid email instead.
+                No active driver matches that code, truck #, phone or name. Enter an email instead.
               </div>
             )}
             {!lookupLoading && lookupMatches.length >= 1 && (
@@ -3903,7 +3930,7 @@ export default function FuelPage() {
                 </div>
                 {lookupMatches.map((m, i) => (
                   <div key={i} style={{ fontSize: 12, color: '#15803D' }}>
-                    {m.first} {m.last}
+                    {m.first} {m.last}{m.driverCode ? ` · ${m.driverCode}` : ''}{m.truckNumber != null ? ` · truck ${m.truckNumber}` : ''}{m.hasPhone === false ? ' · no phone on file' : ''}
                   </div>
                 ))}
               </div>
@@ -3924,15 +3951,84 @@ export default function FuelPage() {
             )}
             <div style={{ display: 'flex', gap: 10 }}>
               <button
-                onClick={() => { if (!emailSending) setShowEmailModal(false) }}
-                disabled={emailSending}
+                onClick={() => { if (!emailSending && !textSending) setShowEmailModal(false) }}
+                disabled={emailSending || textSending}
                 className="sx-btn-ghost"
                 style={{
                   flex: 1,
-                  opacity: emailSending ? 0.5 : 1,
+                  opacity: (emailSending || textSending) ? 0.5 : 1,
                 }}
               >
                 Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  // TEXT the plan (Jason 9/23: "should be able to text plans too").
+                  // kpi resolves the recipient against the live roster and only
+                  // ever texts a roster driver's own number.
+                  const trimmed = emailAddress.trim()
+                  if (!trimmed || !optimizedPlan || optimizedPlan.length === 0) {
+                    setEmailStatus('Enter a driver code, truck #, or phone to text')
+                    return
+                  }
+                  if (trimmed.includes('@')) {
+                    setEmailStatus('Texting needs a driver code, truck #, or phone — not an email')
+                    return
+                  }
+                  setTextSending(true)
+                  setEmailStatus('Sending text...')
+                  try {
+                    const sum = (f: (s: { cost: number; savings: number; gallons: number }) => number) => optimizedPlan.reduce((a, s) => a + (f(s) || 0), 0)
+                    const res = await fetch('/api/fuel-text', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({
+                        to: trimmed,
+                        order_num: useMyLoad ? ((selLoads.current ? currentLoad?.order_num : nextLoad?.order_num) ?? null) : null,
+                        origin, destination,
+                        dest_in_ca: caEscapeMiles > 0,
+                        total_miles: routeInfo?.miles ?? 0,
+                        current_fuel_eighths: currentFuelEighths,
+                        stops: optimizedPlan.map(st => ({
+                          brand: st.station.brand || 'pfj', site: st.station.site,
+                          name: stationLabel(st.station), city: st.station.city, state: st.station.state,
+                          price: st.station.yourPrice, gallons: Math.round(st.gallons),
+                          miles_from_origin: Math.round(st.milesFromOrigin),
+                        })),
+                        total_gallons: Math.round(sum(s => s.gallons)),
+                        total_cost: Math.round(sum(s => s.cost)),
+                        total_savings: Math.round(sum(s => s.savings)),
+                      }),
+                    })
+                    const json = await res.json()
+                    if (json?.ok) {
+                      setEmailStatus(`✓ Texted to ${json.to || 'driver'}!`)
+                      setTimeout(() => { setShowEmailModal(false); setEmailStatus(''); setEmailAddress(''); setLookupMatches([]); }, 1800)
+                    } else {
+                      setEmailStatus(`Error: ${json?.error || 'Text failed'}`)
+                    }
+                  } catch (err: any) {
+                    setEmailStatus(`Error: ${err.message || 'Text failed'}`)
+                  } finally {
+                    setTextSending(false)
+                  }
+                }}
+                disabled={emailSending || textSending || !emailAddress.trim() || emailAddress.includes('@') || lookupLoading || lookupMatches.length === 0}
+                style={{
+                  flex: 2,
+                  padding: '14px 24px',
+                  background: textSending ? 'var(--mute)' : 'linear-gradient(180deg, #22C55E 0%, #16A34A 60%, #15803D 100%)',
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: 'var(--r-pill)',
+                  cursor: textSending ? 'wait' : 'pointer',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  fontFamily: 'var(--display)', letterSpacing: '0.08em', textTransform: 'uppercase',
+                  opacity: (emailSending || textSending || !emailAddress.trim() || emailAddress.includes('@') || lookupLoading || lookupMatches.length === 0) ? 0.5 : 1,
+                }}
+              >
+                {textSending ? 'Sending…' : '📱 Send Text'}
               </button>
               <button
                 onClick={async () => {

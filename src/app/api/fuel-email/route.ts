@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
-import { findRecipient, getTimeOfDayGreeting, getTodaysDateFormatted } from '@/lib/recipients'
+import { findRecipientAsync, getTimeOfDayGreeting, getTodaysDateFormatted } from '@/lib/recipients'
 
 export const maxDuration = 30
 export const dynamic = 'force-dynamic'
@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
     const totalSav = stops.reduce((s, p) => s + p.savings, 0)
 
     // Personalization based on recipient lookup
-    const recipient = findRecipient(to)
+    const recipient = await findRecipientAsync(to)
     const greetingTimePrefix = getTimeOfDayGreeting()
     // Use handle if present, otherwise first name, otherwise just "there"
     const greetingName = recipient

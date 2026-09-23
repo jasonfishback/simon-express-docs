@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Missing q parameter' }, { status: 400 })
     }
 
-    const matches = lookupRecipients(input)
+    const matches = await lookupRecipients(input)
 
     if (matches.length === 0) {
       return NextResponse.json({ found: false, matches: [] })
@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
         email: m.email,
         truckNumber: m.truckNumber,
         driverCode: m.driverCode,
+        hasPhone: !!(m.phone && m.phone.replace(/\D/g, '').length >= 10),
       })),
     })
   } catch (err: any) {
