@@ -2870,7 +2870,9 @@ export default function FuelPage() {
             {routeStartNote && <p style={{ fontSize: 13, color: 'var(--ink, #18181b)', marginTop: 10, fontWeight: 600 }}>{routeStartNote}</p>}
             {caEscapeMiles > 0 && (
               <p style={{ fontSize: 13, marginTop: 8, fontWeight: 600, color: 'var(--ink, #18181b)' }}>
-                🐻 California delivery: always top off before you cross the line. This plan fills up at the cheapest stop before the border so you can deliver <em>and</em> drive ~{caEscapeMiles} more miles out of CA — you never pay California prices.
+                {(optimizedPlan?.length ?? 0) > 0 && optimizedPlan!.every(s => s.station.state === 'CA')
+                  ? <>🐻 California delivery: the truck is already past the last stop before the border, so this plan buys just enough in CA to deliver <em>and</em> drive ~{caEscapeMiles} more miles back out. Next time, top off before you cross the line.</>
+                  : <>🐻 California delivery: always top off before you cross the line. This plan fills up at the cheapest stop before the border so you can deliver <em>and</em> drive ~{caEscapeMiles} more miles out of CA — you never pay California prices.</>}
               </p>
             )}
             {nextRouteSuggestion && (
