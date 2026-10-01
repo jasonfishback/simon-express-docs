@@ -47,7 +47,11 @@ function isAuthorized(req: NextRequest): boolean {
 interface FeedDef {
   key: string
   from: string            // exact address, or "@domain.com" for any sender at that domain
-  subjectContains: string
+  subjectContains: string // '' = any subject from that sender
+  /** When set, a message is only a feed email if it carries a spreadsheet whose
+   *  name matches; anything else from the sender is left untouched (a human
+   *  reply, a note with no sheet). Lets a feed match on sender alone. */
+  requireSheet?: RegExp
   // Parse every relevant attachment into station rows (may span brands).
   parse: (attachments: FuelAttachment[]) => {
     stations: ParsedStation[]
@@ -106,7 +110,12 @@ const FEEDS: FeedDef[] = [
     // filing into KPI-FEED, and the Inbox scan skipped domain-only senders, so
     // Love's + TA sat unread in the Inbox for 3 days.)
     from: 'srichard@englandlogistics.com,@englandlogistics.com',
-    subjectContains: 'Cost-Plus',
+    // 10/1/26: subject changed AGAIN ("Attention Daily Forecast for CP TAP.
+    // Those of you getting LOVES CP discounts we Never Received them today.")
+    // — no "Cost-Plus" at all. Match on sender only; the sheet names are the
+    // stable signal (CP Loves Forecast …xlsx / TAPetro_PRICES_…xls).
+    subjectContains: '',
+    requireSheet: /loves|tas?petro|tapetro/i,
     parse: (attachments) => {
       // Per-attachment isolation (7/20: a TA header change threw and starved
       // BOTH brands — the Love's file in the same email was fine). A failing
@@ -196,6 +205,15 @@ export async function GET(req: NextRequest) {
         const detail: any = { feed: feed.key, id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
         try {
           const attachments = await getMessageAttachments(mailbox, msg.id)
+          if (feed.requireSheet && !attachments.some(a => isSpreadsheet(a) && feed.requireSheet!.test(a.name))) {
+            // From the vendor but not a pricing email (e.g. Suzette's "we
+            // haven't received Love's yet" reply). Leave it exactly where it is.
+            detail.status = 'not-a-pricing-email-left'
+            detail.note = `Attachments: ${attachments.map(a => a.name).join(', ') || 'none'}`
+            summary.skipped++
+            summary.details.push(detail)
+            continue
+          }
           const { stations, parsedFiles, attachmentErrors = [], ignoredAccounts } = feed.parse(attachments)
           detail.parsedFiles = parsedFiles
           detail.parsedStations = stations.length
