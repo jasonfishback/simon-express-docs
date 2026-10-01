@@ -148,12 +148,30 @@ export async function listFuelMessages(mailbox: string, folderId: string, fromAd
  * known senders removes the rule from the critical path.
  */
 export async function listFuelMessagesInInbox(mailbox: string, fromAddress: string, subjectContains: string): Promise<FuelMessage[]> {
-  const exact = fromAddress.toLowerCase().split(',').map(w => w.trim()).filter(w => w && !w.startsWith('@'))
-  if (exact.length === 0) return []
-  const filter = exact.map(a => `from/emailAddress/address eq '${a.replace(/'/g, "''")}'`).join(' or ')
-  const path = `/users/${encodeURIComponent(mailbox)}/mailFolders/inbox/messages?$select=id,subject,receivedDateTime,from&$filter=${encodeURIComponent(filter)}&$top=25`
-  const res = await graph<{ value: Array<{ id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }> }>(path)
-  return res.value
+  type Raw = { id: string; subject: string; receivedDateTime: string; from?: { emailAddress?: { address?: string } } }
+  const wanted = fromAddress.toLowerCase().split(',').map(w => w.trim()).filter(Boolean)
+  const exact = wanted.filter(w => !w.startsWith('@'))
+  const domains = wanted.filter(w => w.startsWith('@'))
+  const base = `/users/${encodeURIComponent(mailbox)}/mailFolders/inbox/messages?$select=id,subject,receivedDateTime,from`
+  const found: Raw[] = []
+  if (exact.length > 0) {
+    const filter = exact.map(a => `from/emailAddress/address eq '${a.replace(/'/g, "''")}'`).join(' or ')
+    const res = await graph<{ value: Raw[] }>(`${base}&$filter=${encodeURIComponent(filter)}&$top=25`)
+    found.push(...res.value)
+  }
+  if (domains.length > 0) {
+    // Graph can't $filter mail by sender domain (no endswith on messages), so
+    // take the newest 100 Inbox items unfiltered and match the domain here.
+    // The cron runs every 30 min; a pricing email won't scroll past 100 items
+    // in that window. (9/30/26: England's feed is domain-matched, and this
+    // path didn't exist, so their emails in the Inbox were never seen.)
+    const res = await graph<{ value: Raw[] }>(`${base}&$orderby=receivedDateTime desc&$top=100`)
+    for (const m of res.value) {
+      const sender = (m.from?.emailAddress?.address || '').toLowerCase()
+      if (domains.some(d => sender.endsWith(d)) && !found.some(f => f.id === m.id)) found.push(m)
+    }
+  }
+  return found
     .filter(m => (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase()))
     .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
     .sort((a, b) => (a.receivedDateTime || '').localeCompare(b.receivedDateTime || ''))

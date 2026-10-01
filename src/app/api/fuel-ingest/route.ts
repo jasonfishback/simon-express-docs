@@ -99,7 +99,13 @@ const FEEDS: FeedDef[] = [
   {
     key: 'england',
     // Forwarded daily by England Logistics (Love's + TA/Petro cost-plus).
-    from: '@englandlogistics.com',
+    // Suzette's exact address is listed FIRST so the Inbox scan's server-side
+    // sender filter catches her mail; the domain catches a replacement rep.
+    // (9/28/26: her subject changed to "Fw: Attention, Loves Cost-Plus & TAP
+    // Cost-Plus Forecast." — the mailbox rule keyed on the old subject stopped
+    // filing into KPI-FEED, and the Inbox scan skipped domain-only senders, so
+    // Love's + TA sat unread in the Inbox for 3 days.)
+    from: 'srichard@englandlogistics.com,@englandlogistics.com',
     subjectContains: 'Cost-Plus',
     parse: (attachments) => {
       // Per-attachment isolation (7/20: a TA header change threw and starved
