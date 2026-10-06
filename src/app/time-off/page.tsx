@@ -221,6 +221,13 @@ export default function TimeOffPage() {
             {afterLoad === '' && (
               <input className={styles.input} type="date" value={start} min={today} onChange={(e) => { setStart(e.target.value); setEnd(e.target.value) }} />
             )}
+            {afterLoad !== '' && !loads.find((l) => l.order_num === afterLoad)?.delivery_date && (
+              <>
+                <label style={label}>When does that load deliver?</label>
+                <input className={styles.input} type="date" value={start} min={today} onChange={(e) => { setStart(e.target.value); setEnd(e.target.value) }} />
+                <p style={{ fontSize: 12, color: 'var(--mute)' }}>Your 34 goes on the board for the day after it delivers.</p>
+              </>
+            )}
             {loads.length === 0 && <p style={{ fontSize: 12, color: 'var(--mute)' }}>No assigned load found to pick from, so choose a date.</p>}
           </div>
         </section>
