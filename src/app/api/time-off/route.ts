@@ -44,9 +44,13 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         code: driver.code,
+        kind: body?.kind === 'restart34' ? 'restart34' : 'time_off',
         start: String(body?.start ?? ''),
         end: String(body?.end ?? ''),
         note: String(body?.note ?? '').slice(0, 200),
+        city: String(body?.city ?? '').slice(0, 60),
+        state: String(body?.state ?? '').slice(0, 30),
+        load: String(body?.load ?? '').slice(0, 20),
       }),
       cache: 'no-store',
       signal: AbortSignal.timeout(55000),
