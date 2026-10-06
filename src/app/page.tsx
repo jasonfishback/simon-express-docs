@@ -284,6 +284,72 @@ export default function HomePage() {
             </span>
           </div>
         </button>
+        {/* Time off card — amber accent; writes straight to the dispatch board */}
+        <button
+          onClick={() => router.push('/time-off')}
+          onTouchStart={() => setPressed('timeoff')}
+          onTouchEnd={() => setPressed(null)}
+          onTouchCancel={() => setPressed(null)}
+          onMouseDown={() => setPressed('timeoff')}
+          onMouseUp={() => setPressed(null)}
+          onMouseLeave={() => setPressed(null)}
+          style={{
+            width: '100%',
+            padding: '22px 24px',
+            background: pressed === 'timeoff'
+              ? 'linear-gradient(180deg, #E8252C 0%, var(--red) 60%, #C61119 100%)'
+              : 'rgba(255,255,255,0.78)',
+            backdropFilter: pressed === 'timeoff' ? undefined : 'saturate(180%) blur(20px)',
+            WebkitBackdropFilter: pressed === 'timeoff' ? undefined : 'saturate(180%) blur(20px)',
+            border: '1px solid',
+            borderColor: pressed === 'timeoff' ? 'var(--red-dark)' : 'rgba(11,11,12,0.06)',
+            borderRadius: 'var(--r-xl)',
+            cursor: 'pointer',
+            textAlign: 'left',
+            transition: 'all var(--t-fast) var(--ease)',
+            transform: pressed === 'timeoff' ? 'scale(0.98)' : 'scale(1)',
+            boxShadow: pressed === 'timeoff' ? 'var(--sh-red), var(--sh-inset)' : 'var(--sh-md)',
+            color: pressed === 'timeoff' ? '#fff' : 'var(--ink)',
+            fontFamily: 'var(--body)',
+            WebkitTapHighlightColor: 'transparent',
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+            <div style={{
+              width: 60, height: 60,
+              background: pressed === 'timeoff' ? 'rgba(255,255,255,0.20)' : 'rgba(245,195,59,0.18)',
+              border: '1px solid',
+              borderColor: pressed === 'timeoff' ? 'rgba(255,255,255,0.30)' : 'rgba(245,195,59,0.45)',
+              borderRadius: 'var(--r-lg)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexShrink: 0,
+              transition: 'all var(--t-fast) var(--ease)',
+            }}>
+              <svg
+                width="30" height="30" viewBox="0 0 24 24" fill="none"
+                stroke={pressed === 'timeoff' ? '#fff' : '#B8860B'}
+                strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+                <path d="M9 16l2 2 4-4"/>
+              </svg>
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p
+                className="sx-display"
+                style={{ fontSize: 22, color: pressed === 'timeoff' ? '#fff' : 'var(--ink)', marginBottom: 4 }}
+              >
+                Request Time Off
+              </p>
+              <p style={{ fontSize: 13, color: pressed === 'timeoff' ? 'rgba(255,255,255,0.85)' : 'var(--mute)', lineHeight: 1.4 }}>
+                Pick your days — goes straight to the dispatch board
+              </p>
+            </div>
+          </div>
+        </button>
       </main>
 
       {/* Footer — respects iOS home indicator */}

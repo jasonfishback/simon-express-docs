@@ -19,7 +19,7 @@ import { DRIVER_COOKIE, kpiBaseUrl, parseDriverCookieValue } from '@/lib/driver-
 import { setDriverCookie } from '@/lib/driver-login-server'
 
 export const config = {
-  matcher: ['/', '/docs/:path*', '/fuel/:path*'],
+  matcher: ['/', '/docs/:path*', '/fuel/:path*', '/time-off/:path*'],
 }
 
 export function middleware(req: NextRequest, event: NextFetchEvent) {
