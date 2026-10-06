@@ -15,7 +15,7 @@ type PastRequest = {
   note: string | null
   truck_number: string | null
   days_written: number
-  days_occupied: { date: string; text: string }[]
+  days_occupied: string[]
   days_off_sheet: string[]
   sheet_error: string | null
   created_at: string
@@ -27,7 +27,7 @@ type Result = {
   truck?: string | null
   days?: string[]
   written?: string[]
-  occupied?: { date: string; text: string }[]
+  occupied?: string[]
   offSheet?: string[]
   sheetError?: string | null
 }
@@ -136,7 +136,7 @@ export default function TimeOffPage() {
                 )}
                 {(result.occupied?.length ?? 0) > 0 && (
                   <p style={{ fontSize: 13, color: 'var(--mute)' }}>
-                    Already planned, left for dispatch to sort out: {result.occupied!.map((o) => `${fmt(o.date)} (${o.text})`).join(', ')}
+                    Already has a plan on the board, dispatch will sort it out: {result.occupied!.map(fmt).join(', ')}
                   </p>
                 )}
                 {(result.offSheet?.length ?? 0) > 0 && (
