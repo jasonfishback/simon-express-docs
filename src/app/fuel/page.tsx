@@ -330,6 +330,12 @@ export default function FuelPage() {
   const [routePanelOpen, setRoutePanelOpen] = useState(true)
   const hadPlanRef = useRef(false)
   const [currentFuelEighths, setCurrentFuelEighths] = useState<number>(4) // 0-8, default 1/2 tank
+  // The optimizer reads the tank level from this ref, never from its closure. planRoute is a
+  // useCallback that does not depend on the slider, so a driver who set the tank FIRST and then
+  // tapped Plan got a plan built on the default half tank (Kevin 11/11/26: 1/8 tank in Clearfield,
+  // first stop Parowan 258 mi out).
+  const fuelEighthsRef = useRef(4)
+  fuelEighthsRef.current = currentFuelEighths
   const [routeDistanceMap, setRouteDistanceMap] = useState<Map<string, number>>(new Map()) // station site -> miles from origin
   const [routeDetourMap, setRouteDetourMap] = useState<Map<string, number>>(new Map()) // station site -> detour miles (distance off the route)
   const [showOptimizer, setShowOptimizer] = useState<boolean>(true)
@@ -1783,7 +1789,8 @@ export default function FuelPage() {
     const MAX_HARD_DETOUR = 50
     // Mid-detour station must save at least this much per gallon vs cheapest corridor option to be picked
     const MID_DETOUR_SAVINGS_THRESHOLD = 0.20  // 20 cents/gal
-    const currentFuel = (currentFuelEighths / 8) * TANK
+    const fuelEighths = fuelEighthsRef.current
+    const currentFuel = (fuelEighths / 8) * TANK
     const fuelToBurn = (planEndMile - startMile) / MPG
     // CA-BOUND HARD RULE (Jason 9/23/26, mirrors kpi lib/fuel/optimizer.ts):
     // "anytime a driver is going into CA it should make them fill up before
@@ -1817,7 +1824,7 @@ export default function FuelPage() {
       })
       .sort((a, b) => a.pos - b.pos)
 
-    console.log('Optimizer:', { totalMiles, currentFuel, fuelToBurn, corridorCount: byPos.length, eighths: currentFuelEighths })
+    console.log('Optimizer:', { totalMiles, currentFuel, fuelToBurn, corridorCount: byPos.length, eighths: fuelEighths })
 
     // Build a human-readable debug summary that shows on the page
     if (byPos.length > 0 && byPos.length <= 8) {
@@ -1889,12 +1896,14 @@ export default function FuelPage() {
       const hardDetour = byPos.filter(s => s.pos > pos && s.pos <= safeReach && s.detour <= MAX_HARD_DETOUR)
       if (hardDetour.length > 0) return hardDetour
 
-      // Still nothing in safe reach — extend to physical reach (running tank low) within 50mi detour
+      // Nothing inside the reserve (the tank is already under it, or the next station is far).
+      // The driver needs the NEXT fuel, not the cheapest pump a dry tank away: offer only the
+      // first station ahead and any within 25 miles past it.
       const physReachable = byPos.filter(s => s.pos > pos && s.pos <= physReach && s.detour <= MAX_HARD_DETOUR)
-      if (physReachable.length > 0) return physReachable
+      if (physReachable.length > 0) return physReachable.filter(s => s.pos <= physReachable[0].pos + 25)
 
-      // Absolute last resort: anywhere reachable, regardless of detour
-      return byPos.filter(s => s.pos > pos && s.pos <= physReach)
+      // Absolute last resort: the first station reachable, regardless of detour
+      return byPos.filter(s => s.pos > pos && s.pos <= physReach).slice(0, 1)
     }
 
     // CA-bound: a deferral rule (3/8 first stop, 5/8 arrival, 70% min-burn) may
