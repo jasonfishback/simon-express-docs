@@ -1625,6 +1625,34 @@ export default function FuelPage() {
     }
   }, [origin, destination, viaPoints, corridorMiles, data, useMyLoad])
 
+  // Opened from the per-load fuel text (/d/<code>?f=<order> -> /fuel?auto=1&load=<order>): the
+  // driver should not have to tap anything to see the plan. Once the load, prices and map are in,
+  // pick the load the text was about (current, or next when the number matches it) and run it.
+  // One shot per page load; every later change is the driver's own.
+  const autoStageRef = useRef<'idle' | 'picked' | 'done'>('idle')
+  useEffect(() => {
+    if (autoStageRef.current === 'done') return
+    if (typeof window === 'undefined') return
+    const qs = new URLSearchParams(window.location.search)
+    if (qs.get('auto') !== '1') { autoStageRef.current = 'done'; return }
+    if (!currentLoad || !data || !mapLoaded) return
+    if (autoStageRef.current === 'idle') {
+      const want = (qs.get('load') || '').replace(/^0+/, '')
+      const isNext = !!want && !!nextLoad?.order_num && String(nextLoad.order_num).replace(/^0+/, '') === want
+        && String(currentLoad.order_num).replace(/^0+/, '') !== want
+      if (isNext) {
+        setSelLoads({ current: false, next: true })
+        applyLoadSelection(false, true)
+      }
+      autoStageRef.current = 'picked'
+      if (isNext) return // run on the next pass, once the route inputs hold the next load
+    }
+    if (!origin.trim() || !destination.trim()) return
+    autoStageRef.current = 'done'
+    planRoute()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentLoad, nextLoad, data, mapLoaded, origin, destination])
+
   // Stop the truck-blip pulse when leaving the page.
   useEffect(() => () => {
     if (truckPulseTimerRef.current) clearInterval(truckPulseTimerRef.current)

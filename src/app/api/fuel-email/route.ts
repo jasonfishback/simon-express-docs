@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { findRecipientAsync, getTimeOfDayGreeting, getTodaysDateFormatted } from '@/lib/recipients'
+import { DRIVER_COOKIE, kpiBaseUrl, parseDriverCookieValue } from '@/lib/driver-auth'
 
 export const maxDuration = 30
 export const dynamic = 'force-dynamic'
@@ -534,6 +535,35 @@ export async function POST(req: NextRequest) {
     if (error) {
       console.error('Resend error:', error)
       return NextResponse.json({ error: 'Failed to send email', details: error }, { status: 500 })
+    }
+
+    // Tell kpi a logged-in driver emailed this plan (11/11/26): it counts as using the app on the
+    // fuel usage board and stops the morning text. Best-effort, never blocks the response.
+    try {
+      const driver = parseDriverCookieValue(req.cookies.get(DRIVER_COOKIE)?.value)
+      if (driver) {
+        await fetch(`${kpiBaseUrl()}/api/driver-login/fuel-run`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            code: driver.code,
+            emailed: true,
+            origin, destination,
+            total_miles: (() => { const m = /([\d,]+)\s*mi/i.exec(distance || ''); return m ? parseInt(m[1].replace(/,/g, ''), 10) || null : null })(),
+            stops: stops.map((s) => ({
+              brand: s.station.name || 'pfj', site: s.station.site, name: s.station.name || null,
+              city: s.station.city, state: s.station.state, price: s.station.yourPrice,
+              gallons: Math.round(s.gallons), miles_from_origin: Math.round(s.milesFromOrigin),
+            })),
+            total_gallons: Math.round(stops.reduce((a, s) => a + (s.gallons || 0), 0)),
+            total_cost: Math.round(stops.reduce((a, s) => a + (s.cost || 0), 0)),
+            total_savings: Math.round(stops.reduce((a, s) => a + (s.savings || 0), 0)),
+          }),
+          signal: AbortSignal.timeout(5000),
+        })
+      }
+    } catch (runErr) {
+      console.error('fuel-email: kpi run log failed', runErr)
     }
 
     // Log this send for the daily dispatch report (best-effort, never blocks the response)

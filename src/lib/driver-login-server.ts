@@ -79,8 +79,18 @@ export async function handleAutoLogin(req: NextRequest, rawCode: string): Promis
     return NextResponse.redirect(url)
   }
   const url = req.nextUrl.clone()
-  url.pathname = '/'
+  // ?f=<order number> (the per-load fuel text from kpi, 11/11/26): land on the fuel planner with
+  // that load picked and the plan already running. ?f with no number just opens the planner.
+  const f = req.nextUrl.searchParams.get('f')
   url.search = ''
+  if (f !== null) {
+    url.pathname = '/fuel'
+    url.searchParams.set('auto', '1')
+    const order = f.replace(/[^0-9A-Za-z-]/g, '').slice(0, 20)
+    if (order) url.searchParams.set('load', order)
+  } else {
+    url.pathname = '/'
+  }
   const res = NextResponse.redirect(url)
   setDriverCookie(res, req, result.driver)
   return res
