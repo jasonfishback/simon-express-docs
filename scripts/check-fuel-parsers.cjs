@@ -4,7 +4,8 @@
 //   node scripts/check-fuel-parsers.cjs <dir-with-vendor-files>
 //
 // Runs every .xls/.xlsx in <dir> through the parser its filename implies
-// (Loves* -> parseLovesXlsx, TAPetro* -> parseTaXls, cp*.xls -> parsePilotXls)
+// (Loves* -> parseLovesXlsx, TAPetro* -> parseTaXls, cp*.xls / pq-*.xlsx ->
+// parsePilotXls)
 // and fails if any file parses to fewer than MIN_STATIONS rows. Vendors rename
 // header columns without notice (7/15, 7/20, 7/24, 8/24 "Loves Store",
 // 9/8 "Fuel Price") and each rename silently starves a brand for days — keep
@@ -38,7 +39,7 @@ for (const f of fs.readdirSync(dir).filter(f => /\.(xls|xlsx)$/i.test(f)).sort()
   let brand, parser
   if (/loves/i.test(f)) { brand = 'loves'; parser = parseLovesXlsx }
   else if (/ta\s?petro|tapetro/i.test(f)) { brand = 'ta'; parser = parseTaXls }
-  else if (/^(\d{8}_)?cp\d+\.xls$/i.test(f)) { brand = 'pfj'; parser = parsePilotXls }
+  else if (/^(\d{8}_)?cp\d+\.xls$/i.test(f) || /^pq-\d+.*\.xlsx$/i.test(f)) { brand = 'pfj'; parser = parsePilotXls }
   else { console.log(`SKIP  ${f} (unknown vendor)`); continue }
   try {
     const rows = parser(buf)

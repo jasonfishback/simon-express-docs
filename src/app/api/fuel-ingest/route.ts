@@ -6,11 +6,13 @@ import {
   listFuelMessages,
   listFuelMessagesInInbox,
   getMessageAttachments,
+  getMessageBodyHtml,
   deleteMessage,
   moveMessage,
   FuelAttachment,
 } from '@/lib/graph'
 import { parsePilotXls, parseLovesXlsx, parseTaXls, ParsedStation, FuelBrand } from '@/lib/fuel/parse'
+import { findPilotQuoteUrl, downloadPilotQuote } from '@/lib/fuel/pilot-link'
 import { enrichStations, EnrichedStation } from '@/lib/fuel/enrich'
 import { recordHeartbeat } from '@/lib/heartbeat'
 
@@ -47,7 +49,11 @@ function isAuthorized(req: NextRequest): boolean {
 interface FeedDef {
   key: string
   from: string            // exact address, or "@domain.com" for any sender at that domain
-  subjectContains: string // '' = any subject from that sender
+  subjectContains: string // '' = any subject from that sender; "a|b" = either
+  /** For a feed whose email LINKS to its sheet instead of attaching it: given
+   *  the message body, fetch the sheet (null = no link in this email). Only
+   *  consulted when the message has no spreadsheet attached. */
+  linkedSheet?: (bodyHtml: string) => Promise<FuelAttachment | null>
   /** When set, a message is only a feed email if it carries a spreadsheet whose
    *  name matches; anything else from the sender is left untouched (a human
    *  reply, a note with no sheet). Lets a feed match on sender alone. */
@@ -69,8 +75,17 @@ const FEEDS: FeedDef[] = [
   {
     key: 'pilot',
     // Pilot has sent from both spellings; accept either (see listFuelMessages).
-    from: process.env.OUTLOOK_FUEL_FROM || 'DailyPricing@pilotflyingj.com,daily.pricing@pilotflyingj.com',
-    subjectContains: process.env.OUTLOOK_FUEL_SUBJECT || 'Pricing - Pilot Flying J',
+    // 11/10/26: Pilot moved the feed to a new system — sender is now
+    // daily.pricing@pilottravelcenters.com, subject "<MM-DD-YYYY> Price Quote -
+    // Pilot Flying J", and the sheet is a LINK (pq-<account>-<date>.xlsx)
+    // rather than an attachment. The new sender/subject are appended to
+    // whatever the env vars hold so a stale override can't hide the feed.
+    from: `${process.env.OUTLOOK_FUEL_FROM || 'DailyPricing@pilotflyingj.com,daily.pricing@pilotflyingj.com'},daily.pricing@pilottravelcenters.com,dailypricing@pilottravelcenters.com`,
+    subjectContains: `${process.env.OUTLOOK_FUEL_SUBJECT || 'Pricing - Pilot Flying J'}|Price Quote - Pilot Flying J`,
+    linkedSheet: async (bodyHtml) => {
+      const url = findPilotQuoteUrl(bodyHtml)
+      return url ? downloadPilotQuote(url) : null
+    },
     parse: (attachments) => {
       // Pilot's file is named cp<ascend account>.xls. From 9/15 Pilot also
       // sends account 118215's sheet as a SEPARATE daily email; the optimizer
@@ -80,13 +95,14 @@ const FEEDS: FeedDef[] = [
       // other accounts' emails are dropped as no-pricing (logged).
       const account = process.env.OUTLOOK_FUEL_PILOT_ACCOUNT || '370934'
       const sheets = attachments.filter(isSpreadsheet)
-      const xls = sheets.find(a => new RegExp('^cp' + account + '\\b', 'i').test(a.name)) ??
-        (sheets.length && !sheets.some(a => /^cp\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
+      // cp<account>.xls (attached, old) or pq-<account>-<date>.xlsx (linked, new).
+      const xls = sheets.find(a => new RegExp('^(?:cp|pq-)' + account + '\\b', 'i').test(a.name)) ??
+        (sheets.length && !sheets.some(a => /^(?:cp|pq-)\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
       if (!xls) {
         // A Pilot sheet for a DIFFERENT Ascend account (118215 from 9/15/26).
         // Jason: same pricing, don't ingest it. Report it so the email is
         // discarded quietly instead of parked as a failure every day.
-        const other = sheets.map(a => a.name.match(/^cp(\d{5,})/i)?.[1]).filter(Boolean) as string[]
+        const other = sheets.map(a => a.name.match(/^(?:cp|pq-)(\d{5,})/i)?.[1]).filter(Boolean) as string[]
         return { stations: [], parsedFiles: [], ignoredAccounts: other.length ? other : undefined }
       }
       if (!xls.contentBytes) {
@@ -205,6 +221,35 @@ export async function GET(req: NextRequest) {
         const detail: any = { feed: feed.key, id: msg.id, subject: msg.subject, receivedDateTime: msg.receivedDateTime, status: 'pending' }
         try {
           const attachments = await getMessageAttachments(mailbox, msg.id)
+          // No sheet attached but the feed links to one (Pilot, 11/10/26 on):
+          // download it and treat it exactly like an attachment.
+          const linkErrors: string[] = []
+          if (feed.linkedSheet && !attachments.some(isSpreadsheet)) {
+            try {
+              const linked = await feed.linkedSheet(await getMessageBodyHtml(mailbox, msg.id))
+              if (linked) {
+                attachments.push(linked)
+                detail.linkedFile = linked.name
+              }
+            } catch (e: any) {
+              const why = `price-quote link: ${e?.message || e}`
+              const ageHours = (Date.now() - Date.parse(msg.receivedDateTime || '')) / 36e5
+              if (ageHours > 72) {
+                // Pilot's links die after 48h. Retrying forever gets nowhere —
+                // park it where a human can find it and move on.
+                detail.status = 'link-expired-parked'
+                detail.note = why
+                summary.skipped++
+                summary.errors.push(`${feed.key} "${msg.subject}" (${msg.receivedDateTime}) ${why} — parked in Unprocessed`)
+                console.warn(`[fuel-ingest] ${feed.key}: ${why} on "${msg.subject}" ${msg.receivedDateTime}; older than 72h, parking`)
+                await moveMessage(mailbox, msg.id, await unprocessedFolder())
+                summary.details.push(detail)
+                continue
+              }
+              // Young enough to still be valid: keep the email and retry.
+              linkErrors.push(why)
+            }
+          }
           if (feed.requireSheet && !attachments.some(a => isSpreadsheet(a) && feed.requireSheet!.test(a.name))) {
             // From the vendor but not a pricing email (e.g. Suzette's "we
             // haven't received Love's yet" reply). Leave it exactly where it is.
@@ -214,7 +259,9 @@ export async function GET(req: NextRequest) {
             summary.details.push(detail)
             continue
           }
-          const { stations, parsedFiles, attachmentErrors = [], ignoredAccounts } = feed.parse(attachments)
+          const parsed = feed.parse(attachments)
+          const { stations, parsedFiles, ignoredAccounts } = parsed
+          const attachmentErrors = [...linkErrors, ...(parsed.attachmentErrors || [])]
           detail.parsedFiles = parsedFiles
           detail.parsedStations = stations.length
           if (stations.length === 0 && attachmentErrors.length === 0 && ignoredAccounts?.length) {

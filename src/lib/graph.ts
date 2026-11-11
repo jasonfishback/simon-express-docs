@@ -107,6 +107,14 @@ export async function ensureChildFolder(mailbox: string, parentId: string, name:
 
 export interface FuelMessage { id: string; subject: string; receivedDateTime: string; from?: string }
 
+/** Subject test for a feed: "" matches anything; "a|b" matches a subject that
+ *  contains either. (11/10/26: Pilot renamed "Pricing - Pilot Flying J" to
+ *  "<date> Price Quote - Pilot Flying J" — both must keep matching.) */
+function subjectMatches(subject: string | undefined, spec: string): boolean {
+  const s = (subject || '').toLowerCase()
+  return spec.toLowerCase().split('|').some(part => s.includes(part.trim()))
+}
+
 // List candidate feed messages in the folder. Two deliberate choices:
 //   1. NO server-side $filter — Graph's filtered folder views are eventually
 //      consistent and can omit recently-arrived items for hours (the unread
@@ -130,8 +138,7 @@ export async function listFuelMessages(mailbox: string, folderId: string, fromAd
       // address silently dropped the whole feed for two weeks.)
       const senderOk = fromAddress.toLowerCase().split(',').map(w => w.trim()).filter(Boolean)
         .some(want => (want.startsWith('@') ? sender.endsWith(want) : sender === want))
-      const subjectOk = (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase())
-      return senderOk && subjectOk
+      return senderOk && subjectMatches(m.subject, subjectContains)
     })
     .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
     .reverse() // oldest first so multiple pending days apply in order
@@ -172,7 +179,7 @@ export async function listFuelMessagesInInbox(mailbox: string, fromAddress: stri
     }
   }
   return found
-    .filter(m => (m.subject || '').toLowerCase().includes(subjectContains.toLowerCase()))
+    .filter(m => subjectMatches(m.subject, subjectContains))
     .map(m => ({ id: m.id, subject: m.subject, receivedDateTime: m.receivedDateTime, from: m.from?.emailAddress?.address }))
     .sort((a, b) => (a.receivedDateTime || '').localeCompare(b.receivedDateTime || ''))
 }
@@ -207,6 +214,12 @@ export async function getMessageAttachments(mailbox: string, messageId: string):
     size: a.size,
     kind: String(a['@odata.type'] || '').replace('#microsoft.graph.', ''),
   }))
+}
+
+/** The message's HTML body — for feeds that link to their sheet instead of attaching it. */
+export async function getMessageBodyHtml(mailbox: string, messageId: string): Promise<string> {
+  const res = await graph<{ body?: { content?: string } }>(`/users/${encodeURIComponent(mailbox)}/messages/${messageId}?$select=body`)
+  return res.body?.content || ''
 }
 
 export async function markMessageRead(mailbox: string, messageId: string): Promise<void> {

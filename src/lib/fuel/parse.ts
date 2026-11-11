@@ -145,35 +145,77 @@ function num(v: any): number {
 }
 
 // ── Pilot / Flying J ────────────────────────────────────────────────────────
-// Daily "Pricing - Pilot Flying J" email from DailyPricing@pilotflyingj.com.
-// Header row 5-ish: Site / City / ST / <product> ... retail col 17, discounted
-// col 19, savings col 20. Non-DSL rows filtered.
+// Pilot's daily "Better Of Pricing Report", in either of its two generations:
+//   through 11/9/26 — "Pricing - Pilot Flying J" email with cp<account>.xls
+//     attached: Prod "DSL", sites zero-padded ("001"), retail / your price /
+//     savings in cols 17 / 19 / 20.
+//   from 11/10/26 — "<date> Price Quote - Pilot Flying J" email with a LINK to
+//     pq-<account>-<MMDDYYYY>.xlsx: Prod "Truck Diesel", sites unpadded ("1"),
+//     one column fewer (16 / 18 / 19).
+// Price columns are found by header name; the old fixed positions are only a
+// fallback for a sheet with no "Your Price" header. Sites are padded to three
+// digits so the coord cache and kpi's price history keep joining on one key.
 export function parsePilotXls(buffer: Buffer): ParsedStation[] {
   const rows = sheetRows(buffer)
   const header = findHeader(rows, ['Site', 'City', 'ST'])
   if (!header) throw new Error(`Could not find header row (Site / City / ST) in Pilot xls — sheet preview: ${sheetPreview(rows)}`)
+  const labels = (rows[header.row] || []).map(normCell)
+  const named = labels.includes('your price')
+  const prodCol = labels.indexOf('prod') >= 0 ? labels.indexOf('prod') : 3
+  const yourCol = named ? labels.indexOf('your price') : 19
+  const retailCol = named ? labels.indexOf('retail price') : 17
+  const savingsCol = named ? labels.findIndex(l => l.startsWith('savings')) : 20
   const stations: ParsedStation[] = []
   for (let i = header.row + 1; i < rows.length; i++) {
     const r = rows[i] || []
     const site = r[header.cols['Site']]
     const city = r[header.cols['City']]
     const state = r[header.cols['ST']]
-    const prod = r[3]
+    const prod = r[prodCol]
     if (site == null || city == null || state == null) continue
-    if (prod != null && String(prod).trim().toUpperCase() !== 'DSL') continue
-    const yours = num(r[19])
+    if (String(site).trim() === '') continue
+    if (prod != null && !isTruckDiesel(prod)) continue
+    const yours = num(r[yourCol])
     if (!(yours > 0)) continue
+    const retail = retailCol >= 0 ? num(r[retailCol]) : NaN
+    const savings = savingsCol >= 0 ? num(r[savingsCol]) : NaN
     stations.push({
       brand: 'pfj',
-      site: String(site).trim(),
+      site: pilotSite(site),
       city: String(city).trim(),
       state: String(state).trim().toUpperCase(),
-      retailPrice: num(r[17]) > 0 ? num(r[17]) : 0,
+      retailPrice: retail > 0 ? retail : 0,
       yourPrice: yours,
-      savings: isFinite(num(r[20])) ? num(r[20]) : 0,
+      savings: isFinite(savings) ? savings : 0,
     })
   }
   return stations
+}
+
+/** "DSL" (old sheet) or "Truck Diesel" (new) — never reefer/dyed fuel or DEF. */
+function isTruckDiesel(prod: any): boolean {
+  const p = String(prod).trim().toLowerCase()
+  if (p === '' || p === 'dsl') return true
+  return p.includes('diesel') && !/reefer|dyed|off.?road/.test(p)
+}
+
+/** Pilot site numbers as the rest of the system keys them: "1" -> "001". */
+function pilotSite(site: any): string {
+  const s = String(site).trim()
+  return /^\d+$/.test(s) ? s.padStart(3, '0') : s
+}
+
+/** The Ascend account a Pilot sheet was priced for ("Account: 370934 - …"). */
+export function pilotSheetAccount(buffer: Buffer): string | null {
+  try {
+    for (const row of sheetRows(buffer).slice(0, 12)) {
+      for (const cell of row || []) {
+        const m = String(cell ?? '').match(/account:\s*(\d{4,})/i)
+        if (m) return m[1]
+      }
+    }
+  } catch { /* not a readable workbook */ }
+  return null
 }
 
 // ── Love's ─────────────────────────────────────────────────────────────────
