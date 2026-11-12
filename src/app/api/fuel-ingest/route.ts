@@ -87,21 +87,21 @@ const FEEDS: FeedDef[] = [
       return url ? downloadPilotQuote(url) : null
     },
     parse: (attachments) => {
-      // Pilot's file is named cp<ascend account>.xls. From 9/15 Pilot also
-      // sends account 118215's sheet as a SEPARATE daily email; the optimizer
-      // and every kpi price history row are built on 370934, and a second
-      // list would just overwrite it (brand-replace). Until Jason decides how
-      // the two contracts relate, only the configured account is ingested;
-      // other accounts' emails are dropped as no-pricing (logged).
-      const account = process.env.OUTLOOK_FUEL_PILOT_ACCOUNT || '370934'
+      // Pilot sends one sheet per Ascend account as SEPARATE daily emails:
+      // 370934 and 118215. Only one can be ingested (a second list would just
+      // overwrite the first, brand-replace). Through 11/11/26 that was 370934;
+      // Jason 11/12/26: Pilot gave us 8 cents/gal more off and 118215 is the
+      // sheet that carries it, so 118215 is now the one we plan on. The other
+      // account's email is dropped as no-pricing (logged).
+      const account = process.env.OUTLOOK_FUEL_PILOT_ACCOUNT || '118215'
       const sheets = attachments.filter(isSpreadsheet)
       // cp<account>.xls (attached, old) or pq-<account>-<date>.xlsx (linked, new).
       const xls = sheets.find(a => new RegExp('^(?:cp|pq-)' + account + '\\b', 'i').test(a.name)) ??
         (sheets.length && !sheets.some(a => /^(?:cp|pq-)\d{5,}/i.test(a.name)) ? sheets[0] : undefined)
       if (!xls) {
-        // A Pilot sheet for a DIFFERENT Ascend account (118215 from 9/15/26).
-        // Jason: same pricing, don't ingest it. Report it so the email is
-        // discarded quietly instead of parked as a failure every day.
+        // A Pilot sheet for the Ascend account we do NOT plan on (370934 from
+        // 11/12/26). Report it so the email is discarded quietly instead of
+        // parked as a failure every day.
         const other = sheets.map(a => a.name.match(/^(?:cp|pq-)(\d{5,})/i)?.[1]).filter(Boolean) as string[]
         return { stations: [], parsedFiles: [], ignoredAccounts: other.length ? other : undefined }
       }
@@ -266,7 +266,7 @@ export async function GET(req: NextRequest) {
           detail.parsedStations = stations.length
           if (stations.length === 0 && attachmentErrors.length === 0 && ignoredAccounts?.length) {
             // Known, intentional: a sheet for an account we don't track.
-            // Discard (it's a duplicate of the list we do ingest) and say so.
+            // Discard (the other account's list is the one we ingest) and say so.
             detail.status = 'other-account-deleted'
             detail.note = `Ignored Pilot account(s): ${ignoredAccounts.join(', ')}`
             console.log(`[fuel-ingest] ${feed.key}: ignoring account ${ignoredAccounts.join(', ')} sheet from "${msg.subject}" ${msg.receivedDateTime}`)
